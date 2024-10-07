@@ -14,8 +14,8 @@ import javax.swing.border.EmptyBorder;
 
 public class NewUserStoryForm extends JFrame implements BaseComponent {
 
-    Double[] pointsList = {1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
-    Double[] businessValueList = {1.0, 3.0, 7.0, 11.0, 17.0, 23.0};
+    Double[] pointsList = {null, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
+    Double[] businessValueList = {null, 1.0, 3.0, 7.0, 11.0, 17.0, 23.0};
 
 
     public NewUserStoryForm() {

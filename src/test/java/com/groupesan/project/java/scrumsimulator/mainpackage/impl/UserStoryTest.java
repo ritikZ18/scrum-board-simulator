@@ -1,12 +1,10 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.groupesan.project.java.scrumsimulator.mainpackage.core.ScrumIdentifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserStoryTest {
     private UserStory myUserStory;
@@ -81,4 +79,22 @@ public class UserStoryTest {
         assertEquals("User Story Description value cannot be empty",exception.getMessage());
 
     }
+
+
+    /** Test case to ensure that business value is updated successfully. */
+    @Test
+    public void testBusinessValueUpdate() {
+        myUserStory.setBusinessValue(5.0);
+        myUserStory.setBusinessValue(8.0);
+        assertEquals(8.0, myUserStory.getBusinessValue(), "Business value should be updated to 8.0");
+    }
+
+    /** Test case to ensure that setting business value to null is handled correctly. */
+    @Test
+    public void testBusinessValueUpdateToNull() {
+        myUserStory.setBusinessValue(5.0);
+        myUserStory.setBusinessValue(Double.NaN);
+        assertTrue(Double.isNaN(myUserStory.getBusinessValue()), "Business value should be updated to NaN");
+    }
+
 }

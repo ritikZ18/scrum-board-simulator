@@ -147,6 +147,14 @@ public class UserStory extends ScrumObject {
     public double getBusinessValue() {
         return businessValue;
     }
+    /**
+     * Set the point value of the User Story to the specified value
+     *
+     * @param businessValue the point value as a double. Usually an element of the fibonacci sequence.
+     */
+    public void setBusinessValue(double businessValue) {
+        this.businessValue = businessValue;
+    }
 
     /**
      * [NOT IMPLEMENTED] return all child scrum objects of this object. Usually this would be tasks.
