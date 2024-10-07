@@ -15,7 +15,7 @@ public class UserStoryTest {
     public void setup() {
         myUserStory =
                 UserStoryFactory.getInstance()
-                        .createNewUserStory("predefinedUS1", "description1", 1.0);
+                        .createNewUserStory("predefinedUS1", "description1", 1.0,3.0);
     }
 
     @Test
@@ -52,5 +52,33 @@ public class UserStoryTest {
         ScrumIdentifier id = myUserStory.getId();
 
         assertNotNull(id);
+    }
+
+    /** Test case to ensure that exception is thrown when name is empty.**/
+    @Test
+    public void testNameEmptyThrowsException(){
+        Exception exception =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        ()->{
+                            UserStoryFactory.getInstance().createNewUserStory("",
+                                    "to delete a button and show response",1.0,1.0);
+                        });
+        assertEquals("User Story Name value cannot be empty",exception.getMessage());
+
+    }
+
+    /** Test case to ensure that exception is thrown when description is empty.**/
+    @Test
+    public void testDescriptionEmptyThrowsException(){
+        Exception exception =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        ()->{
+                            UserStoryFactory.getInstance().createNewUserStory("deletion of button",
+                                    "",1.0,1.0);
+                        });
+        assertEquals("User Story Description value cannot be empty",exception.getMessage());
+
     }
 }

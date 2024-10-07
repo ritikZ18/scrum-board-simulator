@@ -17,22 +17,33 @@ public class UserStory extends ScrumObject {
 
     private double pointValue;
 
+    private double businessValue;
+
     private UserStoryState state;
 
     private Player owner;
 
     // private ArrayList<Task> tasks;  TODO: implement tasks
 
+    private void validateMandatoryField(String value, String fieldName){
+        if(value==null || value.trim().isEmpty()){
+            throw new IllegalArgumentException("User Story " + fieldName +" value cannot be empty");
+        }
+    }
+
     /**
      * Creates a user story. Leaves the description as an empty string.
      *
      * @param name the name for the user story
      * @param pointValue the point value for the story as a way of estimating required effort.
+     * @throws IllegalArgumentException if name is empty
      */
-    public UserStory(String name, double pointValue) {
+    public UserStory(String name, double pointValue, double businessValue) {
+        validateMandatoryField(name,"Name");
         this.name = name;
         this.description = "";
         this.pointValue = pointValue;
+        this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
     }
 
@@ -43,11 +54,15 @@ public class UserStory extends ScrumObject {
      * @param description the description for the user story for better understanding of the
      *     requirements.
      * @param pointValue the point value for the story as a way of estimating required effort.
+     * @throws IllegalArgumentException if name or description is empty
      */
-    public UserStory(String name, String description, double pointValue) {
+    public UserStory(String name, String description, double pointValue, double businessValue) {
+        validateMandatoryField(name,"Name");
+        validateMandatoryField(description,"Description");
         this.name = name;
         this.description = description;
         this.pointValue = pointValue;
+        this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
     }
 
@@ -121,6 +136,16 @@ public class UserStory extends ScrumObject {
      */
     public void setPointValue(double pointValue) {
         this.pointValue = pointValue;
+    }
+
+    /**
+     * Get the Business value of this UserStory
+     *
+     * @return the point value of this UserStory as a double
+     */
+
+    public double getBusinessValue() {
+        return businessValue;
     }
 
     /**
