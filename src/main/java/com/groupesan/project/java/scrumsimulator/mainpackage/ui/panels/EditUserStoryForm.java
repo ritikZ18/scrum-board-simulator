@@ -47,6 +47,8 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
         businessValueCombo = new JComboBox<>(businessValueList);
         businessValueCombo.setSelectedItem(userStory.getBusinessValue());
 
+        businessValueCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
         myJpanel.setBorder(new EmptyBorder(10, 10, 10, 10));

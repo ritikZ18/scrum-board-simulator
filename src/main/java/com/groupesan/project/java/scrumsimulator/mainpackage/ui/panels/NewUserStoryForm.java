@@ -37,6 +37,8 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
         pointsCombo = new JComboBox<>(pointsList);
         businessValueCombo = new JComboBox<>(businessValueList);
 
+        businessValueCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
         myJpanel.setBorder(new EmptyBorder(10, 10, 10, 10));
