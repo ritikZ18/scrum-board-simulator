@@ -15,9 +15,9 @@ public class UserStory extends ScrumObject {
 
     private String description;
 
-    private double pointValue;
+    private Double pointValue;
 
-    private double businessValue;
+    private Double businessValue;
 
     private UserStoryState state;
 
@@ -38,7 +38,7 @@ public class UserStory extends ScrumObject {
      * @param pointValue the point value for the story as a way of estimating required effort.
      * @throws IllegalArgumentException if name is empty
      */
-    public UserStory(String name, double pointValue, double businessValue) {
+    public UserStory(String name, Double pointValue, Double businessValue) {
         validateMandatoryField(name,"Name");
         this.name = name;
         this.description = "";
@@ -56,7 +56,7 @@ public class UserStory extends ScrumObject {
      * @param pointValue the point value for the story as a way of estimating required effort.
      * @throws IllegalArgumentException if name or description is empty
      */
-    public UserStory(String name, String description, double pointValue, double businessValue) {
+    public UserStory(String name, String description, Double pointValue, Double businessValue) {
         validateMandatoryField(name,"Name");
         validateMandatoryField(description,"Description");
         this.name = name;
@@ -123,36 +123,36 @@ public class UserStory extends ScrumObject {
     /**
      * Get the point value of this UserStory
      *
-     * @return the point value of this UserStory as a double
+     * @return the point value of this UserStory as a Double
      */
-    public double getPointValue() {
+    public Double getPointValue() {
         return pointValue;
     }
 
     /**
      * Set the point value of the User Story to the specified value
      *
-     * @param pointValue the point value as a double. Usually an element of the fibonacci sequence.
+     * @param pointValue the point value as a Double. Usually an element of the fibonacci sequence.
      */
-    public void setPointValue(double pointValue) {
+    public void setPointValue(Double pointValue) {
         this.pointValue = pointValue;
     }
 
     /**
      * Get the Business value of this UserStory
      *
-     * @return the point value of this UserStory as a double
+     * @return the point value of this UserStory as a Double
      */
 
-    public double getBusinessValue() {
+    public Double getBusinessValue() {
         return businessValue;
     }
     /**
      * Set the point value of the User Story to the specified value
      *
-     * @param businessValue the point value as a double. Usually an element of the fibonacci sequence.
+     * @param businessValue the point value as a Double. Usually an element of the fibonacci sequence.
      */
-    public void setBusinessValue(double businessValue) {
+    public void setBusinessValue(Double businessValue) {
         this.businessValue = businessValue;
     }
 

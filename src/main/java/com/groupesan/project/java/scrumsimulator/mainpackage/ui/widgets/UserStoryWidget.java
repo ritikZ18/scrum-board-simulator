@@ -52,9 +52,9 @@ public class UserStoryWidget extends JPanel implements BaseComponent {
 
         id = new JLabel(userStory.getId().toString());
         id.addMouseListener(openEditDialog);
-        points = new JLabel(Double.toString(userStory.getPointValue()));
+        points = new JLabel(userStory.getPointValue() == null ? "" : Double.toString(userStory.getPointValue()));
         points.addMouseListener(openEditDialog);
-        businessValue = new JLabel(Double.toString(userStory.getBusinessValue()));
+        businessValue = new JLabel(userStory.getBusinessValue() == null ? "" : Double.toString(userStory.getBusinessValue()));
         businessValue.addMouseListener(openEditDialog);
         name = new JLabel(userStory.getName());
         name.addMouseListener(openEditDialog);
