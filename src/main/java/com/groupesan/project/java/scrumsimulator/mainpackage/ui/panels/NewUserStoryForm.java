@@ -14,8 +14,8 @@ import javax.swing.border.EmptyBorder;
 
 public class NewUserStoryForm extends JFrame implements BaseComponent {
 
-    Double[] pointsList = {1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
-    Double[] businessValueList = {1.0, 3.0, 7.0, 11.0, 17.0, 23.0};
+    Double[] pointsList = {null, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
+    Double[] businessValueList = {null, 1.0, 3.0, 7.0, 11.0, 17.0, 23.0};
 
 
     public NewUserStoryForm() {
@@ -146,13 +146,27 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
         Double points = (Double) pointsCombo.getSelectedItem();
         Double businessValue = (Double) businessValueCombo.getSelectedItem();
 
+        // Option to handle null values explicitly if needed
+        if (points == null) {
+            System.out.println("Points value is not set. Proceeding with null.");
+        }
+        if (businessValue == null) {
+            System.out.println("Business value is not set. Proceeding with null.");
+        }
+
         UserStoryFactory userStoryFactory = UserStoryFactory.getInstance();
 
         UserStory userStory = userStoryFactory.createNewUserStory(name, description, points,businessValue);
 
-        userStory.doRegister();
-
-        System.out.println(userStory);
+        try {
+            userStory.doRegister();
+            System.out.println("UserStory registered: " + userStory);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Failed to register User Story: " + e.getMessage(),
+                    "Registration Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
 
         return userStory;
     }
