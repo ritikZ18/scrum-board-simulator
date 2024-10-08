@@ -123,7 +123,7 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                             isInvalid = true;
                         }
                         if(!isInvalid) {
-                            UserStory userStory = getUserStoryObject();
+                            getUserStoryObject();
                             dispose();
                         }
 
