@@ -6,6 +6,7 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationMan
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -203,6 +204,19 @@ public class DemoPane extends JFrame implements BaseComponent {
                 SprintUIButton,
                 new CustomConstraints(
                         8, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
+        JButton openGeneralPageButton = new JButton("General Page");
+        openGeneralPageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WizardManager.get().showSimulationWizard();
+            }
+        });
+
+        myJpanel.add(
+                openGeneralPageButton,
+                new CustomConstraints(
+                        0, 4, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         add(myJpanel);
     }
