@@ -1,5 +1,6 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.dialogs.simulation;
 
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.SimulationSwitchRolePane;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.DataModel;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.GridBagConstraintsBuilder;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.ResuableHeader;
@@ -42,6 +43,9 @@ class GeneralPage extends Wizard.WizardPage {
                                 "Sprint Duration: ",
                                 new JSpinner(new SpinnerNumberModel(1, 1, 20, 1)),
                                 sprintDurationModel);
+
+                sprintInput.setEnabled((SimulationSwitchRolePane.getCurrentRole()).equals("Scrum Master"));
+                sprintDurationInput.setEnabled((SimulationSwitchRolePane.getCurrentRole()).equals("Scrum Master"));
 
                 inputs.add(
                                 resuableHeader,
