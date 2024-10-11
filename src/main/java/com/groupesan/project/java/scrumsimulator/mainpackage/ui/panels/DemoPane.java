@@ -89,6 +89,23 @@ public class DemoPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         3, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
+        // Blockers button for the sprint
+        JButton possibleBlockersButton = new JButton("Possible Blockers");
+        possibleBlockersButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        PossibleBlockersListPane form = new PossibleBlockersListPane();
+                        form.setVisible(true);
+                    }
+                });
+
+        myJpanel.add(
+                possibleBlockersButton,
+                new CustomConstraints(
+                        2, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
+
         // Simulation button for Demo
         JButton simulationButton = new JButton("Add User");
         simulationButton.addActionListener(
@@ -168,7 +185,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 simulationSwitchRoleButton,
                 new CustomConstraints(
-                        1, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                        1, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         // New button for Variant Simulation UI
         JButton variantSimulationUIButton = new JButton("Variant Simulation UI");
