@@ -8,22 +8,24 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class UserStoryWidget extends JPanel implements BaseComponent {
+public class UserStoryWidget extends JPanel implements BaseComponent, Serializable {
+    private static final long serialVersionUID = 1L;
 
-    JLabel id;
-    JLabel points;
-    JLabel businessValue;
-    JLabel name;
-    JLabel desc;
+    private JLabel id;
+    private JLabel points;
+    private JLabel businessValue;
+    private JLabel name;
+    private JLabel desc;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
-    private UserStory userStory;
+    private transient UserStory userStory;
 
-    ActionListener actionListener = e -> {};
+    //ActionListener actionListener = e -> {};
 
     MouseAdapter openEditDialog =
             new MouseAdapter() {
@@ -43,7 +45,6 @@ public class UserStoryWidget extends JPanel implements BaseComponent {
 
     public UserStoryWidget(UserStory userStory) {
         this.userStory = userStory;
-
         this.init();
     }
 
@@ -86,5 +87,8 @@ public class UserStoryWidget extends JPanel implements BaseComponent {
                 desc,
                 new CustomConstraints(
                         4, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+
+        revalidate();
+        repaint();
     }
 }

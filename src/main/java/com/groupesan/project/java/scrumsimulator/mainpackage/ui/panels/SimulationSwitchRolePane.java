@@ -18,7 +18,6 @@ public class SimulationSwitchRolePane extends JFrame {
     private JRadioButton productOwnerRadioButton;
     private ButtonGroup roleButtonGroup;
     private JButton switchButton;
-    private static String currentRole = "Developer";
 
     private static String currentRole = "Developer";
 
@@ -94,13 +93,5 @@ public class SimulationSwitchRolePane extends JFrame {
         roleButtonGroup.clearSelection();
         dispose();
         return;
-    }
-
-    public static void setCurrentRole(String role) {
-        currentRole = role;
-    }
-
-    public static String getCurrentRole() {
-        return currentRole;
     }
 }
