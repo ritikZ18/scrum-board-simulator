@@ -37,8 +37,7 @@ public class SimulationWizard extends Wizard<Simulation> {
 
     @Override
     protected Simulation process() {
-        Simulation simulation = new Simulation(simulationName.getData(), null, (Integer) sprintCount.getData(),
-                (Integer) sprintDuration.getData());
+        Simulation simulation = new Simulation(simulationName.getData(), null, (Integer) sprintCount.getData(), (Integer) sprintDuration.getData());
         for (Player player : users.getData()) {
             player.doRegister();
             simulation.addPlayer(player);

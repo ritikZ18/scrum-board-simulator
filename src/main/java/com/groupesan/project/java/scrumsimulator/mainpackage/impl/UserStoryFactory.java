@@ -13,8 +13,8 @@ public class UserStoryFactory {
 
     private UserStoryFactory() {}
 
-    public UserStory createNewUserStory(String name, String description, double pointValue) {
-        UserStory newUS = new UserStory(name, description, pointValue);
+    public UserStory createNewUserStory(String name, String description, Double pointValue, Double businessValue) {
+        UserStory newUS = new UserStory(name, description, pointValue, businessValue);
         return newUS;
     }
 }

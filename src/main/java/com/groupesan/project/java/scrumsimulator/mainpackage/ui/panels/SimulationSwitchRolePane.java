@@ -20,6 +20,19 @@ public class SimulationSwitchRolePane extends JFrame {
     private JButton switchButton;
     private static String currentRole = "Developer";
 
+    private static String currentRole = "Developer";
+
+    public static void setCurrentRole(String role) {
+        currentRole = role;
+        System.out.println("Role1 is:" +currentRole);
+    }
+
+    public static String getCurrentRole() {
+        System.out.println("Role2 is:" +currentRole);
+        return currentRole;
+
+    }
+
     public SimulationSwitchRolePane() {
         setTitle("Simulation Status");
         setSize(400, 200);
