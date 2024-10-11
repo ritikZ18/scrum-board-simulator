@@ -70,37 +70,34 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         JButton submitButton = new JButton("Submit");
 
-        submitButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String name=nameField.getText().trim();
-                        String description=descArea.getText().trim();
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameField.getText().trim();
+                String description = descArea.getText().trim();
 
-                        // Delete previous error messages
-                        boolean isInvalid = false;
+                boolean isInvalid = false;
 
-                        // Check if name is empty
-                        if(name.isEmpty()){
-                            JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
-                                    "User Story Name cannot be empty.", "Error in New User Story Form",
-                                    JOptionPane.ERROR_MESSAGE);
-                            isInvalid = true;
-                        }
-                        //Validate description only if name is valid
-                        if(!isInvalid && description.isEmpty()){
-                            JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
-                                    "User Story Description cannot be empty.", "Error in New User Story Form",
-                                    JOptionPane.ERROR_MESSAGE);
-                            isInvalid = true;
-                        }
-                        if(!isInvalid) {
-                            getPossibleBlockerObject();
-                            dispose();
-                        }
-
+                if (name.isEmpty()) {
+                    JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
+                            "Blocker Name cannot be empty.", "Error in New Blocker Form",
+                            JOptionPane.ERROR_MESSAGE);
+                    isInvalid = true;
+                }
+                if (!isInvalid && description.isEmpty()) {
+                    JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
+                            "Blocker Description cannot be empty.", "Error in New Blocker Form",
+                            JOptionPane.ERROR_MESSAGE);
+                    isInvalid = true;
+                }
+                if (!isInvalid) {
+                    PossibleBlocker newBlocker = getPossibleBlockerObject();
+                    if (newBlocker != null) {
+                        dispose();
                     }
-                });
+                }
+            }
+        });
 
         myJpanel.add(
                 cancelButton,

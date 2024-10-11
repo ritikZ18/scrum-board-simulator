@@ -5,71 +5,75 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.EditPossi
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.io.Serializable;
 
+public class PossibleBlockerWidget extends JPanel implements BaseComponent, Serializable {
+    private static final long serialVersionUID = 1L;
 
-public class PossibleBlockerWidget extends JPanel implements BaseComponent {
-    JLabel id;
-    JLabel name;
-    JLabel desc;
+    private JLabel idLabel;
+    private JLabel nameLabel;
+    private JLabel descLabel;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
     private transient PossibleBlocker possibleBlocker;
 
-    ActionListener actionListener = e -> {};
-
-    transient MouseAdapter openEditDialog =
-            new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    EditPossibleBlockerForm form = new EditPossibleBlockerForm(possibleBlocker);
-                    form.setVisible(true);
-
-                    form.addWindowListener(
-                            new java.awt.event.WindowAdapter() {
-                                public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                                    init();
-                                }
-                            });
-                }
-            };
-
     public PossibleBlockerWidget(PossibleBlocker possibleBlocker) {
         this.possibleBlocker = possibleBlocker;
-
         this.init();
     }
 
     public void init() {
         removeAll();
 
-        id = new JLabel(possibleBlocker.getId().toString());
-        id.addMouseListener(openEditDialog);
-        name = new JLabel(possibleBlocker.getName());
-        name.addMouseListener(openEditDialog);
-        desc = new JLabel(possibleBlocker.getDescription());
-        desc.addMouseListener(openEditDialog);
+        idLabel = new JLabel(possibleBlocker.getId().toString());
+        nameLabel = new JLabel(possibleBlocker.getName());
+        descLabel = new JLabel(possibleBlocker.getDescription());
 
-        GridBagLayout myGridBagLayout = new GridBagLayout();
+        MouseAdapter openEditDialog = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                openEditDialog();
+            }
+        };
 
-        setLayout(myGridBagLayout);
+        idLabel.addMouseListener(openEditDialog);
+        nameLabel.addMouseListener(openEditDialog);
+        descLabel.addMouseListener(openEditDialog);
 
-        add(
-                id,
-                new CustomConstraints(
-                        0, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
-        add(
-                name,
-                new CustomConstraints(
-                        1, 0, GridBagConstraints.WEST, 0.2, 0.0, GridBagConstraints.HORIZONTAL));
-        add(
-                desc,
-                new CustomConstraints(
-                        4, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+        setLayout(new GridBagLayout());
+
+        add(idLabel, new CustomConstraints(0, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
+        add(nameLabel, new CustomConstraints(1, 0, GridBagConstraints.WEST, 0.2, 0.0, GridBagConstraints.HORIZONTAL));
+        add(descLabel, new CustomConstraints(2, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+
+        revalidate();
+        repaint();
+    }
+
+    private void openEditDialog() {
+        EditPossibleBlockerForm form = new EditPossibleBlockerForm(possibleBlocker);
+        form.setVisible(true);
+
+        form.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent windowEvent) {
+                updateDisplay();
+            }
+        });
+    }
+
+    private void updateDisplay() {
+        idLabel.setText(possibleBlocker.getId().toString());
+        nameLabel.setText(possibleBlocker.getName());
+        descLabel.setText(possibleBlocker.getDescription());
+        revalidate();
+        repaint();
     }
 }

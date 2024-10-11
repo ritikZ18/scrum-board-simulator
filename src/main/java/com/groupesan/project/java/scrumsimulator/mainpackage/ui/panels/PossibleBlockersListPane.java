@@ -73,20 +73,29 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                                     public void windowClosed(
                                             java.awt.event.WindowEvent windowEvent) {
                                         PossibleBlocker possibleBlocker = form.getPossibleBlockerObject();
-                                        PossibleBlockerStore.getInstance().addPossibleBlocker(possibleBlocker);
-                                        widgets.add(new PossibleBlockerWidget(possibleBlocker));
-                                        int idx = widgets.size() - 1;
-                                        subPanel.add(
-                                                widgets.get(idx),
-                                                new CustomConstraints(
-                                                        0,
-                                                        idx,
-                                                        GridBagConstraints.WEST,
-                                                        1.0,
-                                                        0.1,
-                                                        GridBagConstraints.HORIZONTAL));
+                                        if (possibleBlocker != null) {
+                                            PossibleBlockerStore.getInstance().addPossibleBlocker(possibleBlocker);
+                                            addPossibleBlockerWidget(possibleBlocker);
+                                        }
                                     }
                                 });
+                    }
+
+                    private void addPossibleBlockerWidget(PossibleBlocker possibleBlocker) {
+                        PossibleBlockerWidget widget = new PossibleBlockerWidget(possibleBlocker);
+                        widgets.add(widget);
+                        int idx = widgets.size() - 1;
+                        subPanel.add(
+                                widget,
+                                new CustomConstraints(
+                                        0,
+                                        idx,
+                                        GridBagConstraints.WEST,
+                                        1.0,
+                                        0.1,
+                                        GridBagConstraints.HORIZONTAL));
+                        subPanel.revalidate();
+                        subPanel.repaint();
                     }
                 });
         myJpanel.add(
