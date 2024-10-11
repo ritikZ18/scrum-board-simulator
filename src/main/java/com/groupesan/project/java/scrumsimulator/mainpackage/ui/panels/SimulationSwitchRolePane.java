@@ -19,6 +19,19 @@ public class SimulationSwitchRolePane extends JFrame {
     private ButtonGroup roleButtonGroup;
     private JButton switchButton;
 
+    private static String currentRole = "Developer";
+
+    public static void setCurrentRole(String role) {
+        currentRole = role;
+        System.out.println("Role1 is:" +currentRole);
+    }
+
+    public static String getCurrentRole() {
+        System.out.println("Role2 is:" +currentRole);
+        return currentRole;
+
+    }
+
     public SimulationSwitchRolePane() {
         setTitle("Simulation Status");
         setSize(400, 200);
@@ -59,12 +72,15 @@ public class SimulationSwitchRolePane extends JFrame {
 
     private void onSwitchButtonClicked() {
         if (developerRadioButton.isSelected()) {
+            setCurrentRole("Developer");
             JOptionPane.showMessageDialog(
                     null, "Switched to Developer", "Role Switching", JOptionPane.PLAIN_MESSAGE);
         } else if (scrumMasterRadioButton.isSelected()) {
+            setCurrentRole("Scrum Master");
             JOptionPane.showMessageDialog(
                     null, "Switched to Scrum Master", "Role Switching", JOptionPane.PLAIN_MESSAGE);
         } else if (productOwnerRadioButton.isSelected()) {
+            setCurrentRole("Product Owner");
             JOptionPane.showMessageDialog(
                     null, "Switched to Product Owner", "Role Switching", JOptionPane.PLAIN_MESSAGE);
         } else {
