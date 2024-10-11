@@ -216,7 +216,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 openGeneralPageButton,
                 new CustomConstraints(
-                        0, 4, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                        0, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         add(myJpanel);
     }
