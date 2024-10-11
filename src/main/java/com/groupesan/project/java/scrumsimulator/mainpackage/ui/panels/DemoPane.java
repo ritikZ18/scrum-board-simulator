@@ -12,11 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class DemoPane extends JFrame implements BaseComponent {
-    private Player player = new Player("bob", new ScrumRole("demo"));
+    private Player player = new Player("bob", new ScrumRole("Scrum Master"));
 
     public DemoPane() {
         this.init();
@@ -203,6 +204,40 @@ public class DemoPane extends JFrame implements BaseComponent {
                 SprintUIButton,
                 new CustomConstraints(
                         8, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
+        //  Populate Sprint Backlog button
+        JButton PopulateSprintBacklogButton = new JButton("Populate Sprint Backlog");
+        PopulateSprintBacklogButton.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!(player.getRole().getName() == ("Scrum Master"))) {
+                        JOptionPane.showMessageDialog(null, "Invalid role. Valid role is Scrum Master.");
+                    }
+                    // Load PopulateSprintBacklogPane
+                    PopulateSprintBacklogPane populateSprintBacklogPane = new PopulateSprintBacklogPane();
+                    populateSprintBacklogPane.setVisible(true);
+                }
+            });
+
+        myJpanel.add(PopulateSprintBacklogButton, new CustomConstraints(
+            2, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
+        // View Sprint Backlog Button
+        JButton ViewSprintBacklogButton = new JButton("View Sprint Backlog");
+        ViewSprintBacklogButton.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+
+                    // Load ViewSprintBacklogPane
+                    ViewSprintBacklogPane viewSprintBacklogPane = new ViewSprintBacklogPane();
+                    viewSprintBacklogPane.setVisible(true);
+                }
+            }
+        );
+        myJpanel.add(ViewSprintBacklogButton, new CustomConstraints(
+            3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         add(myJpanel);
     }
