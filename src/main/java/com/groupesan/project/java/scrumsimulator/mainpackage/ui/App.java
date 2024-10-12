@@ -63,6 +63,23 @@ public class App {
 
     }
 
+    private void initializePossibleBlockerSolutions() {
+        PossibleBlockerSolution x =
+                PossibleBlockerSolutionFactory.getInstance()
+                        .createNewPossibleBlockerSolution("Dependencies on team mates", "");
+        x.doRegister();
+        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(x);
+
+        PossibleBlockerSolution y =
+                PossibleBlockerSolutionFactory.getInstance()
+                        .createNewPossibleBlockerSolution("Technical dependencies", "");
+        y.doRegister();
+        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(y);
+
+    }
+
+
+
     private void loadTheme() {
         try {
             // TODO support setting theme from a configuration file

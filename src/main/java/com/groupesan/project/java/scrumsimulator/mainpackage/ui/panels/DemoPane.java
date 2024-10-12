@@ -256,6 +256,21 @@ public class DemoPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         8, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
+        JButton possibleBlockerSolutionsButton = new JButton("Possible Blocker Solutions");
+        possibleBlockerSolutionsButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        PossibleBlockerSolutionsListPane form = new PossibleBlockerSolutionsListPane();
+                        form.setVisible(true);
+                    }
+                });
+
+        myJpanel.add(
+                possibleBlockerSolutionsButton,
+                new CustomConstraints(
+                        3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
         add(myJpanel);
     }
 }
