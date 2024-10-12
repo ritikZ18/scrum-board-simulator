@@ -23,8 +23,6 @@ public class UserStory extends ScrumObject {
 
     private Player owner;
 
-    private Boolean SprintBacklog;
-
     // private ArrayList<Task> tasks;  TODO: implement tasks
 
     private void validateMandatoryField(String value, String fieldName){
@@ -47,7 +45,6 @@ public class UserStory extends ScrumObject {
         this.pointValue = pointValue;
         this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
-        this.SprintBacklog = false;
     }
 
     /**
@@ -67,7 +64,6 @@ public class UserStory extends ScrumObject {
         this.pointValue = pointValue;
         this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
-        this.SprintBacklog = false;
     }
 
     protected void register() {
@@ -219,13 +215,5 @@ public class UserStory extends ScrumObject {
      */
     public Player getOwner() {
         return this.owner;
-    }
-
-    public void setIsSprintBacklog() {
-        this.SprintBacklog = true;
-    }
-    
-    public Boolean getIsSprintBacklog() {
-        return this.SprintBacklog;
     }
 }
