@@ -27,7 +27,7 @@ public class UserStoryListPane extends JFrame implements BaseComponent {
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("User Story list");
-        setSize(400, 300);
+        setSize(600, 400);
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -79,8 +79,10 @@ public class UserStoryListPane extends JFrame implements BaseComponent {
                                     public void windowClosed(
                                             java.awt.event.WindowEvent windowEvent) {
                                         UserStory userStory = form.getUserStoryObject();
-                                        UserStoryStore.getInstance().addUserStory(userStory);
-                                        widgets.add(new UserStoryWidget(userStory));
+                                        if(userStory != null) {
+                                            UserStoryStore.getInstance().addUserStory(userStory);
+                                            widgets.add(new UserStoryWidget(userStory));
+                                        }
                                         int idx = widgets.size() - 1;
                                         subPanel.add(
                                                 widgets.get(idx),
@@ -91,6 +93,8 @@ public class UserStoryListPane extends JFrame implements BaseComponent {
                                                         1.0,
                                                         0.1,
                                                         GridBagConstraints.HORIZONTAL));
+                                        revalidate();
+                                        repaint();
                                     }
                                 });
                     }

@@ -239,7 +239,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         );
         myJpanel.add(ViewSprintBacklogButton, new CustomConstraints(
             3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
-    
+
         JButton SprintUIButton = new JButton("US Selection UI");
         SprintUIButton.addActionListener(
                 new ActionListener() {
@@ -269,6 +269,21 @@ public class DemoPane extends JFrame implements BaseComponent {
                 openGeneralPageButton,
                 new CustomConstraints(
                         0, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
+        JButton possibleBlockerSolutionsButton = new JButton("Possible Blocker Solutions");
+        possibleBlockerSolutionsButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        PossibleBlockerSolutionsListPane form = new PossibleBlockerSolutionsListPane();
+                        form.setVisible(true);
+                    }
+                });
+
+        myJpanel.add(
+                possibleBlockerSolutionsButton,
+                new CustomConstraints(
+                        3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         add(myJpanel);
     }

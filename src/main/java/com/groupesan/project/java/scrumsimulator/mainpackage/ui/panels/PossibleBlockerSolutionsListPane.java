@@ -1,11 +1,9 @@
-
-
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerStore;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolution;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolutionStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
-import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.PossibleBlockerWidget;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.PossibleBlockerSolutionWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,12 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-public class PossibleBlockersListPane extends JFrame implements BaseComponent {
-    public PossibleBlockersListPane() {
+public class PossibleBlockerSolutionsListPane extends JFrame implements BaseComponent {
+    public PossibleBlockerSolutionsListPane() {
         this.init();
     }
 
-    private List<PossibleBlockerWidget> widgets = new ArrayList<>();
+    private List<PossibleBlockerSolutionWidget> widgets = new ArrayList<>();
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,14 +34,14 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
         myJpanel.setBorder(new EmptyBorder(20, 10, 20, 10));
         myJpanel.setLayout(myGridbagLayout);
 
-        for (PossibleBlocker possibleBlocker : PossibleBlockerStore.getInstance().getPossibleBlockers()) {
-            widgets.add(new PossibleBlockerWidget(possibleBlocker));
+        for (PossibleBlockerSolution possibleBlockerSolution : PossibleBlockerSolutionStore.getInstance().getPossibleBlockerSolutions()) {
+            widgets.add(new PossibleBlockerSolutionWidget(possibleBlockerSolution));
         }
 
         JPanel subPanel = new JPanel();
         subPanel.setLayout(new GridBagLayout());
         int i = 0;
-        for (PossibleBlockerWidget widget : widgets) {
+        for (PossibleBlockerSolutionWidget widget : widgets) {
             subPanel.add(
                     widget,
                     new CustomConstraints(
@@ -60,29 +58,29 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         0, 0, GridBagConstraints.WEST, 1.0, 0.8, GridBagConstraints.HORIZONTAL));
 
-        JButton newPossibleBlockerButton = new JButton("New Blocker");
-        newPossibleBlockerButton.addActionListener(
+        JButton newPossibleBlockerSolutionButton = new JButton("New Solution");
+        newPossibleBlockerSolutionButton.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        NewPossibleBlockerForm form = new NewPossibleBlockerForm();
+                        NewPossibleBlockerSolutionForm form = new NewPossibleBlockerSolutionForm();
                         form.setVisible(true);
 
                         form.addWindowListener(
                                 new java.awt.event.WindowAdapter() {
                                     public void windowClosed(
                                             java.awt.event.WindowEvent windowEvent) {
-                                        PossibleBlocker possibleBlocker = form.getPossibleBlockerObject();
-                                        if (possibleBlocker != null) {
-                                            PossibleBlockerStore.getInstance().addPossibleBlocker(possibleBlocker);
-                                            addPossibleBlockerWidget(possibleBlocker);
+                                        PossibleBlockerSolution possibleBlockerSolution = form.getPossibleBlockerSolutionObject();
+                                        if (possibleBlockerSolution != null) {
+                                            PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(possibleBlockerSolution);
+                                            addPossibleBlockerSolutionWidget(possibleBlockerSolution);
                                         }
                                     }
                                 });
                     }
 
-                    private void addPossibleBlockerWidget(PossibleBlocker possibleBlocker) {
-                        PossibleBlockerWidget widget = new PossibleBlockerWidget(possibleBlocker);
+                    private void addPossibleBlockerSolutionWidget(PossibleBlockerSolution possibleBlockerSolution) {
+                        PossibleBlockerSolutionWidget widget = new PossibleBlockerSolutionWidget(possibleBlockerSolution);
                         widgets.add(widget);
                         int idx = widgets.size() - 1;
                         subPanel.add(
@@ -99,7 +97,7 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                     }
                 });
         myJpanel.add(
-                newPossibleBlockerButton,
+                newPossibleBlockerSolutionButton,
                 new CustomConstraints(
                         0, 1, GridBagConstraints.WEST, 1.0, 0.2, GridBagConstraints.HORIZONTAL));
 
