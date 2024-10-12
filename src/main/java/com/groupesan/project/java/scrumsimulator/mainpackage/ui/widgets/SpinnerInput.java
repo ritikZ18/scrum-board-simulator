@@ -17,4 +17,8 @@ public class SpinnerInput extends ScrumLabeledComponent<JSpinner, DataModel<Obje
                     System.out.println(model.getData());
                 });
     }
+    @Override
+    public void setEnabled(boolean enabled) {
+        component.setEnabled(enabled);
+    }
 }

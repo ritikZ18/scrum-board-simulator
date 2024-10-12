@@ -8,14 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class EditUserStoryForm extends JFrame implements BaseComponent {
@@ -120,11 +113,29 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
                         Double points = (Double) pointsCombo.getSelectedItem();
                         Double businessValue = (Double) businessValueCombo.getSelectedItem();
 
-                        userStory.setName(name);
-                        userStory.setDescription(description);
-                        userStory.setPointValue(points);
-                        userStory.setBusinessValue(businessValue);
-                        dispose();
+                        boolean isInvalid = false;
+
+                        if(name.isEmpty()){
+                            JOptionPane.showMessageDialog(EditUserStoryForm.this,
+                                    "User Story Name cannot be empty.", "Error in New User Story Form",
+                                    JOptionPane.ERROR_MESSAGE);
+                            isInvalid = true;
+                        }
+                        if(!isInvalid && description.isEmpty()){
+                            JOptionPane.showMessageDialog(EditUserStoryForm.this,
+                                    "User Story Description cannot be empty.", "Error in New User Story Form",
+                                    JOptionPane.ERROR_MESSAGE);
+                            isInvalid = true;
+                        }
+                        if(!isInvalid) {
+                            userStory.setName(name);
+                            userStory.setDescription(description);
+                            userStory.setPointValue(points);
+                            userStory.setBusinessValue(businessValue);
+                            if (userStory.getName() != null && userStory.getDescription() != null) {
+                                dispose();
+                            }
+                        }
                     }
                 });
 

@@ -3,7 +3,6 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.ui;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.*;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.DemoPane;
-import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
 import javax.swing.*;
 
 public class App {
@@ -11,7 +10,6 @@ public class App {
 
     public void start() {
         this.loadTheme();
-        WizardManager.get().showSimulationWizard();
         SwingUtilities.invokeLater(
                 new Runnable() {
                     @Override

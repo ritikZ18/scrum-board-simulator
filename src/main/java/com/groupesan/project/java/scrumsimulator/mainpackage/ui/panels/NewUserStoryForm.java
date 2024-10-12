@@ -125,10 +125,11 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                             isInvalid = true;
                         }
                         if(!isInvalid) {
-                            getUserStoryObject();
-                            dispose();
+                            UserStory newUserStory = getUserStoryObject();
+                            if(newUserStory != null) {
+                                dispose();
+                            }
                         }
-
                     }
                 });
 
@@ -169,7 +170,6 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                     "Registration Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
-
         return userStory;
     }
 }
