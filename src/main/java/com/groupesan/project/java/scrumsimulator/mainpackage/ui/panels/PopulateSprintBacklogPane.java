@@ -190,7 +190,7 @@ public class PopulateSprintBacklogPane extends JFrame implements BaseComponent {
         if (unselectedUserStories.size() > 0) {
             randomUSCount = secureRandom.nextInt(unselectedUserStories.size()) + 1;
         
-            while (randomUSCount > 0 && !unselectedUserStories.isEmpty()) {
+            while (randomUSCount > 0 && !(unselectedUserStories.isEmpty())) {
                 int randomUSIdx = secureRandom.nextInt(unselectedUserStories.size());
                 randomUserStories.add(unselectedUserStories.get(randomUSIdx));
                 unselectedUserStories.remove(randomUSIdx);

@@ -97,4 +97,10 @@ public class UserStoryTest {
         assertTrue(Double.isNaN(myUserStory.getBusinessValue()), "Business value should be updated to NaN");
     }
 
+    @Test
+    public void testSetSprintView() {
+        myUserStory.setIsSprintBacklog();
+        assertEquals(true, myUserStory.getIsSprintBacklog());
+    }
+
 }

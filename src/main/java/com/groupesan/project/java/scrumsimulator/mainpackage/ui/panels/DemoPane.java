@@ -90,6 +90,23 @@ public class DemoPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         3, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
+        // Blockers button for the sprint
+        JButton possibleBlockersButton = new JButton("Possible Blockers");
+        possibleBlockersButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        PossibleBlockersListPane form = new PossibleBlockersListPane();
+                        form.setVisible(true);
+                    }
+                });
+
+        myJpanel.add(
+                possibleBlockersButton,
+                new CustomConstraints(
+                        2, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
+
         // Simulation button for Demo
         JButton simulationButton = new JButton("Add User");
         simulationButton.addActionListener(
@@ -169,7 +186,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 simulationSwitchRoleButton,
                 new CustomConstraints(
-                        1, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                        1, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         // New button for Variant Simulation UI
         JButton variantSimulationUIButton = new JButton("Variant Simulation UI");
@@ -187,23 +204,6 @@ public class DemoPane extends JFrame implements BaseComponent {
                 variantSimulationUIButton,
                 new CustomConstraints(
                         3, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
-
-        JButton SprintUIButton = new JButton("US Selection UI");
-        SprintUIButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Load SprintUIPane
-                        SprintUIPane sprintUIPane = new SprintUIPane(player);
-                        sprintUIPane.setVisible(true);
-                    }
-                });
-
-        // Adding the button to the panel
-        myJpanel.add(
-                SprintUIButton,
-                new CustomConstraints(
-                        8, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         //  Populate Sprint Backlog button
         JButton PopulateSprintBacklogButton = new JButton("Populate Sprint Backlog");
@@ -238,6 +238,23 @@ public class DemoPane extends JFrame implements BaseComponent {
         );
         myJpanel.add(ViewSprintBacklogButton, new CustomConstraints(
             3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+    
+        JButton SprintUIButton = new JButton("US Selection UI");
+        SprintUIButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Load SprintUIPane
+                        SprintUIPane sprintUIPane = new SprintUIPane(player);
+                        sprintUIPane.setVisible(true);
+                    }
+                });
+
+        // Adding the button to the panel
+        myJpanel.add(
+                SprintUIButton,
+                new CustomConstraints(
+                        8, 0, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         add(myJpanel);
     }

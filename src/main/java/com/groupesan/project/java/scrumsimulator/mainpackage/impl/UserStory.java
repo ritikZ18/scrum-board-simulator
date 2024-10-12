@@ -224,7 +224,7 @@ public class UserStory extends ScrumObject {
     public void setIsSprintBacklog() {
         this.SprintBacklog = true;
     }
-    
+
     public Boolean getIsSprintBacklog() {
         return this.SprintBacklog;
     }

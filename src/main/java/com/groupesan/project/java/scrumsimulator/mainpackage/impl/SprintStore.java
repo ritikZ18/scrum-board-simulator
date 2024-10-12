@@ -26,7 +26,7 @@ public class SprintStore {
     public List<Sprint> getSprints() {
         return new ArrayList<>(sprints);
     }
-
+    
     public Sprint getSprintByName(String sprintName) {
         for(Sprint sprint : getSprints()){
             if(sprint.getName().equals(sprintName)) {

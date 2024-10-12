@@ -18,6 +18,7 @@ public class UserStoryWidget extends JPanel implements BaseComponent {
     JLabel businessValue;
     JLabel name;
     JLabel desc;
+
     protected Boolean SprintView = false;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
