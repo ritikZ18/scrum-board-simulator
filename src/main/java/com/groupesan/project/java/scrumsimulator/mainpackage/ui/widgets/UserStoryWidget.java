@@ -21,6 +21,8 @@ public class UserStoryWidget extends JPanel implements BaseComponent, Serializab
     private JLabel name;
     private JLabel desc;
 
+    protected Boolean SprintView = false;
+
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
     private transient UserStory userStory;
@@ -90,5 +92,10 @@ public class UserStoryWidget extends JPanel implements BaseComponent, Serializab
 
         revalidate();
         repaint();
+    }
+
+    public Boolean setSprintView(){
+        this.SprintView = true;
+        return SprintView;
     }
 }

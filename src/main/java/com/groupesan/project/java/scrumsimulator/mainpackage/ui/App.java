@@ -1,9 +1,7 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStory;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStoryFactory;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStoryStore;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.*;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.DemoPane;
 import javax.swing.*;
 
@@ -18,6 +16,8 @@ public class App {
                     public void run() {
                         // Initialize User Stories in helper function now
                         initializeUserStories();
+                        // Initializing possible blockers
+                        initializePossibleBlockers();
 
                         // Load DemoPane
                         DemoPane form = new DemoPane();
@@ -45,6 +45,38 @@ public class App {
         c.doRegister();
         UserStoryStore.getInstance().addUserStory(c);
     }
+
+    private void initializePossibleBlockers() {
+        PossibleBlocker a =
+                PossibleBlockerFactory.getInstance()
+                        .createNewPossibleBlocker("Sprint cycle 1", "Dependencies on team mates");
+        a.doRegister();
+        PossibleBlockerStore.getInstance().addPossibleBlocker(a);
+
+        PossibleBlocker b =
+                PossibleBlockerFactory.getInstance()
+                        .createNewPossibleBlocker("Sprint cycle 2", "Technical dependencies");
+        b.doRegister();
+        PossibleBlockerStore.getInstance().addPossibleBlocker(b);
+
+    }
+
+    private void initializePossibleBlockerSolutions() {
+        PossibleBlockerSolution x =
+                PossibleBlockerSolutionFactory.getInstance()
+                        .createNewPossibleBlockerSolution("Dependencies on team mates", "");
+        x.doRegister();
+        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(x);
+
+        PossibleBlockerSolution y =
+                PossibleBlockerSolutionFactory.getInstance()
+                        .createNewPossibleBlockerSolution("Technical dependencies", "");
+        y.doRegister();
+        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(y);
+
+    }
+
+
 
     private void loadTheme() {
         try {
