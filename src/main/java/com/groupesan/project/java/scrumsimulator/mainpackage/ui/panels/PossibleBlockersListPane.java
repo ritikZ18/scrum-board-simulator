@@ -29,7 +29,7 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Blockers list");
-        setSize(400, 300);
+        setSize(600, 400);
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
