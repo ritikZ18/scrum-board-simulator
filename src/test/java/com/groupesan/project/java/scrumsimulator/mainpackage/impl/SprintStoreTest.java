@@ -2,7 +2,6 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -20,11 +19,14 @@ class SprintStoreTest {
     private void clearSprintStore() throws NoSuchFieldException, IllegalAccessException {
         Field sprintsField = SprintStore.class.getDeclaredField("sprints");
         sprintsField.setAccessible(true);
-        Object sprintsObj = sprintsField.get(sprintStore);
-        if (sprintsObj instanceof List<?> sprintsList) {
-            if (sprintsList.stream().allMatch(Sprint.class::isInstance)) {
-                List<Sprint> sprintList = (List<Sprint>) sprintsList;
-                sprintList.clear(); // Clear the list
+        List<?> sprintsList = (List<?>) sprintsField.get(sprintStore); // Use traditional cast
+        if (sprintsList != null) {
+            for (Object obj : sprintsList) {
+                if (obj instanceof Sprint) {
+                    //Clear list
+                    ((List<Sprint>) sprintsList).clear();
+                    break;
+                }
             }
         }
     }
