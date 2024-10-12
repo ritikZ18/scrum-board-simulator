@@ -97,7 +97,7 @@ public class PopulateSprintBacklogPane extends JFrame implements BaseComponent {
         });
         myJpanel.add(MoveButton, new CustomConstraints(0, 8, GridBagConstraints.WEST, 1.0, 0.2, GridBagConstraints.HORIZONTAL));
         
-        JButton SelectRandomUSButton = new JButton("Select Random User Stories");
+        JButton SelectRandomUSButton = new JButton("Move Random User Stories");
         SelectRandomUSButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
