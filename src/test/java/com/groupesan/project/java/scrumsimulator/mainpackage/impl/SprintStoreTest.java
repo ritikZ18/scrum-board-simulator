@@ -61,6 +61,39 @@ class SprintStoreTest {
         //The second sprint should be Sprint2
         assertEquals("Sprint2", sprints.get(1).getName());
     }
+
+    @Test
+    void testGetSprintByName() {
+        Sprint sprint1 = new Sprint("Sprint1", "Delete button", 14, 1);
+        Sprint sprint2 = new Sprint("Sprint2", "Add button", 7, 2);
+        sprintStore.addSprint(sprint1);
+        sprintStore.addSprint(sprint2);
+        Sprint foundSprint = sprintStore.getSprintByName("Sprint1");
+        assertNotNull(foundSprint, "sprint should be found");
+        assertEquals("Sprint1", foundSprint.getName(), "sprint name should match");
+        assertEquals("Delete button", foundSprint.getDescription(), "sprint description should match");
+        assertEquals(14, foundSprint.getLength(), "sprint length should match");
+        assertEquals(1, foundSprint.getId(), "sprint ID should match");
+    }
+
+    @Test
+    void testSprintNotFoundReturnsNull() {
+        Sprint notFoundSprint = sprintStore.getSprintByName("dummy non existing sprint");
+        assertNull(notFoundSprint, "should return null for sprints not found");
+    }
+
+    @Test
+    void testAddMultipleSprints() {
+        Sprint sprint1 = new Sprint("Sprint1", "First sprint", 14, 1);
+        Sprint sprint2 = new Sprint("Sprint2", "Second sprint", 14, 2);
+        sprintStore.addSprint(sprint1);
+        sprintStore.addSprint(sprint2);
+        List<Sprint> sprints = sprintStore.getSprints();
+        // Should add 2 sprints
+        assertEquals(2, sprints.size());
+        assertTrue(sprints.contains(sprint1));
+        assertTrue(sprints.contains(sprint2));
+    }
 }
 
 
