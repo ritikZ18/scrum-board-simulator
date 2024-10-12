@@ -29,7 +29,6 @@ public class PossibleBlocker extends ScrumObject {
         validateMandatoryField(name,"Name");
         this.name = name;
         this.description = "";
-        //this.state = new UserStoryUnselectedState(this);
     }
 
     /**
@@ -45,7 +44,6 @@ public class PossibleBlocker extends ScrumObject {
         validateMandatoryField(description,"Description");
         this.name = name;
         this.description = description;
-        //this.state = new UserStoryUnselectedState(this);
     }
 
     protected void register() {
