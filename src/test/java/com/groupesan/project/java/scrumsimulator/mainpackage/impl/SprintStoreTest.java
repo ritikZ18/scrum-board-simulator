@@ -43,7 +43,7 @@ class SprintStoreTest {
         sprintStore.addSprint(sprint);
         List<Sprint> sprints = sprintStore.getSprints();
         assertEquals(1, sprints.size());
-        Sprint addedSprint = sprints.getF();
+        Sprint addedSprint = sprints.getFirst();
         assertEquals("Sprint1", addedSprint.getName());
         assertEquals("Delete button", addedSprint.getDescription());
         assertEquals(14, addedSprint.getLength());
