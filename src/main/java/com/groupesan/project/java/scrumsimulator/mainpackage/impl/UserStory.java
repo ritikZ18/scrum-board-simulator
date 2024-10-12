@@ -15,25 +15,39 @@ public class UserStory extends ScrumObject {
 
     private String description;
 
-    private double pointValue;
+    private Double pointValue;
+
+    private Double businessValue;
 
     private UserStoryState state;
 
     private Player owner;
 
+    private Boolean SprintBacklog;
+
     // private ArrayList<Task> tasks;  TODO: implement tasks
+
+    private void validateMandatoryField(String value, String fieldName){
+        if(value==null || value.trim().isEmpty()){
+            throw new IllegalArgumentException("User Story " + fieldName +" value cannot be empty");
+        }
+    }
 
     /**
      * Creates a user story. Leaves the description as an empty string.
      *
      * @param name the name for the user story
      * @param pointValue the point value for the story as a way of estimating required effort.
+     * @throws IllegalArgumentException if name is empty
      */
-    public UserStory(String name, double pointValue) {
+    public UserStory(String name, Double pointValue, Double businessValue) {
+        validateMandatoryField(name,"Name");
         this.name = name;
         this.description = "";
         this.pointValue = pointValue;
+        this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
+        this.SprintBacklog = false;
     }
 
     /**
@@ -43,12 +57,17 @@ public class UserStory extends ScrumObject {
      * @param description the description for the user story for better understanding of the
      *     requirements.
      * @param pointValue the point value for the story as a way of estimating required effort.
+     * @throws IllegalArgumentException if name or description is empty
      */
-    public UserStory(String name, String description, double pointValue) {
+    public UserStory(String name, String description, Double pointValue, Double businessValue) {
+        validateMandatoryField(name,"Name");
+        validateMandatoryField(description,"Description");
         this.name = name;
         this.description = description;
         this.pointValue = pointValue;
+        this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
+        this.SprintBacklog = false;
     }
 
     protected void register() {
@@ -108,19 +127,37 @@ public class UserStory extends ScrumObject {
     /**
      * Get the point value of this UserStory
      *
-     * @return the point value of this UserStory as a double
+     * @return the point value of this UserStory as a Double
      */
-    public double getPointValue() {
+    public Double getPointValue() {
         return pointValue;
     }
 
     /**
      * Set the point value of the User Story to the specified value
      *
-     * @param pointValue the point value as a double. Usually an element of the fibonacci sequence.
+     * @param pointValue the point value as a Double. Usually an element of the fibonacci sequence.
      */
-    public void setPointValue(double pointValue) {
+    public void setPointValue(Double pointValue) {
         this.pointValue = pointValue;
+    }
+
+    /**
+     * Get the Business value of this UserStory
+     *
+     * @return the point value of this UserStory as a Double
+     */
+
+    public Double getBusinessValue() {
+        return businessValue;
+    }
+    /**
+     * Set the point value of the User Story to the specified value
+     *
+     * @param businessValue the point value as a Double. Usually an element of the fibonacci sequence.
+     */
+    public void setBusinessValue(Double businessValue) {
+        this.businessValue = businessValue;
     }
 
     /**
@@ -182,5 +219,13 @@ public class UserStory extends ScrumObject {
      */
     public Player getOwner() {
         return this.owner;
+    }
+
+    public void setIsSprintBacklog() {
+        this.SprintBacklog = true;
+    }
+    
+    public Boolean getIsSprintBacklog() {
+        return this.SprintBacklog;
     }
 }

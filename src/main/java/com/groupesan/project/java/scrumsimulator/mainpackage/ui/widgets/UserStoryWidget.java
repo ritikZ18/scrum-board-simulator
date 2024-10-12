@@ -15,8 +15,10 @@ public class UserStoryWidget extends JPanel implements BaseComponent {
 
     JLabel id;
     JLabel points;
+    JLabel businessValue;
     JLabel name;
     JLabel desc;
+    protected Boolean SprintView = false;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
@@ -51,8 +53,10 @@ public class UserStoryWidget extends JPanel implements BaseComponent {
 
         id = new JLabel(userStory.getId().toString());
         id.addMouseListener(openEditDialog);
-        points = new JLabel(Double.toString(userStory.getPointValue()));
+        points = new JLabel(userStory.getPointValue() == null ? "" : Double.toString(userStory.getPointValue()));
         points.addMouseListener(openEditDialog);
+        businessValue = new JLabel(userStory.getBusinessValue() == null ? "" : Double.toString(userStory.getBusinessValue()));
+        businessValue.addMouseListener(openEditDialog);
         name = new JLabel(userStory.getName());
         name.addMouseListener(openEditDialog);
         desc = new JLabel(userStory.getDescription());
@@ -71,12 +75,22 @@ public class UserStoryWidget extends JPanel implements BaseComponent {
                 new CustomConstraints(
                         1, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
         add(
+                businessValue,
+                new CustomConstraints(
+                        2, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
+
+        add(
                 name,
                 new CustomConstraints(
-                        2, 0, GridBagConstraints.WEST, 0.2, 0.0, GridBagConstraints.HORIZONTAL));
+                        3, 0, GridBagConstraints.WEST, 0.2, 0.0, GridBagConstraints.HORIZONTAL));
         add(
                 desc,
                 new CustomConstraints(
-                        3, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+                        4, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+    }
+
+    public Boolean setSprintView(){
+        this.SprintView = true;
+        return SprintView;
     }
 }
