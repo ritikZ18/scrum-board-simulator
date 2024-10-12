@@ -43,7 +43,7 @@ class SprintStoreTest {
         sprintStore.addSprint(sprint);
         List<Sprint> sprints = sprintStore.getSprints();
         assertEquals(1, sprints.size());
-        Sprint addedSprint = sprints.getFirst();
+        Sprint addedSprint = sprints.getF();
         assertEquals("Sprint1", addedSprint.getName());
         assertEquals("Delete button", addedSprint.getDescription());
         assertEquals(14, addedSprint.getLength());
@@ -95,6 +95,23 @@ class SprintStoreTest {
         assertEquals(2, sprints.size());
         assertTrue(sprints.contains(sprint1));
         assertTrue(sprints.contains(sprint2));
+    }
+
+    @Test
+    void testSprintStoreClearing() throws NoSuchFieldException, IllegalAccessException {
+        Sprint sprint1 = new Sprint("Sprint1", "First sprint", 14, 1);
+        Sprint sprint2 = new Sprint("Sprint2", "Second sprint", 14, 2);
+
+        // Add some sprints
+        sprintStore.addSprint(sprint1);
+        sprintStore.addSprint(sprint2);
+
+        // Clear the sprint store
+        clearSprintStore();
+
+        // After clearing, ensure the sprint store is empty
+        List<Sprint> sprints = sprintStore.getSprints();
+        assertEquals(0, sprints.size(), "Sprint store should be empty after clearing");
     }
 }
 
