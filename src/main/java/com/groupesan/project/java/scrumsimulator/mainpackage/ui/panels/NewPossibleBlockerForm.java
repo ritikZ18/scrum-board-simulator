@@ -20,6 +20,8 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
     private JTextField nameField = new JTextField();
     private JTextArea descArea = new JTextArea();
 
+    private JComboBox<String> statusComboBox;
+
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("New Possible Blocker");
@@ -56,6 +58,18 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                 new JScrollPane(descArea),
                 new CustomConstraints(
                         1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
+
+        JLabel statusLabel = new JLabel("Status:");
+        String[] statusOptions = {"Unresolved", "Resolved"};
+        statusComboBox = new JComboBox<>(statusOptions);
+        myJpanel.add(
+                statusLabel,
+                new CustomConstraints(
+                        0, 2, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                statusComboBox,
+                new CustomConstraints(
+                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
 
         JButton cancelButton = new JButton("Cancel");
@@ -101,10 +115,10 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 2, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 3, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 2, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 3, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
@@ -112,9 +126,10 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
     public PossibleBlocker getPossibleBlockerObject() {
         String name = nameField.getText().trim();
         String description = descArea.getText().trim();
+        String status = (String) statusComboBox.getSelectedItem();
 
         PossibleBlockerFactory possibleBlockerFactory = PossibleBlockerFactory.getInstance();
-        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name, description);
+        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name, description, status);
 
         try {
             possibleBlocker.doRegister();
