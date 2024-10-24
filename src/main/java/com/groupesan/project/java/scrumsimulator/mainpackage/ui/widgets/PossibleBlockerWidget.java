@@ -19,6 +19,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
     private JLabel idLabel;
     private JLabel nameLabel;
     private JLabel descLabel;
+    private JLabel userStoryIdLabel;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
@@ -35,6 +36,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         idLabel = new JLabel(possibleBlocker.getId().toString());
         nameLabel = new JLabel(possibleBlocker.getName());
         descLabel = new JLabel(possibleBlocker.getDescription());
+        userStoryIdLabel = new JLabel(possibleBlocker.getUserStoryId());
 
         MouseAdapter openEditDialog = new MouseAdapter() {
             @Override
@@ -46,12 +48,14 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         idLabel.addMouseListener(openEditDialog);
         nameLabel.addMouseListener(openEditDialog);
         descLabel.addMouseListener(openEditDialog);
+        userStoryIdLabel.addMouseListener(openEditDialog);
 
         setLayout(new GridBagLayout());
 
         add(idLabel, new CustomConstraints(0, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
-        add(nameLabel, new CustomConstraints(1, 0, GridBagConstraints.WEST, 0.2, 0.0, GridBagConstraints.HORIZONTAL));
-        add(descLabel, new CustomConstraints(2, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+        add(userStoryIdLabel, new CustomConstraints(1, 0, GridBagConstraints.WEST, 0.2, 0.0, GridBagConstraints.HORIZONTAL));
+        add(nameLabel, new CustomConstraints(2, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+        add(descLabel, new CustomConstraints(3, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
 
         revalidate();
         repaint();

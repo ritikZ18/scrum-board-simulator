@@ -19,6 +19,7 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
     private JTextField nameField = new JTextField();
     private JTextArea descArea = new JTextArea();
+    private JTextField userStoryIdField = new JTextField();
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -27,6 +28,7 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         nameField = new JTextField();
         descArea = new JTextArea();
+        userStoryIdField = new JTextField();
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -57,6 +59,15 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
 
+        JLabel userStoryIdLabel = new JLabel("User Story ID:");
+        myJpanel.add(
+                userStoryIdLabel,
+                new CustomConstraints(
+                        0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                userStoryIdField,
+                new CustomConstraints(
+                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
         JButton cancelButton = new JButton("Cancel");
 
@@ -75,6 +86,8 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
             public void actionPerformed(ActionEvent e) {
                 String name = nameField.getText().trim();
                 String description = descArea.getText().trim();
+                String userStoryId = userStoryIdField.getText().trim(); // Get User Story ID
+
 
                 boolean isInvalid = false;
 
@@ -90,6 +103,12 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                             JOptionPane.ERROR_MESSAGE);
                     isInvalid = true;
                 }
+                if (!isInvalid && userStoryId.isEmpty()) {
+                JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
+                        "User Story ID cannot be empty.", "Error in New Blocker Form",
+                        JOptionPane.ERROR_MESSAGE);
+                isInvalid = true;
+                }
                 if (!isInvalid) {
                     PossibleBlocker newBlocker = getPossibleBlockerObject();
                     if (newBlocker != null) {
@@ -101,10 +120,10 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 2, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 3, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 2, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 3, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
@@ -112,9 +131,11 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
     public PossibleBlocker getPossibleBlockerObject() {
         String name = nameField.getText().trim();
         String description = descArea.getText().trim();
+        String userStoryId = userStoryIdField.getText().trim();
 
         PossibleBlockerFactory possibleBlockerFactory = PossibleBlockerFactory.getInstance();
-        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name, description);
+        // Creating blocker with User Story ID
+        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name ,description ,userStoryId);
 
         try {
             possibleBlocker.doRegister();
@@ -129,4 +150,3 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
         return possibleBlocker;
     }
 }
-

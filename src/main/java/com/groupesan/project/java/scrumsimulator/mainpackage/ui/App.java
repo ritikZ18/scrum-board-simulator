@@ -49,13 +49,13 @@ public class App {
     private void initializePossibleBlockers() {
         PossibleBlocker a =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 1", "Dependencies on team mates");
+                        .createNewPossibleBlocker("Sprint cycle 1", "Dependencies on team mates","US3");
         a.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(a);
 
         PossibleBlocker b =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 2", "Technical dependencies");
+                        .createNewPossibleBlocker("Sprint cycle 2", "Technical dependencies","US4");
         b.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(b);
 
