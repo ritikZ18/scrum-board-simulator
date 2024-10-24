@@ -78,7 +78,7 @@ public class ModifySimulationPane extends JFrame implements BaseComponent {
                         String simId = UUID.randomUUID().toString();
                         String simName = simulationNameField.getText();
                         String numberOfSprints = numberOfSprintsField.getText();
-                        simulationManager.createSimulation(simId, simName, numberOfSprints);
+                        simulationManager.createSimulation(simId, simName, numberOfSprints, 0);
 
                         // Prepare a JTextField to display the Simulation ID
                         JTextField simIdField = new JTextField(simId);
