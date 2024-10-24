@@ -1,18 +1,13 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
-import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.Sprint;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintFactory;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintStore;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStory;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStoryStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
-import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.SprintWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -30,12 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeListener;
-
-import org.json.JSONObject;
 
 public class NewSprintForm extends JFrame implements BaseComponent {
     
@@ -122,6 +113,12 @@ public class NewSprintForm extends JFrame implements BaseComponent {
                     }
                 });
 
+        
+        JLabel simulationIDLabel = new JLabel("Simulation ID:");
+
+        myJpanel.add(simulationIDLabel,
+        new CustomConstraints(
+                0, 3, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
 
         simulationComboBox = new JComboBox<>();
 
@@ -131,7 +128,7 @@ public class NewSprintForm extends JFrame implements BaseComponent {
             simulationComboBox.addItem(simulationId);
         
         }
-        myJpanel.add(simulationComboBox, new CustomConstraints(0, 3, GridBagConstraints.WEST, 1.0, 0.2, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(simulationComboBox, new CustomConstraints(1, 3, GridBagConstraints.WEST, 1.0, 0.2, GridBagConstraints.HORIZONTAL));
 
         simulationComboBox.addActionListener(new ActionListener() {
             @Override
