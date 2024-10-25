@@ -9,6 +9,7 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocke
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
 
@@ -24,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class DemoPane extends JFrame implements BaseComponent {
-    private final Player player = new Player("bob", new ScrumRole("Scrum Master"));
+    private Player player = new Player("bob", new ScrumRole("Scrum Master"));
 
     public DemoPane() {
         this.init();
@@ -215,36 +216,36 @@ public class DemoPane extends JFrame implements BaseComponent {
         //  Populate Sprint Backlog button
         JButton PopulateSprintBacklogButton = new JButton("Populate Sprint Backlog");
         PopulateSprintBacklogButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (!(player.getRole().getName() == ("Scrum Master"))) {
-                        JOptionPane.showMessageDialog(null, "Invalid role. Valid role is Scrum Master.");
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!(player.getRole().getName() == ("Scrum Master"))) {
+                            JOptionPane.showMessageDialog(null, "Invalid role. Valid role is Scrum Master.");
+                        }
+                        // Load PopulateSprintBacklogPane
+                        PopulateSprintBacklogPane populateSprintBacklogPane = new PopulateSprintBacklogPane();
+                        populateSprintBacklogPane.setVisible(true);
                     }
-                    // Load PopulateSprintBacklogPane
-                    PopulateSprintBacklogPane populateSprintBacklogPane = new PopulateSprintBacklogPane();
-                    populateSprintBacklogPane.setVisible(true);
-                }
-            });
+                });
 
         myJpanel.add(PopulateSprintBacklogButton, new CustomConstraints(
-            2, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                2, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         // View Sprint Backlog Button
         JButton ViewSprintBacklogButton = new JButton("View Sprint Backlog");
         ViewSprintBacklogButton.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e){
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
 
-                    // Load ViewSprintBacklogPane
-                    ViewSprintBacklogPane viewSprintBacklogPane = new ViewSprintBacklogPane();
-                    viewSprintBacklogPane.setVisible(true);
+                        // Load ViewSprintBacklogPane
+                        ViewSprintBacklogPane viewSprintBacklogPane = new ViewSprintBacklogPane();
+                        viewSprintBacklogPane.setVisible(true);
+                    }
                 }
-            }
         );
         myJpanel.add(ViewSprintBacklogButton, new CustomConstraints(
-            3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         JButton SprintUIButton = new JButton("US Selection UI");
         SprintUIButton.addActionListener(
@@ -292,47 +293,16 @@ public class DemoPane extends JFrame implements BaseComponent {
                         3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
 
-
         JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
-        fineTuneProbabilityButton.addActionListener(e -> openFineTuneWindow());
-        GridBagConstraints gbc2 = new GridBagConstraints();
-        gbc2.gridx = 4;
-        gbc2.gridy = 3;
-        gbc2.anchor = GridBagConstraints.EAST;
-        gbc2.weightx = 1.0;
-        gbc2.fill = GridBagConstraints.HORIZONTAL;
-        myJpanel.add(fineTuneProbabilityButton, gbc2);
+        fineTuneProbabilityButton.addActionListener(e -> FineTuneProbabilityWidget.openFineTuneWindow());
+        myJpanel.add(fineTuneProbabilityButton, new CustomConstraints(4, 3, GridBagConstraints.EAST, 1, 0, GridBagConstraints.HORIZONTAL));
 
         //Panel to frame
         getContentPane().add(myJpanel);
         setLocationRelativeTo(null);
         setVisible(true);
 
-
-
     }
-
-
-    //to init window of FTP panel
-    void openFineTuneWindow() {
-        //Data fetch from thr PB and PBS
-        List<PossibleBlocker> possibleBlockers = PossibleBlockerStore.getInstance().getPossibleBlockers();
-        List<PossibleBlockerSolution> possibleBlockerSolutions = PossibleBlockerSolutionStore.getInstance().getPossibleBlockerSolutions();
-
-        //  ftp-->Pane Instance
-        FineTuneProbabilityPane ftpPanel = new FineTuneProbabilityPane(possibleBlockers, possibleBlockerSolutions);
-        ftpPanel.setPreferredSize(new Dimension(400, 500));
-
-        JFrame fineTuneFrame = new JFrame("Fine Tune Probability");
-
-        fineTuneFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        fineTuneFrame.getContentPane().add(ftpPanel);
-        fineTuneFrame.pack();
-        fineTuneFrame.setLocationRelativeTo(null);
-        fineTuneFrame.setVisible(true);
-    }
-
-
 
 
 }

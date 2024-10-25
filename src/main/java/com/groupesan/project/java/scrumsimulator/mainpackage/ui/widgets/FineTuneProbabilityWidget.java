@@ -5,11 +5,9 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocke
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolutionStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.FineTuneProbabilityListPane;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.FineTuneProbabilityPane;
 
 import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-
 import java.awt.*;
 import java.io.Serializable;
 import java.util.List;
@@ -23,13 +21,28 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
     private transient JComboBox<String> solutionDropdown;
 
 
-    // private transient FineTuneProbability fineTuneProbability;
 
     public FineTuneProbabilityWidget() {
-
         this.init();
     }
 
+   public static void openFineTuneWindow() {
+        //Data fetch from thr PB and PBS
+        List<PossibleBlocker> possibleBlockers = PossibleBlockerStore.getInstance().getPossibleBlockers();
+        List<PossibleBlockerSolution> possibleBlockerSolutions = PossibleBlockerSolutionStore.getInstance().getPossibleBlockerSolutions();
+
+        //  ftp-->Pane Instance
+        FineTuneProbabilityPane ftpPanel = new FineTuneProbabilityPane(possibleBlockers, possibleBlockerSolutions);
+        ftpPanel.setPreferredSize(new Dimension(400, 500));
+
+        JFrame fineTuneFrame = new JFrame("Fine Tune Probability");
+
+        fineTuneFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        fineTuneFrame.getContentPane().add(ftpPanel);
+        fineTuneFrame.pack();
+        fineTuneFrame.setLocationRelativeTo(null);
+        fineTuneFrame.setVisible(true);
+    }
 
     public void init() {
         set(new GridBagLayout());
@@ -43,7 +56,7 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
         blockerDropdown.setVisible(false);
         solutionDropdown.setVisible(false);
 
-//adding button
+        //adding button
         add(fineTuneButton, new GridBagConstraints(0, 0, 1, 1, 0.5, 0.5, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         add(blockerDropdown, new GridBagConstraints(0, 1, 1, 1, 0.5, 0.5, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
         add(solutionDropdown, new GridBagConstraints(0, 2, 1, 1, 0.5, 0.5, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(10, 10, 10, 10), 0, 0));
@@ -51,14 +64,12 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
 
         // Action listener
         fineTuneButton.addActionListener(e -> {
-            // Fetch PossibleBlockers and PossibleBlockerSolutions
+
             List<PossibleBlocker> blockers = PossibleBlockerStore.getInstance().getPossibleBlockers();
             List<PossibleBlockerSolution> solutions = PossibleBlockerSolutionStore.getInstance().getPossibleBlockerSolutions();
 
-            // Create and show the FineTuneProbabilityPane
             FineTuneProbabilityListPane fineTunePane = new FineTuneProbabilityListPane(blockers, solutions);
 
-            // Set content pane or show in a dialog (depending on your design)
             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
             if (parentFrame != null) {
                 parentFrame.setContentPane(fineTunePane);
@@ -71,60 +82,9 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
         });
 
 
-
-
-        //action listner
-        fineTuneButton.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorAdded(AncestorEvent e) {
-                loadDropdowns();
-                //now we are in the FTP we set drops visible
-                blockerDropdown.setVisible(true);
-                solutionDropdown.setVisible(true);
-
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent event) {
-
-            }
-
-            @Override
-            public void ancestorMoved(AncestorEvent event) {
-
-            }
-
-
-        });
-        repaint();
-        revalidate();
-
     }
 
     private void set(GridBagLayout gridBagLayout) {
         setLayout(gridBagLayout);
     }
-
-    private void loadDropdowns() {
-        //fetching PB from PBstore <ths is list>
-        List<PossibleBlocker> blockers = PossibleBlockerStore.getInstance().getPossibleBlockers();
-        blockerDropdown.removeAllItems(); //clear the dropdown
-
-        for (PossibleBlocker blocker : blockers) {
-            blockerDropdown.addItem(blocker.getName()); //add the blocker to drop
-        }
-
-
-        //fetching PBS from PBS store <ths is list>
-
-        List<PossibleBlockerSolution> solutions = PossibleBlockerSolutionStore.getInstance().getPossibleBlockerSolutions();
-        solutionDropdown.removeAllItems();  //
-        for (PossibleBlockerSolution solution : solutions) {
-            solutionDropdown.addItem(solution.getName());
-        }
-
-
-    }
-
-
 }

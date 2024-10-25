@@ -15,37 +15,27 @@ public class FineTuneProbabilityListPane extends JPanel {
     public FineTuneProbabilityListPane(List<PossibleBlocker> possibleBlockers, List<PossibleBlockerSolution> possibleBlockerSolutions) {
         setLayout(new BorderLayout());
 
-        // Create a title label
-        JLabel titleLabel = new JLabel("Fine Tune Probability List", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        add(titleLabel, BorderLayout.NORTH);
-
-        // Create a panel for displaying blockers and solutions --> Working
+        // dropdown panel for displaying blockers and solutions --> Working
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new GridLayout(possibleBlockers.size() + possibleBlockerSolutions.size(), 1));
 
-        // Add blockers to the content panel --> Not Working
+        // Add blockers to panel --> Not Working
         for (PossibleBlocker blocker : possibleBlockers) {
             contentPanel.add(new JLabel("Blocker: " + blocker.getName()));
         }
 
-        // Add solutions to the content panel --> Not Working
+        // add solutions to panel --> Not Working
         for (PossibleBlockerSolution solution : possibleBlockerSolutions) {
             contentPanel.add(new JLabel("Solution: " + solution.getName()));
         }
 
-
-
-
-
         add(contentPanel, BorderLayout.CENTER);
-
 
         JButton closeButton = new JButton("Close");
         closeButton.addActionListener(e -> {
 
             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            parentFrame.setContentPane(new JPanel()); // Reset to an empty panel or a previous one
+            parentFrame.setContentPane(new JPanel());
             parentFrame.revalidate();
             parentFrame.repaint();
         });

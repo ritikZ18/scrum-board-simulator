@@ -7,43 +7,59 @@ import javax.swing.*;
 import java.awt.*;
 import java.security.SecureRandom;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class FineTuneProbabilityPane extends JPanel {
 
-    private final JLabel selectedBlockerValueLabel;
-    private final JLabel selectedSolutionValueLabel;
 
-    //Random Value Generation
-    private SecureRandom secureRandom; //declare as class field
+    private JLabel selectedBlockerValue;
+    private JLabel selectedSolutionValue;
+    private final JComboBox<PossibleBlocker> blockerDropdown;
+    private final JComboBox<PossibleBlockerSolution> solutionDropdown;
+    private final JSlider blockerProbabilitySlider;
+    private final JSlider solutionProbabilitySlider;
+    private final SecureRandom secureRandom;
 
-    public FineTuneProbabilityPane(List<PossibleBlocker> possibleBlockers , List<PossibleBlockerSolution> possibleBlockerSolutions){
 
-        GridBagLayout layout = new GridBagLayout();
-        setLayout(layout);
+    public FineTuneProbabilityPane(List<PossibleBlocker> possibleBlockers, List<PossibleBlockerSolution> possibleBlockerSolutions) {
+
+        //init the SecureRandom (be careful!!)
+        this.secureRandom = new SecureRandom();
+        blockerDropdown = new JComboBox<>(possibleBlockers.toArray(new PossibleBlocker[0]));
+        blockerProbabilitySlider = probabilitySlider(0);
+        solutionDropdown = new JComboBox<>(possibleBlockerSolutions.toArray(new PossibleBlockerSolution[0]));
+        solutionProbabilitySlider = probabilitySlider(100);
+
+        paneUI();
+        paneActionListener();
+
+    }
+
+    private JSlider probabilitySlider(int initialValue) {
+        JSlider slider = new JSlider(0, 100, initialValue);
+        slider.setMinorTickSpacing(5);
+        slider.setMajorTickSpacing(25);
+        slider.setPaintLabels(true);
+        slider.setPaintTicks(true);
+        return slider;
+    }
+
+
+    private void paneUI() {
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        gbc.insets = new Insets(15, 15, 15, 15);
-
-
-        //init the SecureRandom (be careful!!)
-        secureRandom = new SecureRandom();
-
-
-
+        gbc.insets = new Insets(10, 10, 10, 10);
 
         /*
          * Everything on Solution
          * 1. Blocker Probability Dropdown
          * 2. Blocker Probability Slider to set Prob
-         * 3. Slider Location set
          * */
 
-        //1. Blocker Button
-        JComboBox<PossibleBlocker> blockerDropdown = new JComboBox<>(possibleBlockers.toArray(new PossibleBlocker[0]));
+        // 1. Dropdown
+
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -51,142 +67,114 @@ public class FineTuneProbabilityPane extends JPanel {
         gbc.gridx = 1;
         add(blockerDropdown, gbc);
 
-        //2. Slider for Blocker Probability
-        JSlider blockerProbabilitySlider = new JSlider(0 ,100 ,50);
-        blockerProbabilitySlider.setMajorTickSpacing(25);
-        blockerProbabilitySlider.setMinorTickSpacing(5);
-        blockerProbabilitySlider.setPaintTicks(true);
-        blockerProbabilitySlider.setPaintLabels(true);
-
-        //3. Location
+        //2. Slider
         gbc.gridx = 0;
         gbc.gridwidth = 2;
-
-        gbc.gridy = (int) 1.5;
+        gbc.gridy = 1;
         add(blockerProbabilitySlider, gbc);
-
-        selectedBlockerValueLabel = new JLabel("Selected Blocker Probability: 50%");
-        gbc.gridy = 2;
-        add(selectedBlockerValueLabel, gbc);
-
+        selectedBlockerValue = new JLabel("Selected Blocker Probability: 0%");
+        gbc.gridy = 4;
+        add(selectedBlockerValue, gbc);
 
 
         /*
          * Everything on Solution
          * 1. Solution Probability Dropdown
          * 2. Solution Probability Slider to set Prob
-         * 3. Slider Location set
          * */
 
-        //1. Solution Button
-        JComboBox<PossibleBlockerSolution> solutionDropdown = new JComboBox<>(possibleBlockerSolutions.toArray(new PossibleBlockerSolution[0]));
+        //1. Dropdwon
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         add(new JLabel("Solution:"), gbc);
         gbc.gridx = 1;
         add(solutionDropdown, gbc);
 
 
-        //2. Slider for Solution Probability
-        JSlider solutionProbabilitySlider = new JSlider(0 ,100 ,50);
-        solutionProbabilitySlider.setMajorTickSpacing(25);
-        solutionProbabilitySlider.setMinorTickSpacing(5);
-        solutionProbabilitySlider.setPaintTicks(true);
-        solutionProbabilitySlider.setPaintLabels(true);
-
-        //3. Location
+        //2. Slider
         gbc.gridx = 0;
         gbc.gridy = 6;
         add(solutionProbabilitySlider, gbc);
-        selectedSolutionValueLabel = new JLabel("Selected Solution Probability: 50%");
+        selectedSolutionValue = new JLabel("Selected Solution Probability: 100%");
         gbc.gridy = 7;
-        add(selectedSolutionValueLabel, gbc);
+        add(selectedSolutionValue, gbc);
 
 
+        ftpButton("Set", 8);
+        ftpButton("Random", 10);
+
+    }
+
+    private void ftpButton(String label, int gridY) {
+
+        JButton button = new JButton(label);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridy = gridY;
+        //gbc.gridx = gridX;
+        gbc.gridwidth = 2;
+        add(button, gbc);
 
 
-
-// Fine Tune button
-        JButton fineTuneButtonSet = new JButton("Set");
-        fineTuneButtonSet.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //Seting probability slider value
-                int blockerProbability = blockerProbabilitySlider.getValue();
-                int solutionProbability = solutionProbabilitySlider.getValue();
-
-
-                // fine-tuning logic here
-                PossibleBlocker selectedBlocker = (PossibleBlocker) blockerDropdown.getSelectedItem();
-                PossibleBlockerSolution selectedSolution = (PossibleBlockerSolution) solutionDropdown.getSelectedItem();
-
-
-                if (selectedBlocker != null && selectedSolution != null) {
-                    JOptionPane.showMessageDialog(FineTuneProbabilityPane.this,
-                            "Set " + selectedBlocker.getName() + " with solution " + selectedSolution.getSolution()
-                                    + " at " + blockerProbability + "% blocker probability and " + solutionProbability + "% solution probability.",
-                            "Set Successful", JOptionPane.INFORMATION_MESSAGE);
-                }
+        button.addActionListener(e -> {
+            if (label.equals("Set")) {
+                setAction();
+            }
+            else if(label.equals("Random")) {
+                randomAction();
             }
         });
 
-        gbc.gridx = 0;
-        gbc.gridy = 8;
-        gbc.gridwidth = 2;
-        add(fineTuneButtonSet, gbc);
+    }
 
 
+    private void setAction() {
+        PossibleBlocker selectedBlocker = (PossibleBlocker) blockerDropdown.getSelectedItem();
+        PossibleBlockerSolution selectedSolution = (PossibleBlockerSolution) solutionDropdown.getSelectedItem();
 
 
-        JButton fineTuneButtonRandom = new JButton("Random");
-        fineTuneButtonRandom.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        if (selectedBlocker != null && selectedSolution != null) {
+            JOptionPane.showMessageDialog(FineTuneProbabilityPane.this,
+                    "Set " + selectedBlocker.getName() + " with solution " + selectedSolution.getSolution()
+                            + " at random probabilities.",
+                    "Set Successful", JOptionPane.INFORMATION_MESSAGE);
+        }
 
-                //Random Probability Slider here by using secureRandom
-                //potential for SpotBugsMain (Next developer dont touch or will create Havoc)
+    }
 
-              blockerProbabilitySlider.setValue(secureRandom.nextInt(101));
-              solutionProbabilitySlider.setValue(secureRandom.nextInt(101));
-
-
-
-                // Implement fine-tuning logic here
-                PossibleBlocker selectedBlocker = (PossibleBlocker) blockerDropdown.getSelectedItem();
-                PossibleBlockerSolution selectedSolution = (PossibleBlockerSolution) solutionDropdown.getSelectedItem();
+    private void randomAction() {
+        blockerProbabilitySlider.setValue(secureRandom.nextInt(101));
+        solutionProbabilitySlider.setValue(secureRandom.nextInt(101));
 
 
-                if (selectedBlocker != null && selectedSolution != null) {
-                    JOptionPane.showMessageDialog(FineTuneProbabilityPane.this,
-                            "Set " + selectedBlocker.getName() + " with solution " + selectedSolution.getSolution()
-                                    + " at random probabilities.",
-                            "Set Successful", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        });
+        // Implement fine-tuning logic here
+        PossibleBlocker selectedBlocker = (PossibleBlocker) blockerDropdown.getSelectedItem();
+        PossibleBlockerSolution selectedSolution = (PossibleBlockerSolution) solutionDropdown.getSelectedItem();
 
 
-        gbc.gridx = 0;
-        gbc.gridy = 9;
-        gbc.gridwidth = 2;
-        add(fineTuneButtonRandom, gbc);
+        if (selectedBlocker != null && selectedSolution != null) {
+            JOptionPane.showMessageDialog(FineTuneProbabilityPane.this,
+                    "Set " + selectedBlocker.getName() + " with solution " + selectedSolution.getSolution()
+                            + " at random probabilities.",
+                    "Set Successful", JOptionPane.INFORMATION_MESSAGE);
+        }
 
-        // Update labels based on slider changes
+
+    }
+
+    private void paneActionListener() {
+
         blockerProbabilitySlider.addChangeListener(e -> {
             int value = blockerProbabilitySlider.getValue();
-            selectedBlockerValueLabel.setText("Selected Blocker Probability: " + value + "%");
+            selectedBlockerValue.setText("Blocker Probability: " + value + "%");
         });
 
         solutionProbabilitySlider.addChangeListener(e -> {
             int value = solutionProbabilitySlider.getValue();
-            selectedSolutionValueLabel.setText("Selected Solution Probability: " + value + "%");
+            selectedSolutionValue.setText("Solution Probability: " + value + "%");
         });
 
-
-
-
     }
+
 
 
 
