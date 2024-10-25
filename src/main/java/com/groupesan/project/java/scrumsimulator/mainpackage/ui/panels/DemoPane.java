@@ -11,8 +11,8 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationSta
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -298,7 +298,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         GridBagConstraints gbc2 = new GridBagConstraints();
         gbc2.gridx = 4;
         gbc2.gridy = 3;
-        gbc2.anchor = GridBagConstraints.WEST;
+        gbc2.anchor = GridBagConstraints.EAST;
         gbc2.weightx = 1.0;
         gbc2.fill = GridBagConstraints.HORIZONTAL;
         myJpanel.add(fineTuneProbabilityButton, gbc2);
@@ -310,9 +310,6 @@ public class DemoPane extends JFrame implements BaseComponent {
 
 
 
-
-
-        //add(myJpanel);
     }
 
 
@@ -324,9 +321,10 @@ public class DemoPane extends JFrame implements BaseComponent {
 
         //  ftp-->Pane Instance
         FineTuneProbabilityPane ftpPanel = new FineTuneProbabilityPane(possibleBlockers, possibleBlockerSolutions);
-
+        ftpPanel.setPreferredSize(new Dimension(400, 500));
 
         JFrame fineTuneFrame = new JFrame("Fine Tune Probability");
+
         fineTuneFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         fineTuneFrame.getContentPane().add(ftpPanel);
         fineTuneFrame.pack();
