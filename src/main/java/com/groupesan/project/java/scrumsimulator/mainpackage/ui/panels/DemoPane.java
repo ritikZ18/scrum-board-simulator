@@ -2,6 +2,10 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.core.Player;
 import com.groupesan.project.java.scrumsimulator.mainpackage.core.ScrumRole;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolution;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolutionStore;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
@@ -11,14 +15,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class DemoPane extends JFrame implements BaseComponent {
-    private Player player = new Player("bob", new ScrumRole("Scrum Master"));
+    private final Player player = new Player("bob", new ScrumRole("Scrum Master"));
 
     public DemoPane() {
         this.init();
@@ -285,6 +291,50 @@ public class DemoPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
-        add(myJpanel);
+
+
+        JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
+        fineTuneProbabilityButton.addActionListener(e -> openFineTuneWindow());
+        GridBagConstraints gbc2 = new GridBagConstraints();
+        gbc2.gridx = 4;
+        gbc2.gridy = 3;
+        gbc2.anchor = GridBagConstraints.WEST;
+        gbc2.weightx = 1.0;
+        gbc2.fill = GridBagConstraints.HORIZONTAL;
+        myJpanel.add(fineTuneProbabilityButton, gbc2);
+
+        //Panel to frame
+        getContentPane().add(myJpanel);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+
+
+
+
+        //add(myJpanel);
     }
+
+
+    //to init window of FTP panel
+    void openFineTuneWindow() {
+        //Data fetch from thr PB and PBS
+        List<PossibleBlocker> possibleBlockers = PossibleBlockerStore.getInstance().getPossibleBlockers();
+        List<PossibleBlockerSolution> possibleBlockerSolutions = PossibleBlockerSolutionStore.getInstance().getPossibleBlockerSolutions();
+
+        //  ftp-->Pane Instance
+        FineTuneProbabilityPane ftpPanel = new FineTuneProbabilityPane(possibleBlockers, possibleBlockerSolutions);
+
+
+        JFrame fineTuneFrame = new JFrame("Fine Tune Probability");
+        fineTuneFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        fineTuneFrame.getContentPane().add(ftpPanel);
+        fineTuneFrame.pack();
+        fineTuneFrame.setLocationRelativeTo(null);
+        fineTuneFrame.setVisible(true);
+    }
+
+
+
+
 }
