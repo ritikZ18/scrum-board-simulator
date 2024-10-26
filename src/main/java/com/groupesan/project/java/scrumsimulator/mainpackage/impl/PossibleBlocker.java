@@ -58,11 +58,11 @@ public class PossibleBlocker extends ScrumObject {
      * @param userStoryId the user story ID for the user story
      * @throws IllegalArgumentException if name or description or userStoryId is empty
      */
-    public PossibleBlocker(String name, String description, String userStoryId,String Status) {
+    public PossibleBlocker(String name, String description, String userStoryId,String status) {
         validateMandatoryField(name, "Name");
         validateMandatoryField(description, "Description");
         validateMandatoryField(userStoryId, "User Story ID");
-        validateMandatoryField(userStoryId, "Status");
+        validateMandatoryField(status, "Status");
         this.name = name;
         this.description = description;
         this.userStoryId = userStoryId;
