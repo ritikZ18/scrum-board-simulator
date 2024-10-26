@@ -2,24 +2,18 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.core.Player;
 import com.groupesan.project.java.scrumsimulator.mainpackage.core.ScrumRole;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolution;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolutionStore;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
-
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -216,36 +210,36 @@ public class DemoPane extends JFrame implements BaseComponent {
         //  Populate Sprint Backlog button
         JButton PopulateSprintBacklogButton = new JButton("Populate Sprint Backlog");
         PopulateSprintBacklogButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (!(player.getRole().getName() == ("Scrum Master"))) {
-                            JOptionPane.showMessageDialog(null, "Invalid role. Valid role is Scrum Master.");
-                        }
-                        // Load PopulateSprintBacklogPane
-                        PopulateSprintBacklogPane populateSprintBacklogPane = new PopulateSprintBacklogPane();
-                        populateSprintBacklogPane.setVisible(true);
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!(player.getRole().getName() == ("Scrum Master"))) {
+                        JOptionPane.showMessageDialog(null, "Invalid role. Valid role is Scrum Master.");
                     }
-                });
+                    // Load PopulateSprintBacklogPane
+                    PopulateSprintBacklogPane populateSprintBacklogPane = new PopulateSprintBacklogPane();
+                    populateSprintBacklogPane.setVisible(true);
+                }
+            });
 
         myJpanel.add(PopulateSprintBacklogButton, new CustomConstraints(
-                2, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+            2, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         // View Sprint Backlog Button
         JButton ViewSprintBacklogButton = new JButton("View Sprint Backlog");
         ViewSprintBacklogButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
 
-                        // Load ViewSprintBacklogPane
-                        ViewSprintBacklogPane viewSprintBacklogPane = new ViewSprintBacklogPane();
-                        viewSprintBacklogPane.setVisible(true);
-                    }
+                    // Load ViewSprintBacklogPane
+                    ViewSprintBacklogPane viewSprintBacklogPane = new ViewSprintBacklogPane();
+                    viewSprintBacklogPane.setVisible(true);
                 }
+            }
         );
         myJpanel.add(ViewSprintBacklogButton, new CustomConstraints(
-                3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+            3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         JButton SprintUIButton = new JButton("US Selection UI");
         SprintUIButton.addActionListener(
