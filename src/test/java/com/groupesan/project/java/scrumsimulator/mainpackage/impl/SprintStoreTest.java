@@ -39,7 +39,7 @@ class SprintStoreTest {
 
     @Test
     void testAddSprint() {
-        Sprint sprint = new Sprint("Sprint1", "Delete button", 14, 1);
+        Sprint sprint = new Sprint("Sprint1", "Delete button", 14, 1, "testSimulationID");
         sprintStore.addSprint(sprint);
         List<Sprint> sprints = sprintStore.getSprints();
         assertEquals(1, sprints.size());
@@ -48,12 +48,13 @@ class SprintStoreTest {
         assertEquals("Delete button", addedSprint.getDescription());
         assertEquals(14, addedSprint.getLength());
         assertEquals(1, addedSprint.getId());
+        assertEquals("testSimulationID", addedSprint.getSimulationID());
     }
 
     @Test
     void testGetSprints() {
-        Sprint sprint1 = new Sprint("Sprint1", "Delete button", 14, 1);
-        Sprint sprint2 = new Sprint("Sprint2", "Add button", 7, 2);
+        Sprint sprint1 = new Sprint("Sprint1", "Delete button", 14, 1, "testSimulationID");
+        Sprint sprint2 = new Sprint("Sprint2", "Add button", 7, 2, "testSimulationID");
         sprintStore.addSprint(sprint1);
         sprintStore.addSprint(sprint2);
         List<Sprint> sprints = sprintStore.getSprints();
@@ -66,8 +67,8 @@ class SprintStoreTest {
 
     @Test
     void testGetSprintByName() {
-        Sprint sprint1 = new Sprint("Sprint1", "Delete button", 14, 1);
-        Sprint sprint2 = new Sprint("Sprint2", "Add button", 7, 2);
+        Sprint sprint1 = new Sprint("Sprint1", "Delete button", 14, 1, "testSimulationID");
+        Sprint sprint2 = new Sprint("Sprint2", "Add button", 7, 2, "testSimulationID");
         sprintStore.addSprint(sprint1);
         sprintStore.addSprint(sprint2);
         Sprint foundSprint = sprintStore.getSprintByName("Sprint1");
@@ -86,8 +87,8 @@ class SprintStoreTest {
 
     @Test
     void testAddMultipleSprints() {
-        Sprint sprint1 = new Sprint("Sprint1", "First sprint", 14, 1);
-        Sprint sprint2 = new Sprint("Sprint2", "Second sprint", 14, 2);
+        Sprint sprint1 = new Sprint("Sprint1", "First sprint", 14, 1, "testSimulationID");
+        Sprint sprint2 = new Sprint("Sprint2", "Second sprint", 14, 2, "testSimulationID");
         sprintStore.addSprint(sprint1);
         sprintStore.addSprint(sprint2);
         List<Sprint> sprints = sprintStore.getSprints();
@@ -99,8 +100,8 @@ class SprintStoreTest {
 
     @Test
     void testSprintStoreClearing() throws NoSuchFieldException, IllegalAccessException {
-        Sprint sprint1 = new Sprint("Sprint1", "First sprint", 14, 1);
-        Sprint sprint2 = new Sprint("Sprint2", "Second sprint", 14, 2);
+        Sprint sprint1 = new Sprint("Sprint1", "First sprint", 14, 1, "testSimulationID");
+        Sprint sprint2 = new Sprint("Sprint2", "Second sprint", 14, 2, "testSimulationID");
 
         // Add some sprints
         sprintStore.addSprint(sprint1);

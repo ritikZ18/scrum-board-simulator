@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class App {
     public App() {}
-
     public void start() {
         this.loadTheme();
         SwingUtilities.invokeLater(
@@ -49,13 +48,13 @@ public class App {
     private void initializePossibleBlockers() {
         PossibleBlocker a =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 1", "Dependencies on team mates","US3");
+                        .createNewPossibleBlocker("Sprint cycle 1", "US3","US10","unresolved");
         a.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(a);
 
         PossibleBlocker b =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 2", "Technical dependencies","US4");
+                        .createNewPossibleBlocker("Sprint cycle 2", "US4","US11","unresolved");
         b.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(b);
 

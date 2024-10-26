@@ -21,6 +21,8 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
     private JTextArea descArea = new JTextArea();
     private JTextField userStoryIdField = new JTextField();
 
+    private JComboBox<String> statusComboBox;
+
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("New Possible Blocker");
@@ -68,6 +70,18 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                 userStoryIdField,
                 new CustomConstraints(
                         1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+        JLabel statusLabel = new JLabel("Status:");
+        String[] statusOptions = {"Unresolved", "Resolved"};
+        statusComboBox = new JComboBox<>(statusOptions);
+        myJpanel.add(
+                statusLabel,
+                new CustomConstraints(
+                        0, 2, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                statusComboBox,
+                new CustomConstraints(
+                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
 
         JButton cancelButton = new JButton("Cancel");
 
@@ -132,10 +146,10 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
         String name = nameField.getText().trim();
         String description = descArea.getText().trim();
         String userStoryId = userStoryIdField.getText().trim();
+        String status = (String) statusComboBox.getSelectedItem();
 
         PossibleBlockerFactory possibleBlockerFactory = PossibleBlockerFactory.getInstance();
-        // Creating blocker with User Story ID
-        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name ,description ,userStoryId);
+        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name, description,userStoryId,status);
 
         try {
             possibleBlocker.doRegister();
@@ -150,3 +164,4 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
         return possibleBlocker;
     }
 }
+

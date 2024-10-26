@@ -27,7 +27,7 @@ public class ScrumRoleFactoryTest {
     @Test
     public void testCreateNewScrumMaster() {
         Player player = new Player("Player", defaultRole);
-        Sprint sprint = new Sprint(null, null, 0, 0);
+        Sprint sprint = new Sprint(null, null, 0, 0, "testSimulationID");
         assertTrue(
                 factory.createNewScrumMaster(player, "Scrum Master", sprint)
                         instanceof ScrumMaster);

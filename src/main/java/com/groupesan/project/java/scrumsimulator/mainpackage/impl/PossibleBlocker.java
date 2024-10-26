@@ -14,6 +14,8 @@ public class PossibleBlocker extends ScrumObject {
 
     private String userStoryId;
 
+    private String status;
+
 
     private void validateMandatoryField(String value, String fieldName){
         if(value==null || value.trim().isEmpty()){
@@ -56,13 +58,15 @@ public class PossibleBlocker extends ScrumObject {
      * @param userStoryId the user story ID for the user story
      * @throws IllegalArgumentException if name or description or userStoryId is empty
      */
-    public PossibleBlocker(String name, String description, String userStoryId) {
+    public PossibleBlocker(String name, String description, String userStoryId,String Status) {
         validateMandatoryField(name, "Name");
         validateMandatoryField(description, "Description");
         validateMandatoryField(userStoryId, "User Story ID");
+        validateMandatoryField(userStoryId, "Status");
         this.name = name;
         this.description = description;
         this.userStoryId = userStoryId;
+        this.status = status;
     }
 
     public String getUserStoryId() {
@@ -130,6 +134,14 @@ public class PossibleBlocker extends ScrumObject {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

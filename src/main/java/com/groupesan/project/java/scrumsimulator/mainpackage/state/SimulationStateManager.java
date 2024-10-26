@@ -56,7 +56,7 @@ public class SimulationStateManager {
      * @param numberOfSprints The number of sprints in the simulation.
      */
     public static void saveNewSimulationDetails(
-            String simId, String simName, String numberOfSprints) {
+            String simId, String simName, String numberOfSprints, int sprintLength) {
         JSONObject simulationData = getSimulationData();
         if (simulationData == null) {
             simulationData = new JSONObject();
@@ -70,6 +70,7 @@ public class SimulationStateManager {
         newSimulation.put("Sprints", new JSONArray());
         newSimulation.put("Events", new JSONArray());
         newSimulation.put("Users", new JSONArray());
+        newSimulation.put("SprintLength", sprintLength);
 
         JSONArray simulations = simulationData.optJSONArray("Simulations");
         if (simulations == null) {
@@ -98,6 +99,17 @@ public class SimulationStateManager {
             writer.write(updatedData.toString(4));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error writing to simulation.JSON");
+        }
+    }
+
+    public JSONObject getSimulationIDs() {
+        try (FileInputStream fis = new FileInputStream(JSON_FILE_PATH)) {
+            JSONTokener tokener = new JSONTokener(fis);
+            return new JSONObject(tokener);
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error reading from simulation.JSON");
+            return null;
         }
     }
 }
