@@ -12,13 +12,14 @@ import java.awt.event.ActionListener;
 
 public class EditPossibleBlockerForm extends JFrame implements BaseComponent {
 
+    private JComboBox<String> statusComboBox;
+
     public EditPossibleBlockerForm(PossibleBlocker possibleBlocker) {
         this.possibleBlocker = possibleBlocker;
         this.init();
     }
 
     private PossibleBlocker possibleBlocker;
-
     private JTextField nameField = new JTextField();
     private JTextArea descArea = new JTextArea();
 
@@ -59,6 +60,18 @@ public class EditPossibleBlockerForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
 
+        JLabel statusLabel = new JLabel("Status:");
+        String[] statusOptions = {"Unresolved", "Resolved"};
+        statusComboBox = new JComboBox<>(statusOptions);
+        statusComboBox.setSelectedItem(possibleBlocker.getStatus());
+        myJpanel.add(
+                statusLabel,
+                new CustomConstraints(
+                        0, 2, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                statusComboBox,
+                new CustomConstraints(
+                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
         JButton cancelButton = new JButton("Cancel");
 
@@ -78,19 +91,21 @@ public class EditPossibleBlockerForm extends JFrame implements BaseComponent {
                     public void actionPerformed(ActionEvent e) {
                         String name = nameField.getText();
                         String description = descArea.getText();
+                        String status = (String) statusComboBox.getSelectedItem();
 
                         possibleBlocker.setName(name);
                         possibleBlocker.setDescription(description);
+                        possibleBlocker.setStatus(status);
                         dispose();
                     }
                 });
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 2, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 3, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 2, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 3, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
