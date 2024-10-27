@@ -12,6 +12,8 @@ public class PossibleBlocker extends ScrumObject {
 
     private String description;
 
+    private String userStoryId;
+
     private String status;
 
 
@@ -41,13 +43,38 @@ public class PossibleBlocker extends ScrumObject {
      *     requirements.
      * @throws IllegalArgumentException if name or description is empty
      */
-    public PossibleBlocker(String name, String description, String status) {
+    public PossibleBlocker(String name, String description) {
         validateMandatoryField(name,"Name");
         validateMandatoryField(description,"Description");
+        this.name = name;
+        this.description = description;
+    }
+
+    /**
+     *
+     * @param name the name for the user story
+     * @param description the description for the user story for better understanding of the
+     *     requirements.
+     * @param userStoryId the user story ID for the user story
+     * @throws IllegalArgumentException if name or description or userStoryId is empty
+     */
+    public PossibleBlocker(String name, String description, String userStoryId,String status) {
+        validateMandatoryField(name, "Name");
+        validateMandatoryField(description, "Description");
+        validateMandatoryField(userStoryId, "User Story ID");
         validateMandatoryField(status, "Status");
         this.name = name;
         this.description = description;
+        this.userStoryId = userStoryId;
         this.status = status;
+    }
+
+    public String getUserStoryId() {
+        return userStoryId;
+    }
+
+    public void setUserStoryId(String userStoryId) {
+        this.userStoryId = userStoryId;
     }
 
     protected void register() {

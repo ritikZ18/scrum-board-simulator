@@ -15,12 +15,15 @@ public class Sprint {
 
     private int id;
 
-    public Sprint(String name, String description, int length, int id) {
+    private String simulationID;
+
+    public Sprint(String name, String description, int length, int id, String simulationID) {
         this.name = name;
         this.description = description;
         this.length = length;
         this.remainingDays = length;
         this.id = id;
+        this.simulationID = simulationID;
     }
 
     public void addUserStory(UserStory us) {
@@ -63,5 +66,9 @@ public class Sprint {
             USes.append(us.toString()).append("\n");
         }
         return header + USes;
+    }
+
+    public String getSimulationID() {
+        return this.simulationID;
     }
 }

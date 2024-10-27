@@ -10,7 +10,7 @@ public class SprintTest {
 
     @BeforeEach
     public void setup() {
-        mySprint = SprintFactory.getSprintFactory().createNewSprint("testSprint", "testSprint", 5);
+        mySprint = SprintFactory.getSprintFactory().createNewSprint("testSprint", "testSprint", 5, "testSimulationID");
     }
 
     @Test
