@@ -8,8 +8,8 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComp
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -287,14 +287,39 @@ public class DemoPane extends JFrame implements BaseComponent {
                         3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
 
-        JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
-        fineTuneProbabilityButton.addActionListener(e -> FineTuneProbabilityWidget.openFineTuneWindow());
-        myJpanel.add(fineTuneProbabilityButton, new CustomConstraints(4, 3, GridBagConstraints.EAST, 1, 0, GridBagConstraints.HORIZONTAL));
+//        JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
+//        fineTuneProbabilityButton.addActionListener(e -> FineTuneProbabilityWidget.openFineTuneWindow());
+//        myJpanel.add(fineTuneProbabilityButton, new CustomConstraints(4, 3, GridBagConstraints.EAST, 1, 0, GridBagConstraints.HORIZONTAL));
+//
+////        //Panel to frame
+//        getContentPane().add(myJpanel);
+//        setLocationRelativeTo(null);
+//        setVisible(true);
 
-        //Panel to frame
+
+
+        JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
+        fineTuneProbabilityButton.addActionListener(e-> FineTuneProbabilityWidget.openFineTuneWindow());
+        myJpanel.add(fineTuneProbabilityButton,
+                new CustomConstraints(
+                        4, 3, GridBagConstraints.EAST, 1.0, 0, GridBagConstraints.HORIZONTAL));
+
         getContentPane().add(myJpanel);
         setLocationRelativeTo(null);
         setVisible(true);
+
+
+
+
+//        JFrame main = new JFrame("Frame 1");
+//        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        main.getContentPane().add(JPanel);
+//        main.pack();
+//
+//        main.setVisible(true);
+//        main.setLocationRelativeTo(null);
+
+
 
     }
 
