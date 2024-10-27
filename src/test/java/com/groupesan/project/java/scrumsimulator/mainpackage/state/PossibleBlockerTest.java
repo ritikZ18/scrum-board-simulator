@@ -12,7 +12,8 @@ public class PossibleBlockerTest {
         String name = "Sprint Cycle 3";
         String description = "Dependency issues for a field";
         String userStoryId = "US4";
-        PossibleBlocker possibleBlocker = new PossibleBlocker(name, description, userStoryId);
+        String status = "resolved";
+        PossibleBlocker possibleBlocker = new PossibleBlocker(name, description, userStoryId,status);
         assertEquals(description, possibleBlocker.getDescription());
         assertEquals(name, possibleBlocker.getName());
         assertEquals(userStoryId, possibleBlocker.getUserStoryId());
@@ -22,7 +23,7 @@ public class PossibleBlockerTest {
     public void testThrowsExceptionForEmptyNameThrowsException() {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> {
-                    new PossibleBlocker("", "Description", "US3");
+                    new PossibleBlocker("", "Description", "US3","resolved");
                 });
 
         assertTrue(exception.getMessage().contains("Name value cannot be empty"));
@@ -32,7 +33,7 @@ public class PossibleBlockerTest {
     public void testThrowsExceptionForEmptyUserStoryId() {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> {
-                    new PossibleBlocker("Name", "Description", "");
+                    new PossibleBlocker("Name", "Description", "","resolved");
                 });
 
         assertTrue(exception.getMessage().contains("User Story ID value cannot be empty"));
@@ -42,10 +43,20 @@ public class PossibleBlockerTest {
     public void testThrowsExceptionForEmptyDescription() {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> {
-                    new PossibleBlocker("Name", "", "US2");
+                    new PossibleBlocker("Name", "", "US2","resolved");
                 });
 
         assertTrue(exception.getMessage().contains("Description value cannot be empty"));
+    }
+
+    @Test
+    public void testThrowsExceptionForEmptyStatus() {
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> {
+                    new PossibleBlocker("Name", "Deletion", "US2","");
+                });
+
+        assertTrue(exception.getMessage().contains("Status value cannot be empty"));
     }
 
 

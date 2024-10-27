@@ -76,11 +76,11 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
         myJpanel.add(
                 statusLabel,
                 new CustomConstraints(
-                        0, 2, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
+                        0, 3, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
         myJpanel.add(
                 statusComboBox,
                 new CustomConstraints(
-                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+                        1, 3, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
 
         JButton cancelButton = new JButton("Cancel");
@@ -134,10 +134,10 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 3, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 4, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 3, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 4, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
