@@ -104,6 +104,12 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                             JOptionPane.ERROR_MESSAGE);
                     isInvalid = true;
                 }
+                if (!isInvalid && (statusComboBox.getSelectedItem() == null)) {
+                    JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
+                            "Please select a status.", "Error in New Blocker Form",
+                            JOptionPane.ERROR_MESSAGE);
+                    isInvalid = true;
+                }
                 if (!isInvalid) {
                     PossibleBlocker newBlocker = getPossibleBlockerObject();
                     if (newBlocker != null) {
