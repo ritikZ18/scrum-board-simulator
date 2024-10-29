@@ -13,7 +13,7 @@ public class UserStoryTest {
     public void setup() {
         myUserStory =
                 UserStoryFactory.getInstance()
-                        .createNewUserStory("predefinedUS1", "description1", 1.0,3.0);
+                        .createNewUserStory("predefinedUS1", "description1", 1.0,3.0, "New");
     }
 
     @Test
@@ -60,7 +60,7 @@ public class UserStoryTest {
                         IllegalArgumentException.class,
                         ()->{
                             UserStoryFactory.getInstance().createNewUserStory("",
-                                    "to delete a button and show response",1.0,1.0);
+                                    "to delete a button and show response",1.0,1.0,"New");
                         });
         assertEquals("User Story Name value cannot be empty",exception.getMessage());
 
@@ -74,7 +74,7 @@ public class UserStoryTest {
                         IllegalArgumentException.class,
                         ()->{
                             UserStoryFactory.getInstance().createNewUserStory("deletion of button",
-                                    "",1.0,1.0);
+                                    "",1.0,1.0,"New");
                         });
         assertEquals("User Story Description value cannot be empty",exception.getMessage());
 
