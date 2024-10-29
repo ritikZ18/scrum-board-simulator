@@ -32,7 +32,8 @@ public class PossibleBlockerSolutionTest {
                     new PossibleBlockerSolution("Name", "");
                 });
 
-        assertTrue(exception.getMessage().contains("Solution value cannot be empty"));
+        System.out.println(exception.getMessage());
+        assertTrue(exception.getMessage().contains("Possible Blocker solution value cannot be empty"));
     }
 
 
