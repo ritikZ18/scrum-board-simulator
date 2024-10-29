@@ -26,7 +26,7 @@ public class PossibleBlockerSolutionsListPane extends JFrame implements BaseComp
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setTitle("Blockers list");
+        setTitle("Solutions list for blockers");
         setSize(600, 400);
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
