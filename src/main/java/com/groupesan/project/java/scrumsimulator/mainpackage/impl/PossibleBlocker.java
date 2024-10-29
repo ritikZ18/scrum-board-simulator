@@ -33,6 +33,7 @@ public class PossibleBlocker extends ScrumObject {
         validateMandatoryField(name,"Name");
         this.name = name;
         this.description = "";
+
     }
 
     /**
@@ -106,7 +107,7 @@ public class PossibleBlocker extends ScrumObject {
 
     @Override
     public String toString() {
-        return "";
+        return "" + this.id;
     }
 
     /**
