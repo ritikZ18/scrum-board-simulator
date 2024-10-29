@@ -287,17 +287,7 @@ public class DemoPane extends JFrame implements BaseComponent {
                         3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
 
-//        JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
-//        fineTuneProbabilityButton.addActionListener(e -> FineTuneProbabilityWidget.openFineTuneWindow());
-//        myJpanel.add(fineTuneProbabilityButton, new CustomConstraints(4, 3, GridBagConstraints.EAST, 1, 0, GridBagConstraints.HORIZONTAL));
-//
-////        //Panel to frame
-//        getContentPane().add(myJpanel);
-//        setLocationRelativeTo(null);
-//        setVisible(true);
-
-
-
+        //Button for FineTuneProbability
         JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
         fineTuneProbabilityButton.addActionListener(e-> FineTuneProbabilityWidget.openFineTuneWindow());
         myJpanel.add(fineTuneProbabilityButton,
@@ -307,19 +297,6 @@ public class DemoPane extends JFrame implements BaseComponent {
         getContentPane().add(myJpanel);
         setLocationRelativeTo(null);
         setVisible(true);
-
-
-
-
-//        JFrame main = new JFrame("Frame 1");
-//        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        main.getContentPane().add(JPanel);
-//        main.pack();
-//
-//        main.setVisible(true);
-//        main.setLocationRelativeTo(null);
-
-
 
     }
 

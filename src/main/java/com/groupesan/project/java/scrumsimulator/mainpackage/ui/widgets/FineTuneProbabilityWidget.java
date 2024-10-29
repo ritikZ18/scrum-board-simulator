@@ -63,6 +63,12 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
             solutionDropdown.addItem(solution);
         }
 
+        //Force Refresh
+        blockerDropdown.revalidate();
+        blockerDropdown.repaint();
+        solutionDropdown.revalidate();
+        solutionDropdown.repaint();
+
     }
 
     //Slider

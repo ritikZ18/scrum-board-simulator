@@ -106,7 +106,7 @@ public class PossibleBlocker extends ScrumObject {
 
     @Override
     public String toString() {
-        return "";
+        return name;
     }
 
     /**
