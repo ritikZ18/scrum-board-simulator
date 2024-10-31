@@ -30,7 +30,7 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Blockers list");
-        setSize(600, 400);
+        setSize(700, 400);
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -119,6 +119,13 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                 String selectedUserStory = (String) userStoriesDropDown.getSelectedItem();
                 if (selectedUserStory != null && !selectedUserStory.isEmpty()) {
                     addSpike(selectedUserStory);
+                }else {
+                    JOptionPane.showMessageDialog(
+                            PossibleBlockersListPane.this,
+                            "Please select a user story",
+                            "No User Story Selected",
+                            JOptionPane.WARNING_MESSAGE
+                    );
                 }
             }
         });
@@ -133,15 +140,33 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
     // Add spike method implementation
     private void addSpike(String userStoryId) {
         if (!spikedUserStories.contains(userStoryId)) {
-            spikedUserStories.add(userStoryId);
-            JOptionPane.showMessageDialog(this,
-                    "spike added for user story " + userStoryId,
-                    "spike",
-                    JOptionPane.INFORMATION_MESSAGE);
+            showManagementDetailsConfirmation(userStoryId);
         }
         else {
             JOptionPane.showMessageDialog(this, "Already added","Duplicated Spike",JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void showManagementDetailsConfirmation(String userStoryId) {
+        String message = "Management team has provided details";
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                message,
+                "Management Details",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        if (option == JOptionPane.YES_OPTION) {
+            spikedUserStories.add(userStoryId);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Spike added for user story " + userStoryId,
+                    "Spike Added",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+        }
+        // If NO_OPTION is selected, do nothing
     }
 
 

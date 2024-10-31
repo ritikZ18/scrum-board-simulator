@@ -5,12 +5,8 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.EditPossi
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.event.*;
+import javax.swing.*;
 import java.io.Serializable;
 
 public class PossibleBlockerWidget extends JPanel implements BaseComponent, Serializable {
@@ -21,6 +17,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
     private JLabel descLabel;
     private JLabel userStoryIdLabel;
     private JLabel statusLabel;
+    private JButton allocateResourcesButton;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
@@ -39,6 +36,19 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         descLabel = new JLabel(possibleBlocker.getDescription());
         userStoryIdLabel = new JLabel(possibleBlocker.getUserStoryId());
         statusLabel = new JLabel(possibleBlocker.getStatus());
+
+        allocateResourcesButton = new JButton("Allocate More Resources");
+        allocateResourcesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Logic to allocate more resources goes here
+                JOptionPane.showMessageDialog(
+                        PossibleBlockerWidget.this,
+                        "Resources allocated for user story " + possibleBlocker.getUserStoryId(),
+                        "Resources Allocated",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
         MouseAdapter openEditDialog = new MouseAdapter() {
             @Override
@@ -60,6 +70,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         add(nameLabel, new CustomConstraints(2, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(descLabel, new CustomConstraints(3, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(statusLabel, new CustomConstraints(4, 0, GridBagConstraints.WEST, 0.3, 0.0, GridBagConstraints.HORIZONTAL));
+        add(allocateResourcesButton, new CustomConstraints(5, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
 
         revalidate();
         repaint();
