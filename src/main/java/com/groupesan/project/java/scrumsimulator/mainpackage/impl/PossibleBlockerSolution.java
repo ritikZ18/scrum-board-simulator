@@ -11,6 +11,7 @@ public class PossibleBlockerSolution extends ScrumObject {
     private String solution;
     private String blockerId;
 
+    private int probability;
 
     private void validateMandatoryField(String value, String fieldName){
         if(value==null || value.trim().isEmpty()){
@@ -61,5 +62,14 @@ public class PossibleBlockerSolution extends ScrumObject {
     public void setSolution(String solution) {
         this.solution = solution;
     }
+
+    public int getSolutionProbability(){
+        return probability;
+    }
+
+    public void setProbability(int probability){
+        this.probability = Integer.parseInt(String.valueOf(probability));
+    }
+
 
 }

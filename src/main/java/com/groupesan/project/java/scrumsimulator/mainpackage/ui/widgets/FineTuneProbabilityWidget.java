@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, Serializable {
 
@@ -21,6 +23,10 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
     private final JSlider blockerProbabilitySlider;
     private final JSlider solutionProbabilitySlider;
     private final SecureRandom secureRandom;
+
+    private final transient Map<PossibleBlocker, Integer> blockerProbabilities = new HashMap<>();
+    private final transient Map<PossibleBlockerSolution, Integer> solutionProbabilities = new HashMap<>();
+
 
 
     public FineTuneProbabilityWidget() {
@@ -155,13 +161,19 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
 
         //check set btn
         if (selectedBlocker != null && selectedSolution != null) {
+
+            //to store probabilites
+            int blockerProbability = blockerProbabilitySlider.getValue();
+            int solutionProbability = solutionProbabilitySlider.getValue();
+
+            //to store probabilities in maps
+            blockerProbabilities.put(selectedBlocker, blockerProbability);
+            solutionProbabilities.put(selectedSolution, solutionProbability);
+
             JOptionPane.showMessageDialog(this,
-                    "Set " + selectedBlocker.getName() + " with solution " + selectedSolution.getSolution()
-                            + " at random probabilities.",
-                    "Set Successful", JOptionPane.INFORMATION_MESSAGE);
+                    "Probabilities set Success-> " +"Blocker: " +blockerProbability + "%" + " &" + " Solution: " +solutionProbability + "%");
         }
     }
-
 
     //random value select
     private void randomAction() {
@@ -173,13 +185,27 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
     //reflect selected probability
     private void paneActionListener() {
         blockerProbabilitySlider.addChangeListener(e -> {
-            int value = blockerProbabilitySlider.getValue();
-            selectedBlockerValue.setText("Blocker Probability: " + value + "%");
+            int probability = blockerProbabilitySlider.getValue();
+            PossibleBlocker selectedBlocker = (PossibleBlocker) blockerDropdown.getSelectedItem();
+            if (selectedBlocker != null) {
+                selectedBlocker.setProbability(probability);
+                blockerProbabilities.put(selectedBlocker, probability);
+            }
+            selectedBlockerValue.setText("Blocker Probability: " + probability + "%");
+
         });
 
+
+
+
         solutionProbabilitySlider.addChangeListener(e -> {
-            int value = solutionProbabilitySlider.getValue();
-            selectedSolutionValue.setText("Solution Probability: " + value + "%");
+            int probability = solutionProbabilitySlider.getValue();
+            PossibleBlockerSolution selectedSolution = (PossibleBlockerSolution) solutionDropdown.getSelectedItem();
+            if (selectedSolution != null) {
+                selectedSolution.setProbability(probability);
+                solutionProbabilities.put(selectedSolution, probability);
+            }
+            selectedSolutionValue.setText("Solution Probability: " + probability + "%");
         });
     }
 

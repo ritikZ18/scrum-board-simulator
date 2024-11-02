@@ -17,7 +17,7 @@ public class App {
                         initializeUserStories();
                         // Initializing possible blockers
                         initializePossibleBlockers();
-                        // Initializing possible solutions
+                        //Initialiting Possible Blockers Solution
                         initializePossibleBlockerSolutions();
 
                         // Load DemoPane
@@ -61,6 +61,7 @@ public class App {
         PossibleBlockerStore.getInstance().addPossibleBlocker(b);
 
     }
+
 
     private void initializePossibleBlockerSolutions() {
         PossibleBlockerSolution x =
