@@ -79,7 +79,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         add(nameLabel, new CustomConstraints(2, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(descLabel, new CustomConstraints(3, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(statusLabel, new CustomConstraints(4, 0, GridBagConstraints.WEST, 0.3, 0.0, GridBagConstraints.HORIZONTAL));
-        add(probabilityLabel, new CustomConstraints(0, 3, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL)); // Add to the panel
+        add(probabilityLabel, new CustomConstraints(5, 0, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL)); // Add to the panel
 
         revalidate();
         repaint();
