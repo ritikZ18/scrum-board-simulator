@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import javax.swing.JOptionPane;
+
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -15,12 +17,15 @@ import org.json.JSONTokener;
  * saving its ID.
  */
 public class SimulationStateManager {
-    private boolean running;
+    private boolean isRunning = false;
+    private SimulationStore simulationStore;
     private static final String JSON_FILE_PATH = "src/main/resources/simulation.JSON";
+
+    private String currentSimulationId;
 
     /** Simulation State manager. Not running by default. */
     public SimulationStateManager() {
-        this.running = false;
+        this.simulationStore = SimulationStore.getInstance();
     }
 
     /**
@@ -29,23 +34,31 @@ public class SimulationStateManager {
      * @return boolean running
      */
     public boolean isRunning() {
-        return running;
+        return isRunning;
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
 
     /** Method to set the simulation state to running. */
     public void startSimulation() {
-        setRunning(true);
+        this.isRunning = true;
         // Add other logic for starting the simulation
+    }
+
+    public void startSimulation(String simulationId) {
+        this.isRunning = true;
+        this.currentSimulationId = simulationId;
+        simulationStore.updateSimulationStatus(simulationId, "In-Progress");
     }
 
     /** Method to set the simulation state to not running. */
     public void stopSimulation() {
-        setRunning(false);
-        // Add other logic for stopping the simulation
+        // Logic to stop the simulation
+        System.out.println("Simulation stopped: " + currentSimulationId);
+        if (this.isRunning && this.currentSimulationId != null) {
+            simulationStore.updateSimulationStatus(this.currentSimulationId, "Done");
+            this.isRunning = false;
+            this.currentSimulationId = null;
+        }
     }
 
     /**
@@ -112,4 +125,5 @@ public class SimulationStateManager {
             return null;
         }
     }
+
 }

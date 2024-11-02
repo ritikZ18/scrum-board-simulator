@@ -28,7 +28,7 @@ public class SimulationStateTest {
 
     @Test
     public void testStartSimulation() {
-        simulationStateManager.startSimulation();
+        simulationStateManager.startSimulation("testSimulationId");
         assertTrue(simulationStateManager.isRunning());
     }
 
