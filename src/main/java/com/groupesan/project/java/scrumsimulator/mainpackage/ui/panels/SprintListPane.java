@@ -1,7 +1,6 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.Sprint;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintFactory;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.SprintWidget;
@@ -78,8 +77,12 @@ public class SprintListPane extends JFrame implements BaseComponent {
                                 new java.awt.event.WindowAdapter() {
                                     public void windowClosed(
                                             java.awt.event.WindowEvent windowEvent) {
-                                        Sprint newSprint = form.getSprintObject();
-                                        widgets.add(new SprintWidget(newSprint));
+
+                                        List<Sprint> sprintList = form.getSprintObject();
+                                        for(Sprint sprint: sprintList)
+                                        {
+                                            widgets.add(new SprintWidget(sprint));
+                                        }
                                         int idx = widgets.size() - 1;
                                         subPanel.add(
                                                 widgets.get(idx),

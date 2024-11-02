@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -41,7 +42,7 @@ public class NewSprintForm extends JFrame implements BaseComponent {
     JList<String> usList;
 
     private SimulationStore simulationStore = new SimulationStore();
-
+    
     // private String simulationId = new String();
     private JComboBox<String> simulationComboBox;
 
@@ -109,6 +110,7 @@ public class NewSprintForm extends JFrame implements BaseComponent {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+
                         dispose();
                     }
                 });
@@ -141,26 +143,6 @@ public class NewSprintForm extends JFrame implements BaseComponent {
             }
         });
 
-        // listModel = new DefaultListModel<>();
-        // for (UserStory userStory : UserStoryStore.getInstance().getUserStories()) {
-        //     listModel.addElement(userStory.toString());
-        // }
-
-        // usList = new JList<>(listModel);
-        // usList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        // JScrollPane scrollPane = new JScrollPane(usList);
-        // scrollPane.setPreferredSize(new Dimension(300, 100));
-
-        // JLabel userStoriesLabel = new JLabel("User Stories:");
-        // myJpanel.add(
-        //         userStoriesLabel,
-        //         new CustomConstraints(
-        //                 0, 3, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
-        // myJpanel.add(
-        //         usList,
-        //         new CustomConstraints(
-        //                 1, 3, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.NONE));
-
         myJpanel.add(
                 cancelButton,
                 new CustomConstraints(0, 4, GridBagConstraints.EAST, GridBagConstraints.NONE));
@@ -171,39 +153,21 @@ public class NewSprintForm extends JFrame implements BaseComponent {
         add(myJpanel);
     }
 
-    public Sprint getSprintObject() {
+    public List<Sprint> getSprintObject() {
         String name = nameField.getText();
         String description = descArea.getText();
         Integer length = (Integer) sprintDays.getValue();
-
         String simulationId = simulationComboBox.getSelectedItem().toString();
 
-        SprintFactory sprintFactory = SprintFactory.getSprintFactory();
 
-        Sprint mySprint = sprintFactory.createNewSprint(name, description, length, simulationId);
-
-        // int[] selectedIdx = usList.getSelectedIndices();
-
-        // for (int idx : selectedIdx) {
-        //     String stringIdentifier = listModel.getElementAt(idx);
-        //     for (UserStory userStory : UserStoryStore.getInstance().getUserStories()) {
-        //         if (stringIdentifier.equals(userStory.toString())) {
-        //             mySprint.addUserStory(userStory);
-        //             break;
-        //         }
-        //     }
-        // }
-
-        SprintStore.getInstance().addSprint(mySprint);
-
-        System.out.println(mySprint.getName() +"----"+mySprint.getSimulationID());
-
-        simulationStore.addSprint(mySprint, simulationId);
-
-        return mySprint;
+        if(SimulationStore.getInstance().getNumberofSprintsById(simulationId) > SimulationStore.getInstance().getCurrentSprintSize(simulationId)) {
+            SprintFactory sprintFactory = SprintFactory.getSprintFactory();
+            Sprint mySprint = sprintFactory.createNewSprint(name, description, length, simulationId);
+            SprintStore.getInstance().addSprint(mySprint);
+            System.out.println(mySprint.getName() +"----"+mySprint.getSimulationID());
+            simulationStore.addSprint(mySprint, simulationId);
+           }
+        return SprintStore.getInstance().getSprints();
     }
 
-    // public String getSelectedSimulation() {
-    //      ;
-    // }
 }
