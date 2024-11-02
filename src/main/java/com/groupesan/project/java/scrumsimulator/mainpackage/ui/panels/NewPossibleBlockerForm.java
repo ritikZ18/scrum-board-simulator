@@ -19,6 +19,9 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
     private JTextField nameField = new JTextField();
     private JTextArea descArea = new JTextArea();
+    private JTextField userStoryIdField = new JTextField();
+
+    private JComboBox<String> statusComboBox;
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -27,6 +30,7 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         nameField = new JTextField();
         descArea = new JTextArea();
+        userStoryIdField = new JTextField();
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -57,6 +61,27 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
 
+        JLabel userStoryIdLabel = new JLabel("User Story ID:");
+        myJpanel.add(
+                userStoryIdLabel,
+                new CustomConstraints(
+                        0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                userStoryIdField,
+                new CustomConstraints(
+                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+        JLabel statusLabel = new JLabel("Status:");
+        String[] statusOptions = {"Unresolved", "Resolved"};
+        statusComboBox = new JComboBox<>(statusOptions);
+        myJpanel.add(
+                statusLabel,
+                new CustomConstraints(
+                        0, 3, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                statusComboBox,
+                new CustomConstraints(
+                        1, 3, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
 
         JButton cancelButton = new JButton("Cancel");
 
@@ -75,6 +100,8 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
             public void actionPerformed(ActionEvent e) {
                 String name = nameField.getText().trim();
                 String description = descArea.getText().trim();
+                String userStoryId = userStoryIdField.getText().trim(); // Get User Story ID
+
 
                 boolean isInvalid = false;
 
@@ -90,6 +117,18 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                             JOptionPane.ERROR_MESSAGE);
                     isInvalid = true;
                 }
+                if (!isInvalid && userStoryId.isEmpty()) {
+                JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
+                        "User Story ID cannot be empty.", "Error in New Blocker Form",
+                        JOptionPane.ERROR_MESSAGE);
+                isInvalid = true;
+                }
+                if (!isInvalid && (statusComboBox.getSelectedItem() == null)) {
+                    JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
+                            "Please select a status.", "Error in New Blocker Form",
+                            JOptionPane.ERROR_MESSAGE);
+                    isInvalid = true;
+                }
                 if (!isInvalid) {
                     PossibleBlocker newBlocker = getPossibleBlockerObject();
                     if (newBlocker != null) {
@@ -101,10 +140,10 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 2, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 4, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 2, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 4, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
@@ -112,9 +151,11 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
     public PossibleBlocker getPossibleBlockerObject() {
         String name = nameField.getText().trim();
         String description = descArea.getText().trim();
+        String userStoryId = userStoryIdField.getText().trim();
+        String status = (String) statusComboBox.getSelectedItem();
 
         PossibleBlockerFactory possibleBlockerFactory = PossibleBlockerFactory.getInstance();
-        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name, description);
+        PossibleBlocker possibleBlocker = possibleBlockerFactory.createNewPossibleBlocker(name, description,userStoryId,status);
 
         try {
             possibleBlocker.doRegister();

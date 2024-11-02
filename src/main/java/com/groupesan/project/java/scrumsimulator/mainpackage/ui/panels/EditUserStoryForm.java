@@ -13,6 +13,8 @@ import javax.swing.border.EmptyBorder;
 
 public class EditUserStoryForm extends JFrame implements BaseComponent {
 
+
+
     Double[] pointsList = {null, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
     Double[] businessValueList = {null, 0.0, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
 
@@ -27,11 +29,14 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
     private JTextArea descArea = new JTextArea();
     private JComboBox<Double> pointsCombo = new JComboBox<>(pointsList);
     private JComboBox<Double> businessValueCombo = new JComboBox<>(businessValueList);
+    private JComboBox<String> statusCombo;
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Edit User Story " + userStory.getId().toString());
         setSize(400, 300);
+
+        String[] statuses = {"New", "In Progress", "ReadyForTest", "Done"};
 
         nameField = new JTextField(userStory.getName());
         descArea = new JTextArea(userStory.getDescription());
@@ -39,6 +44,8 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
         pointsCombo.setSelectedItem(userStory.getPointValue());
         businessValueCombo = new JComboBox<>(businessValueList);
         businessValueCombo.setSelectedItem(userStory.getBusinessValue());
+        statusCombo = new JComboBox<>(statuses);
+        statusCombo.setSelectedItem(userStory.getStatus());
 
         businessValueCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
 
@@ -92,6 +99,16 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 3, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
+        JLabel statusLabel = new JLabel("Status:");
+        myJpanel.add(
+                statusLabel,
+                new CustomConstraints(
+                        0, 4, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                statusCombo,
+                new CustomConstraints(
+                        1, 4, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
         JButton cancelButton = new JButton("Cancel");
 
         cancelButton.addActionListener(
@@ -112,6 +129,8 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
                         String description = descArea.getText();
                         Double points = (Double) pointsCombo.getSelectedItem();
                         Double businessValue = (Double) businessValueCombo.getSelectedItem();
+                        String status = (String) statusCombo.getSelectedItem();
+
 
                         boolean isInvalid = false;
 
@@ -132,6 +151,7 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
                             userStory.setDescription(description);
                             userStory.setPointValue(points);
                             userStory.setBusinessValue(businessValue);
+                            userStory.setStatus(status);
                             if (userStory.getName() != null && userStory.getDescription() != null) {
                                 dispose();
                             }
@@ -141,10 +161,10 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 4, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 5, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 4, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 5, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }

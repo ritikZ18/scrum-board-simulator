@@ -49,7 +49,7 @@ public class PossibleBlockerSolution extends ScrumObject {
 
     @Override
     public String toString() {
-        return "";
+        return name;
     }
 
     public void setName(String name) {

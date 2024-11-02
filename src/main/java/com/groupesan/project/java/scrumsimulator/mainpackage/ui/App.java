@@ -7,7 +7,6 @@ import javax.swing.*;
 
 public class App {
     public App() {}
-
     public void start() {
         this.loadTheme();
         SwingUtilities.invokeLater(
@@ -29,19 +28,19 @@ public class App {
     private void initializeUserStories() {
         UserStory a =
                 UserStoryFactory.getInstance()
-                        .createNewUserStory("predefinedUS1", "description1", 1.0,3.0);
+                        .createNewUserStory("predefinedUS1", "description1", 1.0,3.0, "New");
         a.doRegister();
         UserStoryStore.getInstance().addUserStory(a);
 
         UserStory b =
                 UserStoryFactory.getInstance()
-                        .createNewUserStory("predefinedUS2", "description2", 2.0,1.0);
+                        .createNewUserStory("predefinedUS2", "description2", 2.0,1.0, "New");
         b.doRegister();
         UserStoryStore.getInstance().addUserStory(b);
 
         UserStory c =
                 UserStoryFactory.getInstance()
-                        .createNewUserStory("predefinedUS3", "description3", 3.0,5.0);
+                        .createNewUserStory("predefinedUS3", "description3", 3.0,5.0, "New");
         c.doRegister();
         UserStoryStore.getInstance().addUserStory(c);
     }
@@ -49,13 +48,13 @@ public class App {
     private void initializePossibleBlockers() {
         PossibleBlocker a =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 1", "Dependencies on team mates");
+                        .createNewPossibleBlocker("Sprint cycle 1", "US3","US10","unresolved");
         a.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(a);
 
         PossibleBlocker b =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 2", "Technical dependencies");
+                        .createNewPossibleBlocker("Sprint cycle 2", "US4","US11","unresolved");
         b.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(b);
 

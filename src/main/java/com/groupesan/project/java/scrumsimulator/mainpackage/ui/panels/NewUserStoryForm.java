@@ -26,16 +26,20 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
     private JTextArea descArea = new JTextArea();
     private JComboBox<Double> pointsCombo = new JComboBox<>(pointsList);
     private JComboBox<Double> businessValueCombo = new JComboBox<>(businessValueList);
+    private JComboBox<String> statusCombo;
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("New User Story");
         setSize(400, 300);
 
+        String[] statuses = {"New", "In Progress", "ReadyForTest", "Done"};
+
         nameField = new JTextField();
         descArea = new JTextArea();
         pointsCombo = new JComboBox<>(pointsList);
         businessValueCombo = new JComboBox<>(businessValueList);
+        statusCombo = new JComboBox<>(statuses);
 
         businessValueCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
 
@@ -87,6 +91,16 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 3, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
+        JLabel statusLabel = new JLabel("Status:");
+        myJpanel.add(
+                statusLabel,
+                new CustomConstraints(
+                        0, 4, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                statusCombo,
+                new CustomConstraints(
+                        1, 4, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
 
         JButton cancelButton = new JButton("Cancel");
 
@@ -127,6 +141,7 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                         if(!isInvalid) {
                             UserStory newUserStory = getUserStoryObject();
                             if(newUserStory != null) {
+                                newUserStory.setStatus((String) statusCombo.getSelectedItem());
                                 dispose();
                             }
                         }
@@ -135,10 +150,10 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 4, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 5, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 4, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 5, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
@@ -159,7 +174,7 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
 
         UserStoryFactory userStoryFactory = UserStoryFactory.getInstance();
 
-        UserStory userStory = userStoryFactory.createNewUserStory(name, description, points,businessValue);
+        UserStory userStory = userStoryFactory.createNewUserStory(name, description, points,businessValue, "New");
 
         try {
             userStory.doRegister();

@@ -12,6 +12,10 @@ public class PossibleBlocker extends ScrumObject {
 
     private String description;
 
+    private String userStoryId;
+
+    private String status;
+
 
     private void validateMandatoryField(String value, String fieldName){
         if(value==null || value.trim().isEmpty()){
@@ -29,6 +33,7 @@ public class PossibleBlocker extends ScrumObject {
         validateMandatoryField(name,"Name");
         this.name = name;
         this.description = "";
+
     }
 
     /**
@@ -44,6 +49,33 @@ public class PossibleBlocker extends ScrumObject {
         validateMandatoryField(description,"Description");
         this.name = name;
         this.description = description;
+    }
+
+    /**
+     *
+     * @param name the name for the user story
+     * @param description the description for the user story for better understanding of the
+     *     requirements.
+     * @param userStoryId the user story ID for the user story
+     * @throws IllegalArgumentException if name or description or userStoryId is empty
+     */
+    public PossibleBlocker(String name, String description, String userStoryId,String status) {
+        validateMandatoryField(name, "Name");
+        validateMandatoryField(description, "Description");
+        validateMandatoryField(userStoryId, "User Story ID");
+        validateMandatoryField(status, "Status");
+        this.name = name;
+        this.description = description;
+        this.userStoryId = userStoryId;
+        this.status = status;
+    }
+
+    public String getUserStoryId() {
+        return userStoryId;
+    }
+
+    public void setUserStoryId(String userStoryId) {
+        this.userStoryId = userStoryId;
     }
 
     protected void register() {
@@ -75,7 +107,7 @@ public class PossibleBlocker extends ScrumObject {
 
     @Override
     public String toString() {
-        return "";
+        return "" + this.id;
     }
 
     /**
@@ -103,6 +135,14 @@ public class PossibleBlocker extends ScrumObject {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

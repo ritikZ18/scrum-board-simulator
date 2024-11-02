@@ -5,10 +5,11 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.core.ScrumRole;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -285,6 +286,19 @@ public class DemoPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
-        add(myJpanel);
+
+        //Button for FineTuneProbability
+        JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
+        fineTuneProbabilityButton.addActionListener(e-> FineTuneProbabilityWidget.openFineTuneWindow());
+        myJpanel.add(fineTuneProbabilityButton,
+                new CustomConstraints(
+                        4, 3, GridBagConstraints.EAST, 1.0, 0, GridBagConstraints.HORIZONTAL));
+
+        getContentPane().add(myJpanel);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
     }
+
+
 }

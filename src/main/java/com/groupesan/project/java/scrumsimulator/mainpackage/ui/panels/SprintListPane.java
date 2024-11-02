@@ -1,7 +1,6 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.Sprint;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintFactory;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.SprintWidget;
@@ -35,17 +34,19 @@ public class SprintListPane extends JFrame implements BaseComponent {
         myJpanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         myJpanel.setLayout(myGridbagLayout);
 
-        Sprint aSprint = SprintFactory.getSprintFactory().createNewSprint("foo", "bar", 2);
-        Sprint aSprint2 = SprintFactory.getSprintFactory().createNewSprint("foo2", "bar2", 4);
-        widgets.add(new SprintWidget(aSprint));
-        widgets.add(new SprintWidget(aSprint2));
+        // Sprint aSprint = SprintFactory.getSprintFactory().createNewSprint("foo", "bar", 2);
+        // Sprint aSprint2 = SprintFactory.getSprintFactory().createNewSprint("foo2", "bar2", 4);
+        // widgets.add(new SprintWidget(aSprint));
+        // widgets.add(new SprintWidget(aSprint2));
 
+        if (SprintStore.getInstance().getSprints().size() != 0){
         for (Sprint sprint : SprintStore.getInstance().getSprints()) {
             widgets.add(new SprintWidget(sprint));
         }
-
+}
         JPanel subPanel = new JPanel();
         subPanel.setLayout(new GridBagLayout());
+        if (widgets.size() != 0){
         int i = 0;
         for (SprintWidget widget : widgets) {
             subPanel.add(
@@ -57,7 +58,7 @@ public class SprintListPane extends JFrame implements BaseComponent {
                             1.0,
                             0.1,
                             GridBagConstraints.HORIZONTAL));
-        }
+        }}
 
         myJpanel.add(
                 new JScrollPane(subPanel),
@@ -76,8 +77,12 @@ public class SprintListPane extends JFrame implements BaseComponent {
                                 new java.awt.event.WindowAdapter() {
                                     public void windowClosed(
                                             java.awt.event.WindowEvent windowEvent) {
-                                        Sprint newSprint = form.getSprintObject();
-                                        widgets.add(new SprintWidget(newSprint));
+
+                                        List<Sprint> sprintList = form.getSprintObject();
+                                        for(Sprint sprint: sprintList)
+                                        {
+                                            widgets.add(new SprintWidget(sprint));
+                                        }
                                         int idx = widgets.size() - 1;
                                         subPanel.add(
                                                 widgets.get(idx),

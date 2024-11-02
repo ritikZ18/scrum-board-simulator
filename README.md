@@ -29,3 +29,59 @@ To clean the project (remove all build artifacts), run the following gradle comm
 
 ### Mac/Linux/Git Bash/WSL:
 `./gradlew clean`
+
+
+
+
+# About the Use Case (SRS_UC_04)
+
+- User Should be able to move user stories from product backlog to sprint backlog.
+
+SRS_UC_04_Variation
+
+- User should be able to move randomly selected user stories from product backlog to sprint backlog.
+
+
+How to test
+
+#### Create new sprint
+ 
+ - Click "Sprints" -> Click "New Sprint" -> Fill all fields -> Click "Submit"
+
+#### Move User Story to Sprint
+
+ - Click "Populate Sprint Backlog" -> Select User Story from dropdown-> Select Sprint from dropdown -> Click "Move to Sprint Backlog"
+
+#### Deselect All User Stories
+
+ - Click "Deselect"
+
+#### Move Random User Story
+
+ - Select Sprint from dropdown -> Click "Move Random User Story"
+
+#### View Sprint Backlog
+
+ - Click "View Sprint Backlog" -> Select Sprint from dropdown -> Click "Select"
+
+
+# About the Use Case (SRS_UC_02)
+
+ - Up on creation of a UserStory, it includes a business value attribute in New User Story Form and there are restrictions for name and description to be mandatory while submitting a form. This can only be altered by the Product Owner. Other roles, including the Scrum Master and Developer, do not have permission to modify this attribute.
+
+ - When a new possible blocker is added, it will automatically appear in the system without the need for a page reload, and it can be edited repeatedly.
+
+# About the Use Case (SRS_UC_03)
+ - CLick 'General Page' -> User can populate sprint count and sprint duration
+ - Click 'Switch Role' -> select 'Scrum Master'
+ - Student with scrum role is only able to populate the sprint count and sprint duration
+
+# Able to edit user stories multiple times
+- Click 'User Story' -> Click on user story
+- Update values and click on submit
+- Repeat multiple times
+
+# List of possible solutions
+- Click on 'Posible Blocker Solutions'
+- User can populate and update the list of blockers
+
