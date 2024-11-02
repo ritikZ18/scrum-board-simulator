@@ -21,15 +21,34 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
     private JLabel descLabel;
     private JLabel userStoryIdLabel;
     private JLabel statusLabel;
+    private JLabel probabilityLabel;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
     private transient PossibleBlocker possibleBlocker;
+    private  transient FineTuneProbabilityWidget fineTuneProbabilityWidget;
 
-    public PossibleBlockerWidget(PossibleBlocker possibleBlocker) {
+    public PossibleBlockerWidget(PossibleBlocker possibleBlocker, FineTuneProbabilityWidget fineTuneProbabilityWidget) {
         this.possibleBlocker = possibleBlocker;
+        this.fineTuneProbabilityWidget = fineTuneProbabilityWidget != null ? fineTuneProbabilityWidget : new FineTuneProbabilityWidget();
+        this.initLabels();
         this.init();
     }
+
+
+    public void initLabels(){
+        idLabel = new JLabel(possibleBlocker.getId().toString());
+        nameLabel = new JLabel(possibleBlocker.getName());
+        descLabel = new JLabel(possibleBlocker.getDescription());
+        userStoryIdLabel = new JLabel(possibleBlocker.getUserStoryId());
+        statusLabel = new JLabel(possibleBlocker.getStatus());
+        // int probability = fineTuneProbabilityWidget.getBlockerProbability(possibleBlocker);
+        probabilityLabel = new JLabel("Probability: " + possibleBlocker.getBlockerProbability() + "%");
+    }
+
+
+
+
 
     public void init() {
         removeAll();
@@ -60,6 +79,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         add(nameLabel, new CustomConstraints(2, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(descLabel, new CustomConstraints(3, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(statusLabel, new CustomConstraints(4, 0, GridBagConstraints.WEST, 0.3, 0.0, GridBagConstraints.HORIZONTAL));
+        add(probabilityLabel, new CustomConstraints(5, 0, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL)); // Add to the panel
 
         revalidate();
         repaint();
@@ -82,6 +102,8 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         nameLabel.setText(possibleBlocker.getName());
         descLabel.setText(possibleBlocker.getDescription());
         statusLabel.setText(possibleBlocker.getStatus());
+        probabilityLabel.setText("Probability: "+possibleBlocker.getBlockerProbability()+ "%");
+
         revalidate();
         repaint();
     }
