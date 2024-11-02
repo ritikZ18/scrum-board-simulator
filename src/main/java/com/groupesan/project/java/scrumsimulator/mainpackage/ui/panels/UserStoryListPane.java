@@ -67,6 +67,7 @@ public class UserStoryListPane extends JFrame implements BaseComponent {
                         0, 0, GridBagConstraints.WEST, 1.0, 0.8, GridBagConstraints.HORIZONTAL));
 
         JButton newSprintButton = new JButton("New User Story");
+        newSprintButton.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
         newSprintButton.addActionListener(
                 new ActionListener() {
                     @Override

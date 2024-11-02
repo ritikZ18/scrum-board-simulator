@@ -41,7 +41,12 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
         businessValueCombo = new JComboBox<>(businessValueList);
         statusCombo = new JComboBox<>(statuses);
 
+        nameField.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        descArea.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
         businessValueCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        pointsCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
+        statusCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
+
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -120,6 +125,7 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                     public void actionPerformed(ActionEvent e) {
                         String name=nameField.getText().trim();
                         String description=descArea.getText().trim();
+                        Double businessValue = (Double) businessValueCombo.getSelectedItem();
 
                         // Delete previous error messages
                         boolean isInvalid = false;
@@ -135,6 +141,12 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                         if(!isInvalid && description.isEmpty()){
                             JOptionPane.showMessageDialog(NewUserStoryForm.this,
                                     "User Story Description cannot be empty.", "Error in New User Story Form",
+                                    JOptionPane.ERROR_MESSAGE);
+                            isInvalid = true;
+                        }
+                        if(!isInvalid && businessValue==null){
+                            JOptionPane.showMessageDialog(NewUserStoryForm.this,
+                                    "User Story business value cannot be empty.", "Error in New User Story Form",
                                     JOptionPane.ERROR_MESSAGE);
                             isInvalid = true;
                         }
