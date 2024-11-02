@@ -3,6 +3,7 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolution;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolutionStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.PossibleBlockerSolutionWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import java.awt.GridBagConstraints;
@@ -18,7 +19,12 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 public class PossibleBlockerSolutionsListPane extends JFrame implements BaseComponent {
+
+    private FineTuneProbabilityWidget fineTuneProbabilityWidget;
+
+
     public PossibleBlockerSolutionsListPane() {
+        this.fineTuneProbabilityWidget = new FineTuneProbabilityWidget();
         this.init();
     }
 
@@ -35,7 +41,7 @@ public class PossibleBlockerSolutionsListPane extends JFrame implements BaseComp
         myJpanel.setLayout(myGridbagLayout);
 
         for (PossibleBlockerSolution possibleBlockerSolution : PossibleBlockerSolutionStore.getInstance().getPossibleBlockerSolutions()) {
-            widgets.add(new PossibleBlockerSolutionWidget(possibleBlockerSolution));
+            widgets.add(new PossibleBlockerSolutionWidget(possibleBlockerSolution, fineTuneProbabilityWidget));
         }
 
         JPanel subPanel = new JPanel();
@@ -73,14 +79,14 @@ public class PossibleBlockerSolutionsListPane extends JFrame implements BaseComp
                                         PossibleBlockerSolution possibleBlockerSolution = form.getPossibleBlockerSolutionObject();
                                         if (possibleBlockerSolution != null) {
                                             PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(possibleBlockerSolution);
-                                            addPossibleBlockerSolutionWidget(possibleBlockerSolution);
+                                            addPossibleBlockerSolutionWidget(possibleBlockerSolution, fineTuneProbabilityWidget);
                                         }
                                     }
                                 });
                     }
 
-                    private void addPossibleBlockerSolutionWidget(PossibleBlockerSolution possibleBlockerSolution) {
-                        PossibleBlockerSolutionWidget widget = new PossibleBlockerSolutionWidget(possibleBlockerSolution);
+                    private void addPossibleBlockerSolutionWidget(PossibleBlockerSolution possibleBlockerSolution, FineTuneProbabilityWidget fineTuneProbabilityWidget) {
+                        PossibleBlockerSolutionWidget widget = new PossibleBlockerSolutionWidget(possibleBlockerSolution, fineTuneProbabilityWidget);
                         widgets.add(widget);
                         int idx = widgets.size() - 1;
                         subPanel.add(
