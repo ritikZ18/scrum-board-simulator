@@ -18,6 +18,7 @@ public class SimulationStore {
     private int sprintLength = 0;
     private int numberOfSprints = 0;
     private int currentNumberOfSprints = 0;
+    private JSONArray runningSimulationSprints;
 
     private static SimulationStore simulationStore;
 
@@ -80,6 +81,7 @@ public class SimulationStore {
                     JOptionPane.showMessageDialog(null, "Error writing to simulation.JSON");
                 }
     }
+
 
     public int getSprintLengthBySimId(String simulationID) {
         JSONObject obj = getSimulationData();
@@ -153,6 +155,20 @@ public class SimulationStore {
         } else {
             simulations = new JSONArray();
         }
+    }
+
+    public JSONArray getRunningSimulationSprints() {
+        JSONObject obj = getSimulationData();
+        JSONArray simulations = obj.getJSONArray("Simulations");
+        if (simulations != null) {
+            for(int i = 0; i < simulations.length(); i++) {
+                if (simulations.getJSONObject(i).getString("Status").equals("In-Progress")) {
+                    runningSimulationSprints = simulations.getJSONObject(i).getJSONArray("Sprints");
+                    break;
+                }
+            }
+        }
+        return runningSimulationSprints;
     }
 }
 
