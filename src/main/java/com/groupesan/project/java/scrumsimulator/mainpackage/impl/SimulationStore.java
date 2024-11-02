@@ -20,6 +20,8 @@ public class SimulationStore {
     private ArrayList<String> simulationIds = new ArrayList<>();
     private static final String JSON_FILE_PATH = "./src/main/resources/simulation.JSON";
     private int sprintLength = 0;
+    private int numberOfSprints = 0;
+    private int currentNumberOfSprints = 0;
 
     private static SimulationStore simulationStore;
 
@@ -81,10 +83,39 @@ public class SimulationStore {
             for(int i = 0; i < simulations.length(); i++) {
                 if (simulations.getJSONObject(i).getString("ID").equals(simulationID)) {
                     sprintLength = simulations.getJSONObject(i).getInt("SprintLength");
+                    break;
                 }
             }
         }
         return sprintLength;
+    }
+
+    public int getNumberofSprintsById(String simulationID) {
+        JSONObject obj = getSimulationData();
+        JSONArray simulations = obj.getJSONArray("Simulations");
+        if (simulations != null) {
+            for(int i = 0; i < simulations.length(); i++) {
+                if (simulations.getJSONObject(i).getString("ID").equals(simulationID)) {
+                    numberOfSprints = simulations.getJSONObject(i).getInt("NumberOfSprints");
+                    break;
+                }
+            }
+        }
+        return numberOfSprints;
+    }
+
+    public int getCurrentSprintSize(String simulationId) {
+        JSONObject obj = getSimulationData();
+        JSONArray simulations = obj.getJSONArray("Simulations");
+        if (simulations != null) {
+            for(int i = 0; i < simulations.length(); i++) {
+                if (simulations.getJSONObject(i).getString("ID").equals(simulationId)) {
+                    currentNumberOfSprints = simulations.getJSONObject(i).getJSONArray("Sprints").length();
+                    break;
+                }
+            }
+        }
+        return currentNumberOfSprints;
     }
 }
 

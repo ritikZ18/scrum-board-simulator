@@ -68,13 +68,13 @@ public class App {
     private void initializePossibleBlockerSolutions() {
         PossibleBlockerSolution x =
                 PossibleBlockerSolutionFactory.getInstance()
-                        .createNewPossibleBlockerSolution("Dependencies on teammates", "Hello 1");
+                        .createNewPossibleBlockerSolution("Dependencies on team mates", "discuss with scrumbledores team");
         x.doRegister();
         PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(x);
 
         PossibleBlockerSolution y =
                 PossibleBlockerSolutionFactory.getInstance()
-                        .createNewPossibleBlockerSolution("Technical dependencies", "Hello 2");
+                        .createNewPossibleBlockerSolution("Technical dependencies", "discuss with hayden team");
         y.doRegister();
         PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(y);
 
