@@ -1,19 +1,15 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.impl;
 
+import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import java.io.FileInputStream;
 
 public class SimulationStore {
     
@@ -26,6 +22,12 @@ public class SimulationStore {
 
     private static SimulationStore simulationStore;
 
+    private JSONArray simulations;
+
+    public SimulationStore() {
+        loadSimulationsFromFile();
+    }
+
     public static SimulationStore getInstance() {
         if (simulationStore == null) {
             simulationStore = new SimulationStore();
@@ -33,7 +35,7 @@ public class SimulationStore {
         return simulationStore;
     }
 
-    private static JSONObject getSimulationData() {
+    private JSONObject getSimulationData() {
         try (FileInputStream fis = new FileInputStream(JSON_FILE_PATH);){
             JSONTokener tokener = new JSONTokener(fis);
             return new JSONObject(tokener);
@@ -41,11 +43,14 @@ public class SimulationStore {
             e.printStackTrace();
             return null;
         }   
-    }   
+    }
+
+
 
     public ArrayList<String> getSimulationsIDs() {
         JSONObject obj = getSimulationData();
         JSONArray simulations = obj.getJSONArray("Simulations");
+        simulationIds.clear();
         if (simulations != null) {
             
             for (int i = 0; i < simulations.length(); i++) {
@@ -118,6 +123,38 @@ public class SimulationStore {
             }
         }
         return currentNumberOfSprints;
+    }
+
+    public void updateSimulationStatus(String simulationId, String newStatus) {
+        for (int i = 0; i < simulations.length(); i++) {
+            JSONObject simulation = simulations.getJSONObject(i);
+            if (simulation.getString("ID").equals(simulationId)) {
+                simulation.put("Status", newStatus);
+                break;
+            }
+        }
+        saveSimulationsToFile();
+    }
+
+    private void saveSimulationsToFile() {
+        try (Writer file = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(JSON_FILE_PATH), StandardCharsets.UTF_8))) {
+            JSONObject root = new JSONObject();
+            root.put("Simulations", simulations);
+            file.write(root.toString(2));
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadSimulationsFromFile() {
+        JSONObject obj = getSimulationData();
+        if (obj != null && obj.has("Simulations")) {
+            simulations = obj.getJSONArray("Simulations");
+        } else {
+            simulations = new JSONArray();
+        }
     }
 
     public JSONArray getRunningSimulationSprints() {
