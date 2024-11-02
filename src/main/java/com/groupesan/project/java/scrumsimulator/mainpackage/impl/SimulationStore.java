@@ -22,6 +22,7 @@ public class SimulationStore {
     private static SimulationStore simulationStore;
 
     private JSONArray simulations;
+    private boolean useInMemoryStore = false;
 
     public SimulationStore() {
         loadSimulationsFromFile();
@@ -123,6 +124,10 @@ public class SimulationStore {
         return currentNumberOfSprints;
     }
 
+    public void setUseInMemoryStore(boolean useInMemoryStore) {
+        this.useInMemoryStore = useInMemoryStore;
+    }
+
     public void updateSimulationStatus(String simulationId, String newStatus) {
         for (int i = 0; i < simulations.length(); i++) {
             JSONObject simulation = simulations.getJSONObject(i);
@@ -131,7 +136,9 @@ public class SimulationStore {
                 break;
             }
         }
-        saveSimulationsToFile();
+        if (!useInMemoryStore) {
+            saveSimulationsToFile();
+        }
     }
 
     private void saveSimulationsToFile() {
@@ -154,5 +161,30 @@ public class SimulationStore {
             simulations = new JSONArray();
         }
     }
+
+    public String getSimulationStatus(String simulationId) {
+        for (int i = 0; i < simulations.length(); i++) {
+            JSONObject simulation = simulations.getJSONObject(i);
+            if (simulation.getString("ID").equals(simulationId)) {
+                return simulation.getString("Status");
+            }
+        }
+        return null; // or throw an exception if the simulation is not found
+    }
+
+    public void addSimulation(JSONObject simulation) {
+        if (simulations == null) {
+            simulations = new JSONArray();
+        }
+        simulations.put(simulation);
+        if (!useInMemoryStore) {
+            saveSimulationsToFile();
+        }
+    }
+
+    public void clearSimulations() {
+        simulations = new JSONArray();
+    }
+
 }
 

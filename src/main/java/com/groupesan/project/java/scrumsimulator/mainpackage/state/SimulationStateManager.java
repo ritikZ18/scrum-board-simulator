@@ -52,8 +52,6 @@ public class SimulationStateManager {
 
     /** Method to set the simulation state to not running. */
     public void stopSimulation() {
-        // Logic to stop the simulation
-        System.out.println("Simulation stopped: " + currentSimulationId);
         if (this.isRunning && this.currentSimulationId != null) {
             simulationStore.updateSimulationStatus(this.currentSimulationId, "Done");
             this.isRunning = false;
