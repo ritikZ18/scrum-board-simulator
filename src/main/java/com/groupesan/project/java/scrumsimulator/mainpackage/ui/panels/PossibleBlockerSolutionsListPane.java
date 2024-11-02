@@ -5,16 +5,13 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocke
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.PossibleBlockerSolutionWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class PossibleBlockerSolutionsListPane extends JFrame implements BaseComponent {
@@ -27,7 +24,7 @@ public class PossibleBlockerSolutionsListPane extends JFrame implements BaseComp
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Solutions list for blockers");
-        setSize(600, 400);
+        setSize(700, 600);
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();

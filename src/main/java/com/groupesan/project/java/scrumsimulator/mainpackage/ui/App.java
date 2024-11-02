@@ -17,6 +17,7 @@ public class App {
                         initializeUserStories();
                         // Initializing possible blockers
                         initializePossibleBlockers();
+                        // Initializing possible solutions
                         initializePossibleBlockerSolutions();
 
                         // Load DemoPane
@@ -64,13 +65,13 @@ public class App {
     private void initializePossibleBlockerSolutions() {
         PossibleBlockerSolution x =
                 PossibleBlockerSolutionFactory.getInstance()
-                        .createNewPossibleBlockerSolution("Dependencies on team mates", "discuss with scrumbledores team");
+                        .createNewPossibleBlockerSolution("PB1","get knowledge from other teams");
         x.doRegister();
         PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(x);
 
         PossibleBlockerSolution y =
                 PossibleBlockerSolutionFactory.getInstance()
-                        .createNewPossibleBlockerSolution("Technical dependencies", "discuss with hayden team");
+                        .createNewPossibleBlockerSolution( "PB2","get information from geeks for geeks");
         y.doRegister();
         PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(y);
 

@@ -13,8 +13,8 @@ public class PossibleBlockerSolutionFactory {
 
     private PossibleBlockerSolutionFactory() {}
 
-    public PossibleBlockerSolution createNewPossibleBlockerSolution(String name, String solution) {
-        PossibleBlockerSolution newPB = new PossibleBlockerSolution(name, solution);
+    public PossibleBlockerSolution createNewPossibleBlockerSolution(String blockerId, String solution) {
+        PossibleBlockerSolution newPB = new PossibleBlockerSolution(blockerId,solution);
         return newPB;
     }
 }

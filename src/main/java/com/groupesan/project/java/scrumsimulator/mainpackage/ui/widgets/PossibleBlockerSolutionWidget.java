@@ -17,7 +17,7 @@ public class PossibleBlockerSolutionWidget extends JPanel implements BaseCompone
     private static final long serialVersionUID = 1L;
 
     private JLabel idLabel;
-    private JLabel nameLabel;
+    private JLabel blockerIdLabel;
     private JLabel solLabel;
 
     private transient PossibleBlockerSolution possibleBlockerSolution;
@@ -31,7 +31,7 @@ public class PossibleBlockerSolutionWidget extends JPanel implements BaseCompone
         removeAll();
 
         idLabel = new JLabel(possibleBlockerSolution.getId().toString());
-        nameLabel = new JLabel(possibleBlockerSolution.getName());
+        blockerIdLabel = new JLabel(possibleBlockerSolution.getBlockerId());
         solLabel = new JLabel(possibleBlockerSolution.getSolution());
 
         MouseAdapter openEditDialog = new MouseAdapter() {
@@ -42,14 +42,15 @@ public class PossibleBlockerSolutionWidget extends JPanel implements BaseCompone
         };
 
         idLabel.addMouseListener(openEditDialog);
-        nameLabel.addMouseListener(openEditDialog);
+        blockerIdLabel.addMouseListener(openEditDialog);
         solLabel.addMouseListener(openEditDialog);
 
         setLayout(new GridBagLayout());
 
-        add(idLabel, new CustomConstraints(0, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
-        add(nameLabel, new CustomConstraints(1, 0, GridBagConstraints.WEST, 0.2, 0.0, GridBagConstraints.HORIZONTAL));
+        add(idLabel, new CustomConstraints(0, 0, GridBagConstraints.WEST, 0.9, 0.0, GridBagConstraints.HORIZONTAL));
+        add(blockerIdLabel, new CustomConstraints(1, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(solLabel, new CustomConstraints(2, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
+        add(solLabel, new CustomConstraints(3, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
 
         revalidate();
         repaint();
@@ -69,7 +70,7 @@ public class PossibleBlockerSolutionWidget extends JPanel implements BaseCompone
 
     private void updateDisplay() {
         idLabel.setText(possibleBlockerSolution.getId().toString());
-        nameLabel.setText(possibleBlockerSolution.getName());
+        blockerIdLabel.setText(possibleBlockerSolution.getBlockerId());
         solLabel.setText(possibleBlockerSolution.getSolution());
         revalidate();
         repaint();
