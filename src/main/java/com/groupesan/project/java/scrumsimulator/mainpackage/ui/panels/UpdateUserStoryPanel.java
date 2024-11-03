@@ -115,5 +115,5 @@ public class UpdateUserStoryPanel extends JFrame {
             }
         }
     }
-}
+    }
 }
