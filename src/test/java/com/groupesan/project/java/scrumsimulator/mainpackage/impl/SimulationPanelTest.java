@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
 
-class SimulationStatusChangeTest {
+class SimulationPanelTest {
 
     private SimulationStateManager simulationStateManager;
     private SimulationStore simulationStore;

@@ -29,36 +29,6 @@ public class SimulationPanel extends JPanel implements BaseComponent {
     }
 
     @Override
-    /*public void init() {
-        startSimulationButton = new JButton("Start Simulation");
-        stopSimulationButton = new JButton("Stop Simulation");
-
-        stopSimulationButton.setVisible(false);
-
-        startSimulationButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        simulationStateManager.startSimulation();
-                        JOptionPane.showMessageDialog(null, "Simulation started!");
-                        updateButtonVisibility();
-                    }
-                });
-
-        stopSimulationButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        simulationStateManager.stopSimulation();
-                        JOptionPane.showMessageDialog(null, "Simulation stopped!");
-                        updateButtonVisibility();
-                    }
-                });
-
-        add(startSimulationButton);
-        add(stopSimulationButton);
-    }*/
-
     public void init(){
         startSimulationButton = new JButton("Start a Simulation");
         stopSimulationButton = new JButton("Stop Simulation");
@@ -69,7 +39,6 @@ public class SimulationPanel extends JPanel implements BaseComponent {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         startSimulationByID();
-                        JOptionPane.showMessageDialog(null, "Simulation started!");
                         updateButtonVisibility();
                     }
                 });
@@ -89,7 +58,6 @@ public class SimulationPanel extends JPanel implements BaseComponent {
     }
 
     private void updateButtonVisibility() {
-        // Show/hide buttons based on the simulation state
         if (simulationStateManager.isRunning()) {
             stopSimulationButton.setVisible(true);
             startSimulationButton.setVisible(false);
@@ -103,7 +71,7 @@ public class SimulationPanel extends JPanel implements BaseComponent {
 
     private void startSimulationByID() {
         SimulationStore simulationStore = SimulationStore.getInstance();
-        ArrayList<String> simulationIds = simulationStore.getSimulationsIDs();  // Retrieve the IDs from the store
+        ArrayList<String> simulationIds = simulationStore.getSimulationsIDs();
         if (simulationIds != null && !simulationIds.isEmpty()) {
             JComboBox<String> simulationIdDropdown = new JComboBox<>(simulationIds.toArray(new String[0]));
             int response = JOptionPane.showConfirmDialog(this, simulationIdDropdown, "Select a Simulation ID:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
