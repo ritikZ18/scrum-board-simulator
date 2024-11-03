@@ -16,7 +16,7 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
 
 
     Double[] pointsList = {null, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
-    Double[] businessValueList = {null, 0.0, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
+    Double[] businessValueList = {null, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
 
     public EditUserStoryForm(UserStory userStory) {
         this.userStory = userStory;
@@ -47,7 +47,11 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
         statusCombo = new JComboBox<>(statuses);
         statusCombo.setSelectedItem(userStory.getStatus());
 
+        nameField.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        descArea.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
         businessValueCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        pointsCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
+        statusCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -143,6 +147,12 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
                         if(!isInvalid && description.isEmpty()){
                             JOptionPane.showMessageDialog(EditUserStoryForm.this,
                                     "User Story Description cannot be empty.", "Error in New User Story Form",
+                                    JOptionPane.ERROR_MESSAGE);
+                            isInvalid = true;
+                        }
+                        if(!isInvalid && businessValue==null){
+                            JOptionPane.showMessageDialog(EditUserStoryForm.this,
+                                    "User Story business value cannot be empty.", "Error in New User Story Form",
                                     JOptionPane.ERROR_MESSAGE);
                             isInvalid = true;
                         }
