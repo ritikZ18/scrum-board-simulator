@@ -15,6 +15,9 @@ import java.util.Map;
 
 public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, Serializable {
 
+    private static boolean isSimulationRunning = false;
+    private static FineTuneProbabilityWidget staticInstance;
+
 
     private JLabel selectedBlockerValue;
     private JLabel selectedSolutionValue;
@@ -156,6 +159,13 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
 
 
     private void setAction() {
+        if (!blockerProbabilitySlider.isEnabled() || !solutionProbabilitySlider.isEnabled()) {
+            JOptionPane.showMessageDialog(this,
+                    "Cannot set probabilities while simulation is running.",
+                    "Action Blocked", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         PossibleBlocker selectedBlocker = (PossibleBlocker) blockerDropdown.getSelectedItem();
         PossibleBlockerSolution selectedSolution = (PossibleBlockerSolution) solutionDropdown.getSelectedItem();
 
@@ -177,6 +187,12 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
 
     //random value select
     private void randomAction() {
+        if (!blockerProbabilitySlider.isEnabled() || !solutionProbabilitySlider.isEnabled()) {
+            JOptionPane.showMessageDialog(this,
+                    "Cannot set random probabilities while simulation is running.",
+                    "Action Blocked", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         blockerProbabilitySlider.setValue(secureRandom.nextInt(101));
         solutionProbabilitySlider.setValue(secureRandom.nextInt(101));
         setAction();
@@ -210,7 +226,10 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
     }
 
     public static void openFineTuneWindow() {
-        FineTuneProbabilityWidget staticInstance = new FineTuneProbabilityWidget();
+        //FineTuneProbabilityWidget staticInstance = new FineTuneProbabilityWidget();
+        if (staticInstance == null) {
+            staticInstance = new FineTuneProbabilityWidget();
+        }
         staticInstance.setPreferredSize(new Dimension(400, 500));
         JFrame fineTuneFrame = new JFrame("Fine Tune Probability");
         fineTuneFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -218,11 +237,48 @@ public class FineTuneProbabilityWidget extends JPanel implements BaseComponent, 
         fineTuneFrame.pack();
         fineTuneFrame.setLocationRelativeTo(null);
         fineTuneFrame.setVisible(true);
+        staticInstance.updateSliderState();
     }
 
     private void set(GridBagLayout gridBagLayout) {
         setLayout(gridBagLayout);
     }
 
+
+    public static void setSimulationRunning(boolean running) {
+        isSimulationRunning = running;
+        if (staticInstance != null) {
+            staticInstance.updateSliderState();
+        }
+    }
+
+    private void updateSliderState() {
+        boolean enabled = !isSimulationRunning;
+        blockerProbabilitySlider.setEnabled(enabled);
+        solutionProbabilitySlider.setEnabled(enabled);
+
+        // Update the appearance of the sliders
+        updateSliderAppearance(blockerProbabilitySlider);
+        updateSliderAppearance(solutionProbabilitySlider);
+
+        // Optionally, update labels to indicate disabled state
+        if (!enabled) {
+            selectedBlockerValue.setText("Blocker: " + blockerProbabilitySlider.getValue() + "% (Locked)");
+            selectedSolutionValue.setText("Solution: " + solutionProbabilitySlider.getValue() + "% (Locked)");
+        } else {
+            selectedBlockerValue.setText("Blocker: " + blockerProbabilitySlider.getValue() + "%");
+            selectedSolutionValue.setText("Solution: " + solutionProbabilitySlider.getValue() + "%");
+        }
+    }
+
+    private void updateSliderAppearance(JSlider slider) {
+        if (!slider.isEnabled()) {
+            slider.setForeground(Color.GRAY);
+            slider.setBackground(new Color(240, 240, 240)); // Light gray background
+        } else {
+            slider.setForeground(null); // Reset to default color
+            slider.setBackground(null); // Reset to default background
+        }
+    }
 
 }

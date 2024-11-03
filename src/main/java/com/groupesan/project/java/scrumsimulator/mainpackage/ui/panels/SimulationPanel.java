@@ -3,6 +3,7 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 
 import java.awt.*;
@@ -17,6 +18,10 @@ public class SimulationPanel extends JPanel implements BaseComponent {
     private JButton startSimulationButton;
     private JButton stopSimulationButton;
 
+
+    public static void notifySimulationState(boolean isRunning) {
+        FineTuneProbabilityWidget.setSimulationRunning(isRunning);
+    }
     /** Simulation Panel Initialization. */
     protected SimulationPanel(SimulationStateManager simulationStateManager) {
         this.simulationStateManager = simulationStateManager;
@@ -88,9 +93,11 @@ public class SimulationPanel extends JPanel implements BaseComponent {
         if (simulationStateManager.isRunning()) {
             stopSimulationButton.setVisible(true);
             startSimulationButton.setVisible(false);
+            notifySimulationState(true);
         } else {
             stopSimulationButton.setVisible(false);
             startSimulationButton.setVisible(true);
+            notifySimulationState(false);
         }
     }
 
