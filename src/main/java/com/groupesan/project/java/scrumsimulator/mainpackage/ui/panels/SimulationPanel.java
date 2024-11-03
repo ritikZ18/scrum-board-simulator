@@ -3,6 +3,7 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 
 import java.awt.*;
@@ -17,6 +18,10 @@ public class SimulationPanel extends JPanel implements BaseComponent {
     private JButton startSimulationButton;
     private JButton stopSimulationButton;
 
+
+    public static void notifySimulationState(boolean isRunning) {
+        FineTuneProbabilityWidget.setSimulationRunning(isRunning);
+    }
     /** Simulation Panel Initialization. */
     protected SimulationPanel(SimulationStateManager simulationStateManager) {
         this.simulationStateManager = simulationStateManager;
@@ -34,7 +39,6 @@ public class SimulationPanel extends JPanel implements BaseComponent {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         startSimulationByID();
-                        JOptionPane.showMessageDialog(null, "Simulation started!");
                         updateButtonVisibility();
                     }
                 });
@@ -54,19 +58,20 @@ public class SimulationPanel extends JPanel implements BaseComponent {
     }
 
     private void updateButtonVisibility() {
-        // Show/hide buttons based on the simulation state
         if (simulationStateManager.isRunning()) {
             stopSimulationButton.setVisible(true);
             startSimulationButton.setVisible(false);
+            notifySimulationState(true);
         } else {
             stopSimulationButton.setVisible(false);
             startSimulationButton.setVisible(true);
+            notifySimulationState(false);
         }
     }
 
     private void startSimulationByID() {
         SimulationStore simulationStore = SimulationStore.getInstance();
-        ArrayList<String> simulationIds = simulationStore.getSimulationsIDs();  // Retrieve the IDs from the store
+        ArrayList<String> simulationIds = simulationStore.getSimulationsIDs();
         if (simulationIds != null && !simulationIds.isEmpty()) {
             JComboBox<String> simulationIdDropdown = new JComboBox<>(simulationIds.toArray(new String[0]));
             int response = JOptionPane.showConfirmDialog(this, simulationIdDropdown, "Select a Simulation ID:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);

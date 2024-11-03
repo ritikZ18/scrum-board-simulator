@@ -1,7 +1,9 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolution;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolutionFactory;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 
@@ -10,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class NewPossibleBlockerSolutionForm extends JFrame implements BaseComponent {
 
@@ -17,15 +20,14 @@ public class NewPossibleBlockerSolutionForm extends JFrame implements BaseCompon
         this.init();
     }
 
-    private JTextField nameField = new JTextField();
     private JTextArea solArea = new JTextArea();
+    private JComboBox<String> possibleBlockersDropdown;
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("New Possible Blocker");
         setSize(400, 300);
 
-        nameField = new JTextField();
         solArea = new JTextArea();
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
@@ -37,16 +39,6 @@ public class NewPossibleBlockerSolutionForm extends JFrame implements BaseCompon
 
         setLayout(myBorderLayout);
 
-        JLabel nameLabel = new JLabel("Name:");
-        myJpanel.add(
-                nameLabel,
-                new CustomConstraints(
-                        0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
-        myJpanel.add(
-                nameField,
-                new CustomConstraints(
-                        1, 0, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
-
         JLabel solLabel = new JLabel("Solution:");
         myJpanel.add(
                 solLabel,
@@ -56,6 +48,15 @@ public class NewPossibleBlockerSolutionForm extends JFrame implements BaseCompon
                 new JScrollPane(solArea),
                 new CustomConstraints(
                         1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
+        // Dropdown for selecting possible blockers
+        possibleBlockersDropdown = new JComboBox<>(getPossibleBlockers());
+        myJpanel.add(
+                new JLabel("Select Existing Blocker:"),
+                new CustomConstraints(0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                possibleBlockersDropdown,
+                new CustomConstraints(1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
 
 
         JButton cancelButton = new JButton("Cancel");
@@ -73,18 +74,11 @@ public class NewPossibleBlockerSolutionForm extends JFrame implements BaseCompon
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = nameField.getText().trim();
                 String solution = solArea.getText().trim();
 
                 boolean isInvalid = false;
 
-                if (name.isEmpty()) {
-                    JOptionPane.showMessageDialog(NewPossibleBlockerSolutionForm.this,
-                            "Blocker Name cannot be empty.", "Error in New Blocker Form",
-                            JOptionPane.ERROR_MESSAGE);
-                    isInvalid = true;
-                }
-                if (!isInvalid && solution.isEmpty()) {
+                if (solution.isEmpty()) {
                     JOptionPane.showMessageDialog(NewPossibleBlockerSolutionForm.this,
                             "Blocker Solution cannot be empty.", "Error in New Blocker Form",
                             JOptionPane.ERROR_MESSAGE);
@@ -101,20 +95,20 @@ public class NewPossibleBlockerSolutionForm extends JFrame implements BaseCompon
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 2, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 3, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 2, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 3, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
 
     public PossibleBlockerSolution getPossibleBlockerSolutionObject() {
-        String name = nameField.getText().trim();
         String solution = solArea.getText().trim();
+        String blockerId = (String) possibleBlockersDropdown.getSelectedItem();
 
         PossibleBlockerSolutionFactory possibleBlockerSolutionFactory = PossibleBlockerSolutionFactory.getInstance();
-        PossibleBlockerSolution possibleBlockerSolution = possibleBlockerSolutionFactory.createNewPossibleBlockerSolution(name, solution);
+        PossibleBlockerSolution possibleBlockerSolution = possibleBlockerSolutionFactory.createNewPossibleBlockerSolution(blockerId,solution);
 
         try {
             possibleBlockerSolution.doRegister();
@@ -128,5 +122,11 @@ public class NewPossibleBlockerSolutionForm extends JFrame implements BaseCompon
 
         return possibleBlockerSolution;
     }
+    // Method to get possible blockers from PossibleBlockerStore
+    private String[] getPossibleBlockers() {
+        List<PossibleBlocker> possibleBlockers = PossibleBlockerStore.getInstance().getPossibleBlockers();
+        return possibleBlockers.stream()
+                .map(blocker -> blocker.getId().toString())
+                .toArray(String[]::new);
+    }
 }
-

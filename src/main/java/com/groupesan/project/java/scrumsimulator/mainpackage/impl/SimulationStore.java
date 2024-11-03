@@ -23,6 +23,7 @@ public class SimulationStore {
     private static SimulationStore simulationStore;
 
     private JSONArray simulations;
+    //private JSONObject obj;
 
     public SimulationStore() {
         loadSimulationsFromFile();
@@ -167,6 +168,25 @@ public class SimulationStore {
         }
         return runningSimulationSprints;
     }
+
+    /*public String getSimulationStatus(String simulationId) {
+        for (int i = 0; i < simulations.length(); i++) {
+            JSONObject simulation = simulations.getJSONObject(i);
+            if (simulation.getString("ID").equals(simulationId)) {
+                return simulation.getString("Status");
+            }
+        }
+        return null; // or throw an exception if the simulation is not found
+    }
+    public void addSimulation(JSONObject simulation) {
+        JSONObject obj = getSimulationData();
+        simulations = obj.getJSONArray("Simulations");
+        if (simulations == null) {
+            simulations = new JSONArray();
+        }
+        simulations.put(simulation);
+        saveSimulationsToFile(obj);
+    }*/
 
     public void clearSimulationData(){
         JSONObject obj = getSimulationData();
