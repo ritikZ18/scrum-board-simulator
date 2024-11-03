@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -166,6 +167,8 @@ public class NewSprintForm extends JFrame implements BaseComponent {
             SprintStore.getInstance().addSprint(mySprint);
             System.out.println(mySprint.getName() +"----"+mySprint.getSimulationID());
             simulationStore.addSprint(mySprint, simulationId);
+           } else {
+            JOptionPane.showMessageDialog(null,"Number of sprints exceeded.");
            }
         return SprintStore.getInstance().getSprints();
     }
