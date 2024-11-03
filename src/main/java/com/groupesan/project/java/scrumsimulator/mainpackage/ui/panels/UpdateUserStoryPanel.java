@@ -45,7 +45,7 @@ public class UpdateUserStoryPanel extends JFrame {
 
         getRunningSimulationSprints();
 
-        if (runningSprint.getUserStories().size() != 0) {
+        if (runningSprint!= null && runningSprint.getUserStories().size() != 0) {
             for (UserStory userStory : runningSprint.getUserStories()) {
                 userStoryComboBox.addItem(userStory.getName());
             }
@@ -99,24 +99,21 @@ public class UpdateUserStoryPanel extends JFrame {
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setDate(runningSprint.getSprintStartDate());
         dateChooser.setMinSelectableDate(runningSprint.getSprintStartDate());
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(runningSprint.getSprintStartDate());
-        calendar.add(Calendar.DAY_OF_MONTH, runningSprint.getLength());
-        dateChooser.setMaxSelectableDate(calendar.getTime());
+        dateChooser.setMaxSelectableDate(runningSprint.getSprintEndDate());
 
         return dateChooser;
     }
 
     public void getRunningSimulationSprints() {
+        if(SimulationStore.getInstance().getRunningSimulationSprints() != null){
         JSONArray sprintArray = SimulationStore.getInstance().getRunningSimulationSprints();
-    
         for (Object obj : sprintArray) {
             Sprint currentSprint = SprintStore.getInstance().getSprintByName(obj.toString());
-            if (currentSprint.getSprintRunning()) {
+            if (currentSprint.getSprintRunning() && !currentSprint.getSprintCompleted()) {
                 runningSprint = currentSprint;
                 break;
             }
         }
+    }
 }
 }
