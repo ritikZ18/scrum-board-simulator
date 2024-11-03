@@ -1,5 +1,3 @@
-
-
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
@@ -17,15 +15,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class PossibleBlockersListPane extends JFrame implements BaseComponent {
     private List<PossibleBlockerWidget> widgets = new ArrayList<>();
-    private JComboBox<String> userStoriesDropDown;// In-memory storage for spikes
+    private JComboBox<String> userStoriesDropDown;
     private FineTuneProbabilityWidget fineTuneProbabilityWidget;
-
+    private Set<String> needsMoreResources = new HashSet<>();
 
     public PossibleBlockersListPane() {
         this.fineTuneProbabilityWidget = new FineTuneProbabilityWidget();
@@ -42,9 +42,14 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
         myJpanel.setBorder(new EmptyBorder(20, 10, 20, 10));
         myJpanel.setLayout(myGridbagLayout);
 
+        // Spike Panel
+        GridBagLayout spikeGridbagLayout = new GridBagLayout();
+        JPanel spikePanel = new JPanel();
+        spikePanel.setBorder(new EmptyBorder(20, 10, 20, 10));
+        spikePanel.setLayout(spikeGridbagLayout);
+
         for (PossibleBlocker possibleBlocker : PossibleBlockerStore.getInstance().getPossibleBlockers()) {
             widgets.add(new PossibleBlockerWidget(possibleBlocker, fineTuneProbabilityWidget));
-
         }
 
         JPanel subPanel = new JPanel();
@@ -110,7 +115,7 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         0, 1, GridBagConstraints.WEST, 1.0, 0.2, GridBagConstraints.HORIZONTAL));
 
-        // Adding  dropdown for selecting user stories
+        // Adding dropdown for selecting user stories
         userStoriesDropDown = new JComboBox<>(getUserStories());
         myJpanel.add(
                 userStoriesDropDown,
@@ -125,7 +130,8 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                 String selectedUserStory = (String) userStoriesDropDown.getSelectedItem();
                 if (selectedUserStory != null && !selectedUserStory.isEmpty()) {
                     addSpike(selectedUserStory);
-                }else {
+                    displaySpikedPanel(spikePanel);
+                } else {
                     JOptionPane.showMessageDialog(
                             PossibleBlockersListPane.this,
                             "Please select a user story",
@@ -135,34 +141,43 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                 }
             }
         });
+        spikePanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEtchedBorder(),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
         myJpanel.add(
                 addSpikeButton,
                 new CustomConstraints(
                         1, 2, GridBagConstraints.WEST, 1.0, 0.1, GridBagConstraints.HORIZONTAL));
-
+        myJpanel.add(
+                spikePanel,
+                new CustomConstraints(
+                        0, 3, GridBagConstraints.WEST, 1.0, 0.8, GridBagConstraints.HORIZONTAL));
         add(myJpanel);
+        displaySpikedPanel(spikePanel);
     }
 
     // Add spike method implementation
-    private void addSpike(String userStoryId) {;
-
+    private void addSpike(String userStoryId) {
         if (!PossibleBlockerStore.getInstance().getSpikedUserStories().contains(userStoryId)) {
-            showManagementDetailsConfirmation(userStoryId);
-        }
-        else {
-            JOptionPane.showMessageDialog(this, "Already added","Duplicated Spike",JOptionPane.ERROR_MESSAGE);
+            PossibleBlockerStore.getInstance().addSpikedUserStory(userStoryId);
+            showSpikeAdded(userStoryId);
+            showManagementDetailsConfirmation(userStoryId, null, null, true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Already added", "Duplicated Spike", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void showManagementDetailsConfirmation(String userStoryId) {
-        PossibleBlockerStore.getInstance().addSpikedUserStory(userStoryId);
+    private void showSpikeAdded(String userStoryId) {
         JOptionPane.showMessageDialog(
                 this,
                 "Spike added for user story " + userStoryId,
                 "Spike Added",
                 JOptionPane.INFORMATION_MESSAGE
         );
+    }
 
+    private void showManagementDetailsConfirmation(String userStoryId, JButton allocateResourcesButton, JButton spikeSuccessButton, boolean initialStatus) {
         String message = "Management team has provided details";
         int option = JOptionPane.showConfirmDialog(
                 this,
@@ -172,17 +187,107 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
                 JOptionPane.INFORMATION_MESSAGE
         );
 
-        if (option == JOptionPane.YES_OPTION) {
+        if (option == JOptionPane.NO_OPTION) {
+            PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Spike Fail");
+            if (allocateResourcesButton != null) allocateResourcesButton.setEnabled(false);
+            if (spikeSuccessButton != null) spikeSuccessButton.setEnabled(false);
+        } else if (option == JOptionPane.YES_OPTION) {
+            if (initialStatus) {
+                PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Spike Added");
+            } else {
+                PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Resources Requested");
+            }
 
-//            spikedUserStories.add(userStoryId);
-//            JOptionPane.showMessageDialog(
-//                    this,
-//                    "Spike added for user story " + userStoryId,
-//                    "Spike Added",
-//                    JOptionPane.INFORMATION_MESSAGE
-//            );
         }
-        // If NO_OPTION is selected, do nothing
+    }
+    private void displaySpikedPanel(JPanel spikePanel) {
+        spikePanel.removeAll();
+
+        List<String> spikedStories = PossibleBlockerStore.getInstance().getSpikedUserStories();
+        int row = 0;
+
+        for (String userStoryId : spikedStories) {
+            JLabel userStoryLabel = new JLabel(userStoryId);
+            spikePanel.add(userStoryLabel, new CustomConstraints(0, row, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
+            String currentStatus = PossibleBlockerStore.getInstance().getSpikedStatus(userStoryId);
+            JLabel statusLabel = new JLabel(currentStatus);
+            spikePanel.add(statusLabel, new CustomConstraints(1, row, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
+            JButton allocateResourcesButton = new JButton("Allocate More Resources");
+            JButton spikeSuccessButton = new JButton("Spike Success");
+
+            allocateResourcesButton.setEnabled(needsMoreResources.contains(userStoryId) || "Spike Added".equals(currentStatus));
+
+            allocateResourcesButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Resources Requested");
+                    statusLabel.setText("Resources Requested");
+                    int response = showManagementDetailsConfirmation(userStoryId);
+                    if (response == JOptionPane.YES_OPTION) {
+                        PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Resources Allocated");
+                        statusLabel.setText("Resources Allocated");
+                        needsMoreResources.remove(userStoryId);
+                        displaySpikedPanel(new JPanel());
+                    } else {
+                        PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Spike Fail");
+                        statusLabel.setText("Spike Fail");
+                        allocateResourcesButton.setEnabled(false);
+                        spikeSuccessButton.setEnabled(false);
+                    }
+                }
+            });
+            spikePanel.add(allocateResourcesButton, new CustomConstraints(2, row, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
+            spikeSuccessButton.setEnabled(!"Spike Success".equals(currentStatus) && !"Spike Fail".equals(currentStatus));
+            spikeSuccessButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Spike Success");
+                    statusLabel.setText("Spike Success");
+                    needsMoreResources.remove(userStoryId);
+                    allocateResourcesButton.setEnabled(false);
+                    spikeSuccessButton.setEnabled(false);
+                }
+            });
+            spikePanel.add(spikeSuccessButton, new CustomConstraints(3, row, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
+            if ("Spike Added".equals(currentStatus)) {
+                int response = showManagementDetailsConfirmation(userStoryId);
+                if (response == JOptionPane.YES_OPTION) {
+                    needsMoreResources.add(userStoryId);
+                    allocateResourcesButton.setEnabled(true);
+                } else if (response == JOptionPane.NO_OPTION) {
+                    PossibleBlockerStore.getInstance().updateSpikedStatus(userStoryId, "Spike Fail");
+                    statusLabel.setText("Spike Fail");
+                    allocateResourcesButton.setEnabled(false);
+                    spikeSuccessButton.setEnabled(false);
+                }
+            }
+
+            row++;
+        }
+
+        spikePanel.revalidate();
+        spikePanel.repaint();
+    }
+
+    private int showManagementDetailsConfirmation (String userStoryId) {
+        String message = "Management team has provided details for user story " + userStoryId + ". Proceed?";
+        int response = JOptionPane.showConfirmDialog(
+                this,
+                message,
+                "Management Details",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+
+        if (response == JOptionPane.YES_OPTION) {
+            needsMoreResources.add(userStoryId);
+        }
+        return response;
     }
 
     // Method to get user stories from UserStoryStore
