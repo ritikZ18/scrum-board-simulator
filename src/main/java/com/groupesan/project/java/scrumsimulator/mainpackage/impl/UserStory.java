@@ -7,6 +7,7 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.state.UserStoryStat
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.UserStoryUnselectedState;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 public class UserStory extends ScrumObject {
     private UserStoryIdentifier id;
@@ -26,6 +27,8 @@ public class UserStory extends ScrumObject {
     private Boolean SprintBacklog;
 
     private String status = "New";
+
+    private Date completionDate;
 
     // private ArrayList<Task> tasks;  TODO: implement tasks
 
@@ -237,5 +240,13 @@ public class UserStory extends ScrumObject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setCompletionDate(Date date) {
+        this.completionDate = date;
+    }
+
+    public Date getCompletionDate() {
+        return this.completionDate;
     }
 }

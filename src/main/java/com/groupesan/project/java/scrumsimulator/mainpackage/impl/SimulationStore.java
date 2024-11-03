@@ -1,19 +1,15 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.impl;
 
+import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
-import java.io.FileInputStream;
 
 public class SimulationStore {
     
@@ -22,8 +18,16 @@ public class SimulationStore {
     private int sprintLength = 0;
     private int numberOfSprints = 0;
     private int currentNumberOfSprints = 0;
+    private JSONArray runningSimulationSprints;
 
     private static SimulationStore simulationStore;
+
+    private JSONArray simulations;
+    private boolean useInMemoryStore = false;
+
+    public SimulationStore() {
+        loadSimulationsFromFile();
+    }
 
     public static SimulationStore getInstance() {
         if (simulationStore == null) {
@@ -32,7 +36,7 @@ public class SimulationStore {
         return simulationStore;
     }
 
-    private static JSONObject getSimulationData() {
+    private JSONObject getSimulationData() {
         try (FileInputStream fis = new FileInputStream(JSON_FILE_PATH);){
             JSONTokener tokener = new JSONTokener(fis);
             return new JSONObject(tokener);
@@ -40,11 +44,14 @@ public class SimulationStore {
             e.printStackTrace();
             return null;
         }   
-    }   
+    }
+
+
 
     public ArrayList<String> getSimulationsIDs() {
         JSONObject obj = getSimulationData();
         JSONArray simulations = obj.getJSONArray("Simulations");
+        simulationIds.clear();
         if (simulations != null) {
             
             for (int i = 0; i < simulations.length(); i++) {
@@ -75,6 +82,7 @@ public class SimulationStore {
                     JOptionPane.showMessageDialog(null, "Error writing to simulation.JSON");
                 }
     }
+
 
     public int getSprintLengthBySimId(String simulationID) {
         JSONObject obj = getSimulationData();
@@ -116,6 +124,83 @@ public class SimulationStore {
             }
         }
         return currentNumberOfSprints;
+    }
+
+    public void setUseInMemoryStore(boolean useInMemoryStore) {
+        this.useInMemoryStore = useInMemoryStore;
+    }
+
+    public void updateSimulationStatus(String simulationId, String newStatus) {
+        for (int i = 0; i < simulations.length(); i++) {
+            JSONObject simulation = simulations.getJSONObject(i);
+            if (simulation.getString("ID").equals(simulationId)) {
+                simulation.put("Status", newStatus);
+                break;
+            }
+        }
+        if (!useInMemoryStore) {
+            saveSimulationsToFile();
+        }
+    }
+
+    private void saveSimulationsToFile() {
+        try (Writer file = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(JSON_FILE_PATH), StandardCharsets.UTF_8))) {
+            JSONObject root = new JSONObject();
+            root.put("Simulations", simulations);
+            file.write(root.toString(2));
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadSimulationsFromFile() {
+        JSONObject obj = getSimulationData();
+        if (obj != null && obj.has("Simulations")) {
+            simulations = obj.getJSONArray("Simulations");
+        } else {
+            simulations = new JSONArray();
+        }
+    }
+
+    public String getSimulationStatus(String simulationId) {
+        for (int i = 0; i < simulations.length(); i++) {
+            JSONObject simulation = simulations.getJSONObject(i);
+            if (simulation.getString("ID").equals(simulationId)) {
+                return simulation.getString("Status");
+            }
+        }
+        return null; // or throw an exception if the simulation is not found
+    }
+
+    public void addSimulation(JSONObject simulation) {
+        if (simulations == null) {
+            simulations = new JSONArray();
+        }
+        simulations.put(simulation);
+        if (!useInMemoryStore) {
+            saveSimulationsToFile();
+        }
+    }
+
+    public void clearSimulations() {
+        simulations = new JSONArray();
+    }
+
+
+    public JSONArray getRunningSimulationSprints() {
+        JSONObject obj = getSimulationData();
+        JSONArray simulations = obj.getJSONArray("Simulations");
+        if (simulations != null) {
+            for(int i = 0; i < simulations.length(); i++) {
+                if (simulations.getJSONObject(i).getString("Status").equals("In-Progress")) {
+                    runningSimulationSprints = simulations.getJSONObject(i).getJSONArray("Sprints");
+                    break;
+                }
+            }
+        }
+        return runningSimulationSprints;
     }
 }
 
