@@ -7,8 +7,13 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.state.UserStoryStat
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.UserStoryUnselectedState;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserStory extends ScrumObject {
+
+
+    private static List<UserStory> userStories = new ArrayList<>();
+
     private UserStoryIdentifier id;
 
     private String name;
@@ -50,6 +55,13 @@ public class UserStory extends ScrumObject {
         this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
         this.SprintBacklog = false;
+        register();
+    }
+
+    public UserStory(String description, String status) {
+        this.description = description;
+        this.status = status;
+        register();
     }
 
     /**
@@ -70,10 +82,17 @@ public class UserStory extends ScrumObject {
         this.businessValue = businessValue;
         this.state = new UserStoryUnselectedState(this);
         this.SprintBacklog = false;
+        register();
     }
 
     protected void register() {
         this.id = new UserStoryIdentifier(ScrumIdentifierStoreSingleton.get().getNextId());
+        userStories.add(this);
+    }
+
+
+    public static List<UserStory> getUserStories() {
+        return userStories;
     }
 
     /**
@@ -176,13 +195,12 @@ public class UserStory extends ScrumObject {
      *
      * @return a string of the following format: "US #3 - foo"
      */
+
     @Override
     public String toString() {
-        if (isRegistered()) {
-            return this.getId().toString() + " - " + name;
-        }
-        return "(unregistered) - " + getName();
+        return (isRegistered() ? getId().toString() : "(unregistered)") + " - " + name;
     }
+
 
     // State Management, need Player class to implement final selection logic
     /**
@@ -238,4 +256,6 @@ public class UserStory extends ScrumObject {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 }

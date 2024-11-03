@@ -26,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 public class ViewSprintBacklogPane extends JFrame implements BaseComponent {
     private ArrayList<SprintWidget> sprintWidgets = new ArrayList<>();
     private JPanel userStoryPanel;
+    private List<UserStoryWidget> userStoryWidgets;
 
     public ViewSprintBacklogPane() {
         this.init();
@@ -51,7 +52,7 @@ public class ViewSprintBacklogPane extends JFrame implements BaseComponent {
         userStoryPanel = new JPanel();
         userStoryPanel.setLayout(new GridBagLayout());
         myJPanel.add(new JScrollPane(userStoryPanel), new CustomConstraints(0, 3, GridBagConstraints.WEST, 1.0, 0.8, GridBagConstraints.HORIZONTAL));
-        
+
         JButton SelectSprintButton = new JButton("Select Sprint");
         SelectSprintButton.addActionListener(new ActionListener() {
             @Override
@@ -64,22 +65,23 @@ public class ViewSprintBacklogPane extends JFrame implements BaseComponent {
         });
 
         myJPanel.add(SelectSprintButton, new CustomConstraints(0, 2, GridBagConstraints.WEST, 1.0, 0.2, GridBagConstraints.HORIZONTAL));
-    
+
         add(myJPanel);
-        }
-    
-    
+    }
+
+
     public void populateUserStoryPanel(String selectedSprint) {
         userStoryPanel.removeAll();
-        
+
         Sprint sprint = SprintStore.getInstance().getSprintByName(selectedSprint);
-        
+
         List<UserStory> sprintStories = sprint.getUserStories();
-        
+
         if(sprintStories.size() > 0){
             int i = 0;
             for (UserStory userStory : sprintStories) {
                 UserStoryWidget userStoryWidget = new UserStoryWidget(userStory);
+                userStoryWidget.setDeleteBtnVisible(false);
                 userStoryWidget.setSprintView();
                 userStoryPanel.add(userStoryWidget, new CustomConstraints(0, i++, GridBagConstraints.WEST, 1.0, 0.1, GridBagConstraints.HORIZONTAL));
             }

@@ -33,4 +33,8 @@ public class UserStoryStore {
     public List<UserStory> getUserStories() {
         return new ArrayList<>(userStories);
     }
+
+    public boolean removeUserStory(UserStory userStory) {
+        return userStories.remove(userStory);
+    }
 }

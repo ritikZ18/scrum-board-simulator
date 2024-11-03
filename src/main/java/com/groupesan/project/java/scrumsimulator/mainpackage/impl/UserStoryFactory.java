@@ -18,4 +18,6 @@ public class UserStoryFactory {
         newUS.setStatus(status);
         return newUS;
     }
+
+
 }

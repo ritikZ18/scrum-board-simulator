@@ -43,6 +43,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         myJpanel.setLayout(myGridbagLayout);
 
+
         JButton sprintsButton = new JButton("Sprints");
         sprintsButton.addActionListener(
                 new ActionListener() {
@@ -53,6 +54,7 @@ public class DemoPane extends JFrame implements BaseComponent {
                     }
                 });
 
+        //Start Simulation Button
         SimulationStateManager simulationStateManager = new SimulationStateManager();
         SimulationPanel simulationPanel = new SimulationPanel(simulationStateManager);
         myJpanel.add(
