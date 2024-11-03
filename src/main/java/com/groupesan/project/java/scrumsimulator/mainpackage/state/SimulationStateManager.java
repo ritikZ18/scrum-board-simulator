@@ -5,7 +5,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.Calendar;
+
 import javax.swing.JOptionPane;
+
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintStore;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.Sprint;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -15,12 +23,15 @@ import org.json.JSONTokener;
  * saving its ID.
  */
 public class SimulationStateManager {
-    private boolean running;
+    private boolean isRunning = false;
+    private SimulationStore simulationStore;
     private static final String JSON_FILE_PATH = "src/main/resources/simulation.JSON";
+
+    private String currentSimulationId;
 
     /** Simulation State manager. Not running by default. */
     public SimulationStateManager() {
-        this.running = false;
+        this.simulationStore = SimulationStore.getInstance();
     }
 
     /**
@@ -29,23 +40,76 @@ public class SimulationStateManager {
      * @return boolean running
      */
     public boolean isRunning() {
-        return running;
+        return isRunning;
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
+
+    // /** Method to set the simulation state to running. */
+    // public void startSimulation() {
+    //     this.isRunning = true;
+    //     // Add other logic for starting the simulation
+    // }
+
+    public void initiateSprint() {
+        if (SimulationStore.getInstance().getRunningSimulationSprints() != null) {
+            JSONArray runningSimulationSprints = SimulationStore.getInstance().getRunningSimulationSprints();
+            Date lastCompletedEndDate = null;
+    
+            for (Object obj : runningSimulationSprints) {
+                Sprint currentSprint = SprintStore.getInstance().getSprintByName(obj.toString());
+    
+                if (currentSprint != null) {
+                    if (!currentSprint.getSprintRunning() && !currentSprint.getSprintCompleted()) {
+                        Date startDate;
+                        if (lastCompletedEndDate != null) {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(lastCompletedEndDate);
+                            calendar.add(Calendar.DAY_OF_MONTH, 1);
+                            startDate = calendar.getTime();
+                        } else {
+                            startDate = new Date();
+                        }
+    
+                        currentSprint.setSprintStartDate(startDate);
+                        currentSprint.setSprintEndDate();
+                        currentSprint.setSprintRunning();
+                        break;
+                    } else if (currentSprint.getSprintCompleted()) {
+                        lastCompletedEndDate = currentSprint.getSprintEndDate();
+                    }
+                }
+            }
+        }
+    }
+    
+    public void stopSprint() {
+        if(SimulationStore.getInstance().getRunningSimulationSprints().length() != 0) {
+        JSONArray runningSimulationSprints = SimulationStore.getInstance().getRunningSimulationSprints(); 
+        for (Object obj : runningSimulationSprints) {
+            Sprint currentSprint = SprintStore.getInstance().getSprintByName(obj.toString());
+            if (currentSprint != null && currentSprint.getSprintRunning() && !currentSprint.getSprintCompleted()) {
+                currentSprint.setSprintCompleted();
+                System.out.println("Sprint stopped.");
+                }
+            }
+        }
     }
 
-    /** Method to set the simulation state to running. */
-    public void startSimulation() {
-        setRunning(true);
-        // Add other logic for starting the simulation
+    public void startSimulation(String simulationId) {
+        this.isRunning = true;
+        this.currentSimulationId = simulationId;
+        simulationStore.updateSimulationStatus(simulationId, "In-Progress");
+        initiateSprint();
     }
 
     /** Method to set the simulation state to not running. */
     public void stopSimulation() {
-        setRunning(false);
-        // Add other logic for stopping the simulation
+        if (this.isRunning && this.currentSimulationId != null) {
+            simulationStore.updateSimulationStatus(this.currentSimulationId, "Done");
+            this.isRunning = false;
+            this.currentSimulationId = null;
+            stopSprint();
+        }
     }
 
     /**
@@ -112,4 +176,5 @@ public class SimulationStateManager {
             return null;
         }
     }
+
 }

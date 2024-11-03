@@ -8,6 +8,7 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.state.UserStoryUnse
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Date;
 
 public class UserStory extends ScrumObject {
 
@@ -31,6 +32,8 @@ public class UserStory extends ScrumObject {
     private Boolean SprintBacklog;
 
     private String status = "New";
+
+    private Date completionDate;
 
     // private ArrayList<Task> tasks;  TODO: implement tasks
 
@@ -198,9 +201,11 @@ public class UserStory extends ScrumObject {
 
     @Override
     public String toString() {
-        return (isRegistered() ? getId().toString() : "(unregistered)") + " - " + name;
+        if (isRegistered()) {
+            return this.getId().toString() + " - " + name;
+        }
+        return "(unregistered) - " + getName();
     }
-
 
     // State Management, need Player class to implement final selection logic
     /**
@@ -257,5 +262,11 @@ public class UserStory extends ScrumObject {
         this.status = status;
     }
 
+    public void setCompletionDate(Date date) {
+        this.completionDate = date;
+    }
 
+    public Date getCompletionDate() {
+        return this.completionDate;
+    }
 }

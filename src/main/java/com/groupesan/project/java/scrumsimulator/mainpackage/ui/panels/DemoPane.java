@@ -8,12 +8,15 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComp
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
 
+import java.awt.event.WindowEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+
+import java.awt.event.WindowAdapter;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -27,8 +30,8 @@ public class DemoPane extends JFrame implements BaseComponent {
     public DemoPane() {
         this.init();
         player.doRegister();
-    }
 
+    }
     /**
      * Initialization of Demo Pane. Demonstrates creation of User stories, Sprints, and Simulation
      * start.
@@ -87,6 +90,11 @@ public class DemoPane extends JFrame implements BaseComponent {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        if(SimulationStore.getInstance().getRunningSimulationSprints().length() == 0){
+                            JOptionPane.showMessageDialog(null, "No sprints found for running simulation.");
+                            return;
+                        }
+
                         UpdateUserStoryPanel form = new UpdateUserStoryPanel();
                         form.setVisible(true);
                     }
@@ -309,6 +317,27 @@ public class DemoPane extends JFrame implements BaseComponent {
         // Add the fine tune panel to the main panel
         myJpanel.add(fineTunePanel, new CustomConstraints(4, 3, GridBagConstraints.EAST, 1.0, 0, GridBagConstraints.HORIZONTAL));
 
+
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Confirmation dialog before closing
+                int confirm = JOptionPane.showOptionDialog(
+                        DemoPane.this,
+                        "Are you sure you want to close the application?",
+                        "Exit Confirmation",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null, null, null);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    // Call clearData() method for cleanup
+                    SimulationStore.getInstance().clearSimulationData();
+                    dispose();
+                }
+            }
+        });
 
         getContentPane().add(myJpanel);
         setLocationRelativeTo(null);

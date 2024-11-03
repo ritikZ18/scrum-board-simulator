@@ -6,7 +6,6 @@ import java.util.List;
 public class UserStoryStore {
 
     private static UserStoryStore userStoryStore;
-
     /**
      * returns the shared instance of the UserStoryStore which contains all user stories in the
      * system.
