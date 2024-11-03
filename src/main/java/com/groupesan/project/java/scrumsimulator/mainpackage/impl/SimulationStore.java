@@ -192,6 +192,7 @@ public class SimulationStore {
         JSONObject obj = getSimulationData();
         simulations = obj.getJSONArray("Simulations");
         simulations.clear();
+        saveSimulationsToFile(obj);
     }
 }
 
