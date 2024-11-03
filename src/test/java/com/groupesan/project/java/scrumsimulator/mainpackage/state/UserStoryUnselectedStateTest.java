@@ -25,4 +25,19 @@ public class UserStoryUnselectedStateTest {
                 "state must change to UserStorySelectedState");
     }
 
+    @Test
+    public void testOnComplete() {
+        String result = unselectedState.onComplete();
+        assertEquals("Unselected", result);
+        assertTrue(userStory.getUserStoryState() instanceof UserStoryUnselectedState,
+                "State should remain as UserStoryUnselectedState after onComplete");
+    }
+
+    @Test
+    public void testOnDelete() {
+        String result = unselectedState.onDelete();
+        assertEquals("Deleted", result, "onDelete should return 'Deleted'");
+        assertTrue(userStory.getUserStoryState() instanceof UserStoryDeletedState,
+                "State should change to UserStoryDeletedState after onDelete");
+    }
 }
