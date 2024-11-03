@@ -2,34 +2,32 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.impl;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.core.ScrumIdentifier;
 import com.groupesan.project.java.scrumsimulator.mainpackage.core.ScrumObject;
-import com.groupesan.project.java.scrumsimulator.mainpackage.state.UserStoryUnselectedState;
 
 public class PossibleBlockerSolution extends ScrumObject {
 
     private PossibleBlockerSolutionIdentifier id;
 
-    private String name;
 
     private String solution;
+    private String blockerId;
 
+    private int probability;
 
     private void validateMandatoryField(String value, String fieldName){
         if(value==null || value.trim().isEmpty()){
-            throw new IllegalArgumentException("Possible Blocker " + fieldName +" value cannot be empty");
+            throw new IllegalArgumentException("Possible Blocker" + fieldName +" value cannot be empty");
         }
     }
 
-    public PossibleBlockerSolution(String name) {
-        validateMandatoryField(name,"Name");
-        this.name = name;
-        this.solution = "";
+    public PossibleBlockerSolution( String solution) {
+        validateMandatoryField(solution,"solution");
+        this.solution = solution;
     }
 
-    public PossibleBlockerSolution(String name, String solution) {
-        validateMandatoryField(name,"Name");
+    public PossibleBlockerSolution( String blockerId, String solution) {
         validateMandatoryField(solution,"solution");
-        this.name = name;
         this.solution = solution;
+        this.blockerId = blockerId;
     }
 
     protected void register() {
@@ -43,25 +41,35 @@ public class PossibleBlockerSolution extends ScrumObject {
         }
         return id;
     }
-    public String getName() {
-        return name;
+
+    public String getBlockerId() {
+        return blockerId;
     }
 
     @Override
     public String toString() {
-        return "";
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return solution;
     }
 
     public String getSolution() {
         return solution;
     }
+    @Override
+    public String getName() {
+        return "";
+    }
 
     public void setSolution(String solution) {
         this.solution = solution;
     }
+
+    public int getSolutionProbability(){
+        return probability;
+    }
+
+    public void setProbability(int probability){
+        this.probability = Integer.parseInt(String.valueOf(probability));
+    }
+
 
 }

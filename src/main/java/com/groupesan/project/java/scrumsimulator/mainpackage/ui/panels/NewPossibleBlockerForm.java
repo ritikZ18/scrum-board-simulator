@@ -1,7 +1,6 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerFactory;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.*;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 
@@ -10,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
@@ -19,7 +19,7 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
     private JTextField nameField = new JTextField();
     private JTextArea descArea = new JTextArea();
-    private JTextField userStoryIdField = new JTextField();
+    private JComboBox<String> userStoriesDropDown;
 
     private JComboBox<String> statusComboBox;
 
@@ -30,7 +30,6 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
 
         nameField = new JTextField();
         descArea = new JTextArea();
-        userStoryIdField = new JTextField();
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -66,8 +65,9 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                 userStoryIdLabel,
                 new CustomConstraints(
                         0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        userStoriesDropDown = new JComboBox<>(getUserStories());
         myJpanel.add(
-                userStoryIdField,
+                userStoriesDropDown,
                 new CustomConstraints(
                         1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
         JLabel statusLabel = new JLabel("Status:");
@@ -100,7 +100,7 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
             public void actionPerformed(ActionEvent e) {
                 String name = nameField.getText().trim();
                 String description = descArea.getText().trim();
-                String userStoryId = userStoryIdField.getText().trim(); // Get User Story ID
+                String  userStoryId = (String) userStoriesDropDown.getSelectedItem();
 
 
                 boolean isInvalid = false;
@@ -117,11 +117,17 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
                             JOptionPane.ERROR_MESSAGE);
                     isInvalid = true;
                 }
-                if (!isInvalid && userStoryId.isEmpty()) {
+                if (!isInvalid && userStoryId == null || userStoryId.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
                         "User Story ID cannot be empty.", "Error in New Blocker Form",
                         JOptionPane.ERROR_MESSAGE);
                 isInvalid = true;
+                }
+                if (!isInvalid && (statusComboBox.getSelectedItem() == null)) {
+                    JOptionPane.showMessageDialog(NewPossibleBlockerForm.this,
+                            "Please select a status.", "Error in New Blocker Form",
+                            JOptionPane.ERROR_MESSAGE);
+                    isInvalid = true;
                 }
                 if (!isInvalid) {
                     PossibleBlocker newBlocker = getPossibleBlockerObject();
@@ -145,7 +151,7 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
     public PossibleBlocker getPossibleBlockerObject() {
         String name = nameField.getText().trim();
         String description = descArea.getText().trim();
-        String userStoryId = userStoryIdField.getText().trim();
+        String userStoryId = (String) userStoriesDropDown.getSelectedItem();
         String status = (String) statusComboBox.getSelectedItem();
 
         PossibleBlockerFactory possibleBlockerFactory = PossibleBlockerFactory.getInstance();
@@ -162,6 +168,13 @@ public class NewPossibleBlockerForm extends JFrame implements BaseComponent {
         }
 
         return possibleBlocker;
+    }
+    // Method to get user stories from UserStoryStore
+    private String[] getUserStories() {
+        List<UserStory> userStories = UserStoryStore.getInstance().getUserStories();
+        return userStories.stream()
+                .map(userStory -> userStory.getId().toString())
+                .toArray(String[]::new);
     }
 }
 

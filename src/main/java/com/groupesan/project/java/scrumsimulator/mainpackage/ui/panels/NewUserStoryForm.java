@@ -26,18 +26,27 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
     private JTextArea descArea = new JTextArea();
     private JComboBox<Double> pointsCombo = new JComboBox<>(pointsList);
     private JComboBox<Double> businessValueCombo = new JComboBox<>(businessValueList);
+    private JComboBox<String> statusCombo;
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("New User Story");
         setSize(400, 300);
 
+        String[] statuses = {"New", "In Progress", "ReadyForTest", "Done"};
+
         nameField = new JTextField();
         descArea = new JTextArea();
         pointsCombo = new JComboBox<>(pointsList);
         businessValueCombo = new JComboBox<>(businessValueList);
+        statusCombo = new JComboBox<>(statuses);
 
+        nameField.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        descArea.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
         businessValueCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        pointsCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
+        statusCombo.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
+
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();
@@ -87,6 +96,16 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 3, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
+        JLabel statusLabel = new JLabel("Status:");
+        myJpanel.add(
+                statusLabel,
+                new CustomConstraints(
+                        0, 4, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                statusCombo,
+                new CustomConstraints(
+                        1, 4, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
 
         JButton cancelButton = new JButton("Cancel");
 
@@ -106,6 +125,7 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                     public void actionPerformed(ActionEvent e) {
                         String name=nameField.getText().trim();
                         String description=descArea.getText().trim();
+                        Double businessValue = (Double) businessValueCombo.getSelectedItem();
 
                         // Delete previous error messages
                         boolean isInvalid = false;
@@ -124,9 +144,16 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
                                     JOptionPane.ERROR_MESSAGE);
                             isInvalid = true;
                         }
+                        if(!isInvalid && businessValue==null){
+                            JOptionPane.showMessageDialog(NewUserStoryForm.this,
+                                    "User Story business value cannot be empty.", "Error in New User Story Form",
+                                    JOptionPane.ERROR_MESSAGE);
+                            isInvalid = true;
+                        }
                         if(!isInvalid) {
                             UserStory newUserStory = getUserStoryObject();
                             if(newUserStory != null) {
+                                newUserStory.setStatus((String) statusCombo.getSelectedItem());
                                 dispose();
                             }
                         }
@@ -135,10 +162,10 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 4, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 5, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 4, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 5, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
     }
@@ -159,7 +186,7 @@ public class NewUserStoryForm extends JFrame implements BaseComponent {
 
         UserStoryFactory userStoryFactory = UserStoryFactory.getInstance();
 
-        UserStory userStory = userStoryFactory.createNewUserStory(name, description, points,businessValue);
+        UserStory userStory = userStoryFactory.createNewUserStory(name, description, points,businessValue, "New");
 
         try {
             userStory.doRegister();

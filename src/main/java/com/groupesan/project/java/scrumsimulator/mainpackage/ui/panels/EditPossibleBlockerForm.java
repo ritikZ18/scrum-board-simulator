@@ -1,6 +1,8 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStory;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStoryStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 
@@ -9,10 +11,12 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class EditPossibleBlockerForm extends JFrame implements BaseComponent {
 
     private JComboBox<String> statusComboBox;
+    private JComboBox<String> userStoriesDropDown;
 
     public EditPossibleBlockerForm(PossibleBlocker possibleBlocker) {
         this.possibleBlocker = possibleBlocker;
@@ -60,6 +64,14 @@ public class EditPossibleBlockerForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
 
+        JLabel userStoryLabel = new JLabel("User Story:");
+        userStoriesDropDown = new JComboBox<>(getUserStories());
+        userStoriesDropDown.setSelectedItem(possibleBlocker.getUserStoryId());
+        myJpanel.add(userStoryLabel,
+                new CustomConstraints(0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(userStoriesDropDown,
+                new CustomConstraints(1,2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+
         JLabel statusLabel = new JLabel("Status:");
         String[] statusOptions = {"Unresolved", "Resolved"};
         statusComboBox = new JComboBox<>(statusOptions);
@@ -67,11 +79,11 @@ public class EditPossibleBlockerForm extends JFrame implements BaseComponent {
         myJpanel.add(
                 statusLabel,
                 new CustomConstraints(
-                        0, 2, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
+                        0, 3, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
         myJpanel.add(
                 statusComboBox,
                 new CustomConstraints(
-                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+                        1, 3, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
         JButton cancelButton = new JButton("Cancel");
 
@@ -102,11 +114,18 @@ public class EditPossibleBlockerForm extends JFrame implements BaseComponent {
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 3, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 4, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 3, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 4, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
+    }
+    // Method to get user stories from UserStoryStore
+    private String[] getUserStories() {
+        List<UserStory> userStories = UserStoryStore.getInstance().getUserStories();
+        return userStories.stream()
+                .map(userStory -> userStory.getId().toString())
+                .toArray(String[]::new);
     }
 }

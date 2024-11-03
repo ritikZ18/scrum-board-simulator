@@ -1,6 +1,8 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlocker;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerSolution;
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 
@@ -9,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class EditPossibleBlockerSolutionForm extends JFrame implements BaseComponent {
 
@@ -18,16 +21,15 @@ public class EditPossibleBlockerSolutionForm extends JFrame implements BaseCompo
     }
 
     private PossibleBlockerSolution possibleBlockerSolution;
-
-    private JTextField nameField = new JTextField();
     private JTextArea solArea = new JTextArea();
+    private JComboBox<String> possibleBlockersDropdown;
 
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setTitle("Edit Possible Blocker " + possibleBlockerSolution.getId().toString());
+        setTitle("Edit Solution for Blocker " + possibleBlockerSolution.getId().toString());
         setSize(400, 300);
 
-        nameField = new JTextField(possibleBlockerSolution.getName());
+
         solArea = new JTextArea(possibleBlockerSolution.getSolution());
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
@@ -39,16 +41,6 @@ public class EditPossibleBlockerSolutionForm extends JFrame implements BaseCompo
 
         setLayout(myBorderLayout);
 
-        JLabel nameLabel = new JLabel("Name:");
-        myJpanel.add(
-                nameLabel,
-                new CustomConstraints(
-                        0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
-        myJpanel.add(
-                nameField,
-                new CustomConstraints(
-                        1, 0, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
-
         JLabel solLabel = new JLabel("Solution:");
         myJpanel.add(
                 solLabel,
@@ -58,6 +50,16 @@ public class EditPossibleBlockerSolutionForm extends JFrame implements BaseCompo
                 new JScrollPane(solArea),
                 new CustomConstraints(
                         1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
+
+        // Dropdown for selecting possible blockers
+        possibleBlockersDropdown = new JComboBox<>(getPossibleBlockers());
+        myJpanel.add(
+                new JLabel("Select Existing Blocker:"),
+                new CustomConstraints(0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(
+                possibleBlockersDropdown,
+                new CustomConstraints(1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+
 
 
         JButton cancelButton = new JButton("Cancel");
@@ -76,10 +78,8 @@ public class EditPossibleBlockerSolutionForm extends JFrame implements BaseCompo
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String name = nameField.getText();
                         String solution = solArea.getText();
 
-                        possibleBlockerSolution.setName(name);
                         possibleBlockerSolution.setSolution(solution);
                         dispose();
                     }
@@ -87,11 +87,18 @@ public class EditPossibleBlockerSolutionForm extends JFrame implements BaseCompo
 
         myJpanel.add(
                 cancelButton,
-                new CustomConstraints(0, 2, GridBagConstraints.EAST, GridBagConstraints.NONE));
+                new CustomConstraints(0, 3, GridBagConstraints.EAST, GridBagConstraints.NONE));
         myJpanel.add(
                 submitButton,
-                new CustomConstraints(1, 2, GridBagConstraints.WEST, GridBagConstraints.NONE));
+                new CustomConstraints(1, 3, GridBagConstraints.WEST, GridBagConstraints.NONE));
 
         add(myJpanel);
+    }
+    // Method to get possible blockers from PossibleBlockerStore
+    private String[] getPossibleBlockers() {
+        List<PossibleBlocker> possibleBlockers = PossibleBlockerStore.getInstance().getPossibleBlockers();
+        return possibleBlockers.stream()
+                .map(blocker -> blocker.getId().toString())
+                .toArray(String[]::new);
     }
 }

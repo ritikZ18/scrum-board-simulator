@@ -16,6 +16,7 @@ public class SimulationSwitchRolePane extends JFrame {
     private JRadioButton developerRadioButton;
     private JRadioButton scrumMasterRadioButton;
     private JRadioButton productOwnerRadioButton;
+    private JRadioButton scrumAdministratorRadioButton;
     private ButtonGroup roleButtonGroup;
     private JButton switchButton;
 
@@ -39,7 +40,7 @@ public class SimulationSwitchRolePane extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(5, 1));
 
         JLabel label = new JLabel("Roles:");
         panel.add(label);
@@ -47,13 +48,16 @@ public class SimulationSwitchRolePane extends JFrame {
         developerRadioButton = new JRadioButton("Developer");
         scrumMasterRadioButton = new JRadioButton("Scrum Master");
         productOwnerRadioButton = new JRadioButton("Product Owner");
+        scrumAdministratorRadioButton = new JRadioButton("Scrum Administrator");
         roleButtonGroup = new ButtonGroup();
         roleButtonGroup.add(developerRadioButton);
         roleButtonGroup.add(scrumMasterRadioButton);
         roleButtonGroup.add(productOwnerRadioButton);
+        roleButtonGroup.add(scrumAdministratorRadioButton);
         panel.add(developerRadioButton);
         panel.add(scrumMasterRadioButton);
         panel.add(productOwnerRadioButton);
+        panel.add(scrumAdministratorRadioButton);
 
         switchButton = new JButton("Switch Role");
         switchButton.addActionListener(
@@ -83,6 +87,10 @@ public class SimulationSwitchRolePane extends JFrame {
             setCurrentRole("Product Owner");
             JOptionPane.showMessageDialog(
                     null, "Switched to Product Owner", "Role Switching", JOptionPane.PLAIN_MESSAGE);
+        } else if (scrumAdministratorRadioButton.isSelected()) {
+            setCurrentRole("Scrum Administrator");
+            JOptionPane.showMessageDialog(
+                    null, "Switched to Scrum Administrator", "Role Switching", JOptionPane.PLAIN_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(
                     null,

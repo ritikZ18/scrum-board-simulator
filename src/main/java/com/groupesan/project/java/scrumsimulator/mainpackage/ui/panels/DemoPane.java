@@ -5,12 +5,15 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.core.ScrumRole;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.SimulationStateManager;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.FineTuneProbabilityWidget;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.utils.WizardManager;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 public class DemoPane extends JFrame implements BaseComponent {
     private Player player = new Player("bob", new ScrumRole("Scrum Master"));
+    private JPanel fineTunePanel;
 
     public DemoPane() {
         this.init();
@@ -181,6 +185,12 @@ public class DemoPane extends JFrame implements BaseComponent {
                     public void actionPerformed(ActionEvent e) {
                         SimulationSwitchRolePane feedbackPanelUI = new SimulationSwitchRolePane();
                         feedbackPanelUI.setVisible(true);
+                        feedbackPanelUI.addWindowListener(new WindowAdapter() {
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                updateVisibilityForFineTuneButton();
+                            }
+                        });
                     }
                 });
 
@@ -285,6 +295,31 @@ public class DemoPane extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         3, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
-        add(myJpanel);
+
+        // Create a panel for the Fine Tune Probability button
+        fineTunePanel = new JPanel();
+        fineTunePanel.setLayout(new GridBagLayout());
+        JButton fineTuneProbabilityButton = new JButton("Fine Tune Probability");
+        fineTuneProbabilityButton.addActionListener(e -> FineTuneProbabilityWidget.openFineTuneWindow());
+        fineTunePanel.add(fineTuneProbabilityButton);
+        fineTuneProbabilityButton.setEnabled(true);
+        fineTunePanel.setVisible(false);
+        // Add the fine tune panel to the main panel
+        myJpanel.add(fineTunePanel, new CustomConstraints(4, 3, GridBagConstraints.EAST, 1.0, 0, GridBagConstraints.HORIZONTAL));
+
+
+        getContentPane().add(myJpanel);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
     }
+    // Method to update visibility for  fine tune button based on the current role.
+    private void updateVisibilityForFineTuneButton() {
+        String currentRole = SimulationSwitchRolePane.getCurrentRole();
+        boolean isScrumAdmin = "Scrum Administrator".equals(currentRole);
+        fineTunePanel.setVisible(isScrumAdmin);
+
+    }
+
+
 }

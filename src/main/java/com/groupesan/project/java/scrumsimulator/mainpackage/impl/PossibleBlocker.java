@@ -16,6 +16,7 @@ public class PossibleBlocker extends ScrumObject {
 
     private String status;
 
+    private int probability;
 
     private void validateMandatoryField(String value, String fieldName){
         if(value==null || value.trim().isEmpty()){
@@ -33,6 +34,7 @@ public class PossibleBlocker extends ScrumObject {
         validateMandatoryField(name,"Name");
         this.name = name;
         this.description = "";
+
     }
 
     /**
@@ -106,7 +108,7 @@ public class PossibleBlocker extends ScrumObject {
 
     @Override
     public String toString() {
-        return "";
+        return "" + this.id;
     }
 
     /**
@@ -142,6 +144,14 @@ public class PossibleBlocker extends ScrumObject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getBlockerProbability(){
+        return probability;
+    }
+
+    public void setProbability(int probability){
+        this.probability = probability;
     }
 
 }

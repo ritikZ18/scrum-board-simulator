@@ -7,6 +7,7 @@ public class PossibleBlockerStore {
 
     private static PossibleBlockerStore possibleBlockerStore;
 
+
     /**
      * returns the shared instance of the UserStoryStore which contains all user stories in the
      * system.
@@ -21,9 +22,11 @@ public class PossibleBlockerStore {
     }
 
     private List<PossibleBlocker> possibleBlockers;
+    private List<String> spikedUserStories;
 
     private PossibleBlockerStore() {
         possibleBlockers = new ArrayList<PossibleBlocker>();
+        spikedUserStories = new ArrayList<>();
     }
 
     public void addPossibleBlocker(PossibleBlocker possibleBlocker) {
@@ -33,4 +36,14 @@ public class PossibleBlockerStore {
     public List<PossibleBlocker> getPossibleBlockers() {
         return new ArrayList<>(possibleBlockers);
     }
+    public void addSpikedUserStory(String userStoryId) {
+        if (!spikedUserStories.contains(userStoryId)) {
+            spikedUserStories.add(userStoryId);
+        }
+    }
+
+    public List<String> getSpikedUserStories() {
+        return new ArrayList<>(spikedUserStories);
+    }
+
 }

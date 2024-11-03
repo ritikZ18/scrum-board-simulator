@@ -25,6 +25,8 @@ public class UserStory extends ScrumObject {
 
     private Boolean SprintBacklog;
 
+    private String status = "New";
+
     // private ArrayList<Task> tasks;  TODO: implement tasks
 
     private void validateMandatoryField(String value, String fieldName){
@@ -227,5 +229,13 @@ public class UserStory extends ScrumObject {
 
     public Boolean getIsSprintBacklog() {
         return this.SprintBacklog;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
