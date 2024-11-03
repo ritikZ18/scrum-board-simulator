@@ -67,7 +67,7 @@ public class ViewSprintBacklogPane extends JFrame implements BaseComponent {
         myJPanel.add(SelectSprintButton, new CustomConstraints(0, 2, GridBagConstraints.WEST, 1.0, 0.2, GridBagConstraints.HORIZONTAL));
 
         add(myJPanel);
-    }
+        }
 
 
     public void populateUserStoryPanel(String selectedSprint) {

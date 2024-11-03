@@ -103,8 +103,4 @@ public class UserStoryTest {
         assertEquals(true, myUserStory.getIsSprintBacklog());
     }
 
-
-
-
-
 }
