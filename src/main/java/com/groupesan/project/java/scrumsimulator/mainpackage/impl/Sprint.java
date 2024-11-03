@@ -19,9 +19,9 @@ public class Sprint {
 
     private String simulationID;
 
-    private boolean sprintRunning;
+    private boolean sprintRunning = false;
 
-    private boolean sprintCompleted;
+    private boolean sprintCompleted = false;
 
     private Date sprintStartDate;
 
@@ -101,16 +101,17 @@ public class Sprint {
     public void setSprintStartDate(Date date) {
         this.sprintStartDate = date;
     }
+    
+    public Date getSprintStartDate() {
+        return this.sprintStartDate;
+    }
 
     public void setSprintEndDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.sprintStartDate);
         calendar.add(Calendar.DAY_OF_MONTH, this.length);
         this.sprintEndDate = calendar.getTime();
-    }
-
-    public Date getSprintStartDate() {
-        return this.sprintStartDate;
+        System.out.println(this.sprintEndDate);
     }
 
     public Date getSprintEndDate() {
