@@ -24,36 +24,6 @@ public class SimulationPanel extends JPanel implements BaseComponent {
     }
 
     @Override
-    /*public void init() {
-        startSimulationButton = new JButton("Start Simulation");
-        stopSimulationButton = new JButton("Stop Simulation");
-
-        stopSimulationButton.setVisible(false);
-
-        startSimulationButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        simulationStateManager.startSimulation();
-                        JOptionPane.showMessageDialog(null, "Simulation started!");
-                        updateButtonVisibility();
-                    }
-                });
-
-        stopSimulationButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        simulationStateManager.stopSimulation();
-                        JOptionPane.showMessageDialog(null, "Simulation stopped!");
-                        updateButtonVisibility();
-                    }
-                });
-
-        add(startSimulationButton);
-        add(stopSimulationButton);
-    }*/
-
     public void init(){
         startSimulationButton = new JButton("Start a Simulation");
         stopSimulationButton = new JButton("Stop Simulation");

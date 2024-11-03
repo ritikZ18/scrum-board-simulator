@@ -73,19 +73,13 @@ public class SimulationStore {
         }
 
 
-        try (OutputStreamWriter writer =
-                        new OutputStreamWriter(
-                                new FileOutputStream(JSON_FILE_PATH), StandardCharsets.UTF_8)) {
-                    writer.write(obj.toString(4));
-                } catch (IOException e) {
-                    JOptionPane.showMessageDialog(null, "Error writing to simulation.JSON");
-                }
+        saveSimulationsToFile(obj);
     }
 
 
     public int getSprintLengthBySimId(String simulationID) {
         JSONObject obj = getSimulationData();
-        JSONArray simulations = obj.getJSONArray("Simulations");
+        simulations = obj.getJSONArray("Simulations");
         if (simulations != null) {
             for(int i = 0; i < simulations.length(); i++) {
                 if (simulations.getJSONObject(i).getString("ID").equals(simulationID)) {
@@ -99,7 +93,7 @@ public class SimulationStore {
 
     public int getNumberofSprintsById(String simulationID) {
         JSONObject obj = getSimulationData();
-        JSONArray simulations = obj.getJSONArray("Simulations");
+        simulations = obj.getJSONArray("Simulations");
         if (simulations != null) {
             for(int i = 0; i < simulations.length(); i++) {
                 if (simulations.getJSONObject(i).getString("ID").equals(simulationID)) {
@@ -113,7 +107,7 @@ public class SimulationStore {
 
     public int getCurrentSprintSize(String simulationId) {
         JSONObject obj = getSimulationData();
-        JSONArray simulations = obj.getJSONArray("Simulations");
+        simulations = obj.getJSONArray("Simulations");
         if (simulations != null) {
             for(int i = 0; i < simulations.length(); i++) {
                 if (simulations.getJSONObject(i).getString("ID").equals(simulationId)) {
@@ -126,6 +120,8 @@ public class SimulationStore {
     }
 
     public void updateSimulationStatus(String simulationId, String newStatus) {
+        JSONObject obj = getSimulationData();
+        simulations = obj.getJSONArray("Simulations");
         for (int i = 0; i < simulations.length(); i++) {
             JSONObject simulation = simulations.getJSONObject(i);
             if (simulation.getString("ID").equals(simulationId)) {
@@ -133,19 +129,17 @@ public class SimulationStore {
                 break;
             }
         }
-        saveSimulationsToFile();
+        saveSimulationsToFile(obj);
     }
 
-    private void saveSimulationsToFile() {
-        try (Writer file = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(JSON_FILE_PATH), StandardCharsets.UTF_8))) {
-            JSONObject root = new JSONObject();
-            root.put("Simulations", simulations);
-            file.write(root.toString(2));
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void saveSimulationsToFile(JSONObject obj) {
+        try (OutputStreamWriter writer =
+                        new OutputStreamWriter(
+                                new FileOutputStream(JSON_FILE_PATH), StandardCharsets.UTF_8)) {
+                    writer.write(obj.toString(4));
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error writing to simulation.JSON");
+                }
     }
 
     private void loadSimulationsFromFile() {
@@ -158,17 +152,28 @@ public class SimulationStore {
     }
 
     public JSONArray getRunningSimulationSprints() {
+        // JSONArray runningSimulationSprints = new JSONArray();
         JSONObject obj = getSimulationData();
-        JSONArray simulations = obj.getJSONArray("Simulations");
+        simulations = obj.getJSONArray("Simulations");
         if (simulations != null) {
             for(int i = 0; i < simulations.length(); i++) {
                 if (simulations.getJSONObject(i).getString("Status").equals("In-Progress")) {
+                    if(simulations.getJSONObject(i).getJSONArray("Sprints") != null){
                     runningSimulationSprints = simulations.getJSONObject(i).getJSONArray("Sprints");
                     break;
+                }
                 }
             }
         }
         return runningSimulationSprints;
+    }
+
+    public void clearSimulationData(){
+        JSONObject obj = getSimulationData();
+        simulations = obj.getJSONArray("Simulations");
+        simulations.clear();
+
+        saveSimulationsToFile(obj);
     }
 }
 
