@@ -124,7 +124,7 @@ public class NewSprintForm extends JFrame implements BaseComponent {
                 0, 3, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
 
         simulationComboBox = new JComboBox<>();
-
+        simulationComboBox.addItem("");
         ArrayList<String> simulationIds = simulationStore.getSimulationsIDs();
 
         for (String simulationId : simulationIds) {
