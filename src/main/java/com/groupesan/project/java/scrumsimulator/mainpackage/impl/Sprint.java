@@ -2,6 +2,8 @@ package com.groupesan.project.java.scrumsimulator.mainpackage.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.util.Calendar;
 
 public class Sprint {
     private ArrayList<UserStory> userStories = new ArrayList<>();
@@ -16,6 +18,14 @@ public class Sprint {
     private int id;
 
     private String simulationID;
+
+    private boolean sprintRunning = false;
+
+    private boolean sprintCompleted = false;
+
+    private Date sprintStartDate;
+
+    private Date sprintEndDate;
 
     public Sprint(String name, String description, int length, int id, String simulationID) {
         this.name = name;
@@ -70,5 +80,41 @@ public class Sprint {
 
     public String getSimulationID() {
         return this.simulationID;
+    }
+
+    public void setSprintRunning() {
+        this.sprintRunning = true;
+    }
+
+    public boolean getSprintRunning() {
+        return this.sprintRunning;
+    }
+
+    public void setSprintCompleted() {
+        this.sprintCompleted = true;
+    }
+
+    public boolean getSprintCompleted() {
+        return this.sprintCompleted;
+    }
+
+    public void setSprintStartDate(Date date) {
+        this.sprintStartDate = date;
+    }
+    
+    public Date getSprintStartDate() {
+        return this.sprintStartDate;
+    }
+
+    public void setSprintEndDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(this.sprintStartDate);
+        calendar.add(Calendar.DAY_OF_MONTH, this.length);
+        this.sprintEndDate = calendar.getTime();
+        System.out.println(this.sprintEndDate);
+    }
+
+    public Date getSprintEndDate() {
+        return this.sprintEndDate;
     }
 }

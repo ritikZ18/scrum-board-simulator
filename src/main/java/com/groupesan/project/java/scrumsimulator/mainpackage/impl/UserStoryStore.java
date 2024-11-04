@@ -6,7 +6,6 @@ import java.util.List;
 public class UserStoryStore {
 
     private static UserStoryStore userStoryStore;
-
     /**
      * returns the shared instance of the UserStoryStore which contains all user stories in the
      * system.
@@ -32,5 +31,9 @@ public class UserStoryStore {
 
     public List<UserStory> getUserStories() {
         return new ArrayList<>(userStories);
+    }
+
+    public boolean removeUserStory(UserStory userStory) {
+        return userStories.remove(userStory);
     }
 }
