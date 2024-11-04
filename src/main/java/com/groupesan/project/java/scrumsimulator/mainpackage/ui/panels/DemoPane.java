@@ -17,7 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 
 import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -47,6 +46,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         myJpanel.setLayout(myGridbagLayout);
 
+
         JButton sprintsButton = new JButton("Sprints");
         sprintsButton.addActionListener(
                 new ActionListener() {
@@ -57,6 +57,7 @@ public class DemoPane extends JFrame implements BaseComponent {
                     }
                 });
 
+        //Start Simulation Button
         SimulationStateManager simulationStateManager = new SimulationStateManager();
         SimulationPanel simulationPanel = new SimulationPanel(simulationStateManager);
         myJpanel.add(
