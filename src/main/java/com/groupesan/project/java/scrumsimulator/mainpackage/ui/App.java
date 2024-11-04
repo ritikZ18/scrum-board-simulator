@@ -50,13 +50,13 @@ public class App {
     private void initializePossibleBlockers() {
         PossibleBlocker a =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 1", "US3","US10","unresolved");
+                        .createNewPossibleBlocker("Bug", "Delete user story","US#1","unresolved");
         a.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(a);
 
         PossibleBlocker b =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 2", "US4","US11","unresolved");
+                        .createNewPossibleBlocker("Bug", "Update point value","US#2","unresolved");
         b.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(b);
 
