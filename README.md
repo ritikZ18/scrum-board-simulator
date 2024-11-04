@@ -30,9 +30,93 @@ To clean the project (remove all build artifacts), run the following gradle comm
 ### Mac/Linux/Git Bash/WSL:
 `./gradlew clean`
 
+# Sprint 2
+# Simulation flow to generate burndown chart
+- Click on Create Simulation in Demo Panel, add simulation name,number of sprints, and sprint length and click on create simulation button.
+- Click on Sprints button in Demo Panel. Click on New Sprint, add parameters and submit.
+- Click on Populate Sprint Backlog  in Demo Panel. Select the stories from dropdown, click on Select. Select Sprint and move to Sprint backlog.
+- Click on View Sprint Backlog in Demo Panel. Click on Select sprint.
 
+# About the Use Case (Start Sprint Cycle)
+- The Start Sprint Cycle is not a part of the SBS document but it is placed to generate the outcomes of a simulation in a burndown chart form.
 
+How to test
 
+#### Switch Role
+- Click "Switch Role" -> Click "Scrum Master" -> Click "Switch Role" -
+
+#### Create New Simulation
+- Click "Create Simulation" -> Populate all fields -> Click "Create Simulation"
+
+#### Create Sprints
+- Click "Sprints" -> Populate fields -> Select the Simulation ID -> Reapeat to create Multiple Sprints.
+
+#### Populate Sprint Backlog
+- Check "Move User Story to Sprint" (Button: Populate Sprint Backlog)
+
+#### Start Simulation 
+- Click "Start Simulation" -> Click "Update User Story Status" -> Update completed status and completion date for all user stories
+
+#### Stop Simulation
+
+- Click Stop Simulation -> View burndown chart in "stats" folder.
+
+**Note**: 
+- Start and stop simulation will run one sprint cycle. To run each sprint cycle click start and stop simulation.
+- The date range for Sprint 1 will be set from today's date to sprint length. The start date of the next sprint will be one day after the previous sprint end date to sprint length.
+- If three sprints were run for a simulation three burndown chart will be created for each sprint.
+
+# About the Use Case (SRS_UC_06)
+
+- When development team resolve the blocker from the blocker list by selecting a possible solution they should update the status to resolved else keep it as unresolved.
+
+How to test
+
+- Click on “Possible Blockers” button —> click on any one of the listed blocker and select the required status.
+
+# About the Use Case (SRC_UC_02)
+User Story Deletion
+Product Owner assumes role and is able to delete user story in the user stories wigdet in DemoPane, which will be deleted from entire simualtion
+
+How to test
+
+- onClick "User Stories Widget" -->  click "Delete" , selected User Story is deleted.
+
+# About the Use Case (SRC_UC_08)
+Fine Tune Probabilities
+Scrum Administartor is only able to invoke the Fine Tune Probability functionality which selects the Blockers and Solutions from their respective widgets List , which are seen in the Fine tune proabability Dropdowns respectively.
+
+How to test
+
+- "Switch Role" --> Scrum Administrator --> "Fine Tune Probability"(FTP) sets to visible in demopane --> onClick "FTP" select Blocker and Solution from the dropdown --> select "Set or Random" btn to set proabability, which will be set and reflected in the Possible Blocker and Possible Blocker Solution widgets
+
+# About the Use Case (SRS_UC_07)
+
+How to test
+
+- click on 'Possible Blocker'
+Select 'User story' from dropdown -> click on 'Add Spike'.
+The system notifies the user that a spike has been added for the selected user story and the user story is marked as blocked.
+
+After a spike is added, the user must confirm if management has provided the necessary information .
+The user makes this decision by clicking 'Yes' or 'No'.
+
+Click 'Yes' -> the spike is considered successful at this stage.
+Click 'No'-> the spike fails, and the user story is marked as blocked, preventing any status updates.
+
+Handle Spike Outcome:
+
+If Management Feedback is Positive:
+
+Click on 'Allocate More Resources'
+If selected, the status of the user story changes to 'Resources Requested'.
+The user is again prompted to decide if management has provided additional resources.
+Click 'Yes'-> proceed to the next step.
+Click 'No' -> the spike fails.
+
+Click on 'Spike Success' -> Spike Success, and the user story is re-enabled to resume in the sprint.
+
+# Sprint 1
 # About the Use Case (SRS_UC_04)
 
 - User Should be able to move user stories from product backlog to sprint backlog.
@@ -84,4 +168,10 @@ How to test
 # List of possible solutions
 - Click on 'Posible Blocker Solutions'
 - User can populate and update the list of blockers
+
+
+
+
+
+
 
