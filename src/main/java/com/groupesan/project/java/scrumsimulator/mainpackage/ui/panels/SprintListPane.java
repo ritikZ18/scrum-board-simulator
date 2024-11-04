@@ -25,9 +25,10 @@ public class SprintListPane extends JFrame implements BaseComponent {
     private List<SprintWidget> widgets = new ArrayList<>();
 
     public void init() {
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Sprints list");
-        setSize(400, 300);
+        setSize(600, 400);
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();

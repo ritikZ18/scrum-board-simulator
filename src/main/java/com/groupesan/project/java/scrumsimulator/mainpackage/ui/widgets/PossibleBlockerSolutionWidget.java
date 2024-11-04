@@ -81,6 +81,7 @@ public class PossibleBlockerSolutionWidget extends JPanel implements BaseCompone
     private void updateDisplay() {
         idLabel.setText(possibleBlockerSolution.getId().toString());
         blockerIdLabel.setText(possibleBlockerSolution.getBlockerId());
+
         solLabel.setText(possibleBlockerSolution.getSolution());
         probabilityLabel.setText("Probability: "+possibleBlockerSolution.getSolutionProbability()+ "%");
 
