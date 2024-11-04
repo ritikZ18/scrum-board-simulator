@@ -17,7 +17,7 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
 
 
     Double[] pointsList = {null, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
-    Double[] businessValueList = {null, 1.0, 2.0, 3.0, 5.0, 8.0, 11.0, 19.0, 30.0, 49.0};
+    Double[] businessValueList = {null,1.0, 3.0, 7.0, 11.0, 17.0, 23.0};
 
     public EditUserStoryForm(UserStory userStory) {
         this.userStory = userStory;
@@ -90,37 +90,16 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
 
         setLayout(myBorderLayout);
 
-        JLabel nameLabel = new JLabel("Name:");
-        myJpanel.add(
-                nameLabel,
-                new CustomConstraints(
-                        0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
-        myJpanel.add(
-                nameField,
-                new CustomConstraints(
-                        1, 0, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(new JLabel("Name:"), new CustomConstraints(0, 0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(nameField, new CustomConstraints(1, 0, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
-        JLabel descLabel = new JLabel("Description:");
-        myJpanel.add(
-                descLabel,
-                new CustomConstraints(
-                        0, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
-        myJpanel.add(
-                new JScrollPane(descArea),
-                new CustomConstraints(
-                        1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
+        myJpanel.add(new JLabel("Description:"), new CustomConstraints(0, 1, GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(new JScrollPane(descArea), new CustomConstraints(1, 1, GridBagConstraints.EAST, 1.0, 0.3, GridBagConstraints.BOTH));
 
-        JLabel pointsLabel = new JLabel("Points:");
-        myJpanel.add(
-                pointsLabel,
-                new CustomConstraints(
-                        0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
-        myJpanel.add(
-                pointsCombo,
-                new CustomConstraints(
-                        1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(new JLabel("Points:"), new CustomConstraints(0, 2, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL));
+        myJpanel.add(pointsCombo, new CustomConstraints(1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
-        JLabel businessValueLabel = new JLabel("business Value:");
+        JLabel businessValueLabel = new JLabel("business Value:");// start Changes done by Sumathi
 
         myJpanel.add(
                 businessValueLabel,
