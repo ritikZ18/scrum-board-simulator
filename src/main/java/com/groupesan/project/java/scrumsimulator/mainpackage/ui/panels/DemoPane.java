@@ -377,11 +377,11 @@ public class DemoPane extends JFrame implements BaseComponent {
         boolean isScrumAdmin = "Scrum Administrator".equals(currentRole);
         fineTunePanel.setVisible(isScrumAdmin);
 
-        if (isScrumAdmin) {
-            fineTunePanel.setBackground(Color.GREEN);
-        } else {
-            fineTunePanel.setBackground(null);
-        }
+//        if (isScrumAdmin) {
+//            fineTunePanel.setBackground(Color.);
+//        } else {
+//            fineTunePanel.setBackground(null);
+//        }
 
     }
 
