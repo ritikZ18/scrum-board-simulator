@@ -187,7 +187,7 @@ public class PossibleBlockersListPane extends JFrame implements BaseComponent {
     }
 
     private void showManagementDetailsConfirmation(String userStoryId, JButton allocateResourcesButton, JButton spikeSuccessButton, boolean initialStatus) {
-        String message = "Management team has provided details for user story " + userStoryId + ". Proceed?";
+        String message = "Management team has provided details for user story " + userStoryId + "?";
         int option = JOptionPane.showConfirmDialog(
                 this,
                 message,
