@@ -76,6 +76,11 @@ public class App {
         y.doRegister();
         PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(y);
 
+        PossibleBlockerSolution z =
+                PossibleBlockerSolutionFactory.getInstance()
+                        .createNewPossibleBlockerSolution("PB3","update knowledge from other teams");
+        z.doRegister();
+        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(z);
     }
 
 
