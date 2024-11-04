@@ -30,9 +30,15 @@ To clean the project (remove all build artifacts), run the following gradle comm
 ### Mac/Linux/Git Bash/WSL:
 `./gradlew clean`
 
+# Sprint 2
+# Simulation flow to generate burndown chart
+- Click on Create Simulation in Demo Panel, add simulation name,number of sprints, and sprint length and click on create simulation button.
+- Click on Sprints button in Demo Panel. Click on New Sprint, add parameters and submit.
+- Click on Populate Sprint Backlog  in Demo Panel. Select the stories from dropdown, click on Select. Select Sprint and move to Sprint backlog.
+- Click on View Sprint Backlog in Demo Panel. Click on Select sprint.
 
 
-
+# Sprint 1
 # About the Use Case (SRS_UC_04)
 
 - User Should be able to move user stories from product backlog to sprint backlog.
@@ -84,4 +90,6 @@ How to test
 # List of possible solutions
 - Click on 'Posible Blocker Solutions'
 - User can populate and update the list of blockers
+
+
 
