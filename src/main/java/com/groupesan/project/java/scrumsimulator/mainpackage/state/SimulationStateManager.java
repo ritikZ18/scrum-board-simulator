@@ -94,7 +94,7 @@ public class SimulationStateManager {
                 currentSprint.setSprintCompleted();
                 GetSprintExcecutionData getSprintExcecutionData = new GetSprintExcecutionData(currentSprint);
                 CategoryDataset sprintData = getSprintExcecutionData.generateDataSet();
-                GenerateLineChart generateLineChart = new GenerateLineChart(sprintData);
+                new GenerateLineChart(sprintData);
                 System.out.println("Sprint stopped.");
                 }
             }
