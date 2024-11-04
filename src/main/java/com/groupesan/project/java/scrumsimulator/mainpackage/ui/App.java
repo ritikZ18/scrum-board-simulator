@@ -42,7 +42,7 @@ public class App {
 
         UserStory c =
                 UserStoryFactory.getInstance()
-                        .createNewUserStory("predefinedUS3", "description3", 3.0,5.0, "New");
+                        .createNewUserStory("predefinedUS3", "description3", 3.0,7.0, "New");
         c.doRegister();
         UserStoryStore.getInstance().addUserStory(c);
     }

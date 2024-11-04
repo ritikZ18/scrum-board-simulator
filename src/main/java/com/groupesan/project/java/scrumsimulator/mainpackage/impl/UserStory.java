@@ -33,6 +33,8 @@ public class UserStory extends ScrumObject {
 
     private String status = "New";
 
+    private boolean spikeAdded = false;
+
     private Date completionDate;
 
     // private ArrayList<Task> tasks;  TODO: implement tasks
@@ -260,6 +262,16 @@ public class UserStory extends ScrumObject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public boolean spikeAdded() {
+        return spikeAdded;
+    }
+
+    // Method to set spike status
+    public void setSpikeAdded(boolean added) {
+        this.spikeAdded = added;
     }
 
     public void setCompletionDate(Date date) {

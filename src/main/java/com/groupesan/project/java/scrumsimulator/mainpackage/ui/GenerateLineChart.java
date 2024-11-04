@@ -1,7 +1,5 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui;
 
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.GetSprintExcecutionData;
-import com.groupesan.project.java.scrumsimulator.mainpackage.impl.Sprint;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 
 import org.jfree.chart.ChartFactory;
@@ -9,22 +7,23 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.*;
 
 public class GenerateLineChart extends JFrame implements BaseComponent {
 
-    private Sprint currentSprint;
+    private CategoryDataset dataset;
 
-    public GenerateLineChart(Sprint sprint) {
-        this.currentSprint = sprint;
+    public GenerateLineChart(CategoryDataset dataset) {
+        this.dataset = dataset;
         init();
     }
 
     public void init() {
-        GetSprintExcecutionData excecutionData = new GetSprintExcecutionData(this.currentSprint);
-        CategoryDataset dataset = excecutionData.generateDataSet();
-
         JFreeChart chart = ChartFactory.createLineChart(
                 "Burndown Chart",
                 "Sprint Days",
@@ -41,5 +40,17 @@ public class GenerateLineChart extends JFrame implements BaseComponent {
 
         setSize(800, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        saveChartToFile(chart);
     }
+
+    private void saveChartToFile(JFreeChart chart) {
+    File outputFile = new File("./stats/burndown_chart.png");
+    try {
+        BufferedImage image = chart.createBufferedImage(800, 600);
+        ImageIO.write(image, "png", outputFile);
+        System.out.println("Chart saved as " + outputFile.getAbsolutePath());
+    } catch (IOException e) {
+        System.err.println("Error saving chart: " + e.getMessage());
+    }
+}
 }

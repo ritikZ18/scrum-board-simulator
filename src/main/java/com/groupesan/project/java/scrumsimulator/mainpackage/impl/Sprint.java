@@ -109,7 +109,7 @@ public class Sprint {
     public void setSprintEndDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.sprintStartDate);
-        calendar.add(Calendar.DAY_OF_MONTH, this.length);
+        calendar.add(Calendar.DAY_OF_MONTH, this.length - 1);
         this.sprintEndDate = calendar.getTime();
         System.out.println(this.sprintEndDate);
     }
