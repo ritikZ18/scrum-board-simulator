@@ -22,8 +22,8 @@ public class UserStoryStoreTest {
 
     @Test
     public void testGetUserStories() {
-        UserStory userStory1 = new UserStory("Feature A", 3.0, 5.0);
-        UserStory userStory2 = new UserStory("Feature B", 2.0, 4.0);
+        UserStory userStory1 = new UserStory("Feature A", 3.0, 7.0);
+        UserStory userStory2 = new UserStory("Feature B", 2.0, 7.0);
         userStoryStore.addUserStory(userStory1);
         userStoryStore.addUserStory(userStory2);
 

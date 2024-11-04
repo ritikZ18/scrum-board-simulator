@@ -12,7 +12,7 @@ public class UserStoryUnselectedStateTest {
 
     @BeforeEach
     public void setUp() {
-        userStory = new UserStory("Delete button needed", 5.0, 3.0);
+        userStory = new UserStory("Delete button needed", 5.0, 7.0);
         unselectedState = new UserStoryUnselectedState(userStory);
         userStory.changeState(unselectedState);
     }
