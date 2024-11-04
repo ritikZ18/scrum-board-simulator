@@ -37,6 +37,34 @@ To clean the project (remove all build artifacts), run the following gradle comm
 - Click on Populate Sprint Backlog  in Demo Panel. Select the stories from dropdown, click on Select. Select Sprint and move to Sprint backlog.
 - Click on View Sprint Backlog in Demo Panel. Click on Select sprint.
 
+# About the Use Case (Start Sprint Cycle)
+- The Start Sprint Cycle is not a part of the SBS document but it is placed to generate the outcomes of a simulation in a burndown chart form.
+
+How to test
+
+#### Switch Role
+- Click "Switch Role" -> Click "Scrum Master" -> Click "Switch Role" -
+
+#### Create New Simulation
+- Click "Create Simulation" -> Populate all fields -> Click "Create Simulation"
+
+#### Create Sprints
+- Click "Sprints" -> Populate fields -> Select the Simulation ID -> Reapeat to create Multiple Sprints.
+
+#### Populate Sprint Backlog
+- Check "Move User Story to Sprint" (Button: Populate Sprint Backlog)
+
+#### Start Simulation 
+- Click "Start Simulation" -> Click "Update User Story Status" -> Update completed status and completion date for all user stories
+
+#### Stop Simulation
+
+- Click Stop Simulation -> View burndown chart in "stats" folder.
+
+**Note**: 
+- Start and stop simulation will run one sprint cycle. To run each sprint cycle click start and stop simulation.
+- The date range for Sprint 1 will be set from today's date to sprint length. The start date of the next sprint will be one day after the previous sprint end date to sprint length.
+- If three sprints were run for a simulation three burndown chart will be created for each sprint.
 
 # Sprint 1
 # About the Use Case (SRS_UC_04)
@@ -90,6 +118,10 @@ How to test
 # List of possible solutions
 - Click on 'Posible Blocker Solutions'
 - User can populate and update the list of blockers
+
+
+
+
 
 
 
