@@ -22,6 +22,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
     private JLabel userStoryIdLabel;
     private JLabel statusLabel;
     private JLabel probabilityLabel;
+//    private JButton allocateResourcesButton;
 
     // TODO: This is a non transient field and this class is supposed to be serializable. this needs
     // to be dealt with before this object can be serialized
@@ -59,6 +60,19 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         userStoryIdLabel = new JLabel(possibleBlocker.getUserStoryId());
         statusLabel = new JLabel(possibleBlocker.getStatus());
 
+//        allocateResourcesButton = new JButton("Allocate More Resources");
+//        allocateResourcesButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                // Logic to allocate more resources goes here
+//                JOptionPane.showMessageDialog(
+//                        PossibleBlockerWidget.this,
+//                        "Resources allocated for user story " + possibleBlocker.getUserStoryId(),
+//                        "Resources Allocated",
+//                        JOptionPane.INFORMATION_MESSAGE);
+//            }
+//        });
+
         MouseAdapter openEditDialog = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -80,6 +94,7 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         add(descLabel, new CustomConstraints(3, 0, GridBagConstraints.WEST, 0.7, 0.0, GridBagConstraints.HORIZONTAL));
         add(statusLabel, new CustomConstraints(4, 0, GridBagConstraints.WEST, 0.3, 0.0, GridBagConstraints.HORIZONTAL));
         add(probabilityLabel, new CustomConstraints(5, 0, GridBagConstraints.WEST, 1.0, 0.0, GridBagConstraints.HORIZONTAL)); // Add to the panel
+//        add(allocateResourcesButton, new CustomConstraints(5, 0, GridBagConstraints.WEST, 0.1, 0.0, GridBagConstraints.HORIZONTAL));
 
         revalidate();
         repaint();
@@ -103,7 +118,6 @@ public class PossibleBlockerWidget extends JPanel implements BaseComponent, Seri
         descLabel.setText(possibleBlocker.getDescription());
         statusLabel.setText(possibleBlocker.getStatus());
         probabilityLabel.setText("Probability: "+possibleBlocker.getBlockerProbability()+ "%");
-
         revalidate();
         repaint();
     }
