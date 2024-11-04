@@ -30,7 +30,7 @@ public class SimulationPanel extends JPanel implements BaseComponent {
 
     @Override
     public void init(){
-        startSimulationButton = new JButton("Start a Simulation");
+        startSimulationButton = new JButton("Start Simulation");
         stopSimulationButton = new JButton("Stop Simulation");
         stopSimulationButton.setVisible(false);
 

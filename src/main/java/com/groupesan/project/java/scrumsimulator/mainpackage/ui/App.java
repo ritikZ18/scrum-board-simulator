@@ -42,7 +42,7 @@ public class App {
 
         UserStory c =
                 UserStoryFactory.getInstance()
-                        .createNewUserStory("predefinedUS3", "description3", 3.0,5.0, "New");
+                        .createNewUserStory("predefinedUS3", "description3", 3.0,7.0, "New");
         c.doRegister();
         UserStoryStore.getInstance().addUserStory(c);
     }
@@ -50,13 +50,13 @@ public class App {
     private void initializePossibleBlockers() {
         PossibleBlocker a =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 1", "US3","US10","unresolved");
+                        .createNewPossibleBlocker("Bug", "Delete user story","US#1","unresolved");
         a.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(a);
 
         PossibleBlocker b =
                 PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Sprint cycle 2", "US4","US11","unresolved");
+                        .createNewPossibleBlocker("Bug", "Update point value","US#2","unresolved");
         b.doRegister();
         PossibleBlockerStore.getInstance().addPossibleBlocker(b);
 
@@ -76,6 +76,11 @@ public class App {
         y.doRegister();
         PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(y);
 
+        PossibleBlockerSolution z =
+                PossibleBlockerSolutionFactory.getInstance()
+                        .createNewPossibleBlockerSolution("PB3","update knowledge from other teams");
+        z.doRegister();
+        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(z);
     }
 
 

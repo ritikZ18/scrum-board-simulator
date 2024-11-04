@@ -39,7 +39,7 @@ public class PopulateSprintBacklogPane extends JFrame implements BaseComponent {
     public void init() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Product Backlog");
-        setSize(400, 600);
+        setSize(600, 600);
 
         GridBagLayout myGridbagLayout = new GridBagLayout();
         JPanel myJpanel = new JPanel();

@@ -84,15 +84,15 @@ public class UserStoryTest {
     /** Test case to ensure that business value is updated successfully. */
     @Test
     public void testBusinessValueUpdate() {
-        myUserStory.setBusinessValue(5.0);
-        myUserStory.setBusinessValue(8.0);
-        assertEquals(8.0, myUserStory.getBusinessValue(), "Business value should be updated to 8.0");
+        myUserStory.setBusinessValue(7.0);
+        myUserStory.setBusinessValue(1.0);
+        assertEquals(1.0, myUserStory.getBusinessValue(), "Business value should be updated to 8.0");
     }
 
     /** Test case to ensure that setting business value to null is handled correctly. */
     @Test
     public void testBusinessValueUpdateToNull() {
-        myUserStory.setBusinessValue(5.0);
+        myUserStory.setBusinessValue(7.0);
         myUserStory.setBusinessValue(Double.NaN);
         assertTrue(Double.isNaN(myUserStory.getBusinessValue()), "Business value should be updated to NaN");
     }

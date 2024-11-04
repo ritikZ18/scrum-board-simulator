@@ -19,6 +19,7 @@ public class SimulationSwitchRolePane extends JFrame {
     private JRadioButton scrumAdministratorRadioButton;
     private ButtonGroup roleButtonGroup;
     private JButton switchButton;
+    private DemoPane demoPane;
 
     private static String currentRole = "Developer";
 
@@ -33,7 +34,9 @@ public class SimulationSwitchRolePane extends JFrame {
 
     }
 
-    public SimulationSwitchRolePane() {
+    public SimulationSwitchRolePane(DemoPane demoPane) {
+        this.demoPane = demoPane;
+
         setTitle("Simulation Status");
         setSize(400, 200);
         setLocationRelativeTo(null);
@@ -72,6 +75,8 @@ public class SimulationSwitchRolePane extends JFrame {
         setLayout(new BorderLayout());
         add(switchButton, BorderLayout.SOUTH);
         add(panel);
+
+
     }
 
     private void onSwitchButtonClicked() {
@@ -98,8 +103,9 @@ public class SimulationSwitchRolePane extends JFrame {
                     "Role Switching Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+        demoPane.updateRoleLabel(); //label update
         roleButtonGroup.clearSelection();
         dispose();
-        return;
+        // return;
     }
 }

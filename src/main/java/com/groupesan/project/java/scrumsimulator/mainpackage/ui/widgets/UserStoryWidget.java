@@ -5,6 +5,7 @@ import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStory;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStoryStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.state.UserStoryDeletedState;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.EditUserStoryForm;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels.SimulationSwitchRolePane;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
 
 import java.awt.*;
@@ -68,6 +69,8 @@ public class UserStoryWidget extends JPanel implements BaseComponent, Serializab
         name = new JLabel(userStory.getName());
         desc = new JLabel(userStory.getDescription());
         delete = new JButton("Delete");
+
+        delete.setEnabled(SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
 
         statusLabel = new JLabel(userStory.getStatus());
         String[] statuses = {"New", "In Progress", "ReadyForTest", "Done"};
