@@ -10,10 +10,13 @@ import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.GetSprintExcecutionData;
+import com.groupesan.project.java.scrumsimulator.mainpackage.ui.GenerateLineChart;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SimulationStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.SprintStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.Sprint;
 
+import org.jfree.data.category.CategoryDataset;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -89,6 +92,9 @@ public class SimulationStateManager {
             Sprint currentSprint = SprintStore.getInstance().getSprintByName(obj.toString());
             if (currentSprint != null && currentSprint.getSprintRunning() && !currentSprint.getSprintCompleted()) {
                 currentSprint.setSprintCompleted();
+                GetSprintExcecutionData getSprintExcecutionData = new GetSprintExcecutionData(currentSprint);
+                CategoryDataset sprintData = getSprintExcecutionData.generateDataSet();
+                new GenerateLineChart(sprintData);
                 System.out.println("Sprint stopped.");
                 }
             }
