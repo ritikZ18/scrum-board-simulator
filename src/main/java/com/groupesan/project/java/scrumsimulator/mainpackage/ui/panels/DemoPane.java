@@ -56,7 +56,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 sprintsButton,
                 new CustomConstraints(
-                        1, 1, GridBagConstraints.WEST, 0, 0, GridBagConstraints.HORIZONTAL));
+                        1, 2, GridBagConstraints.WEST, 0, 0, GridBagConstraints.HORIZONTAL));
 
 
 
@@ -67,6 +67,8 @@ public class DemoPane extends JFrame implements BaseComponent {
                 simulationPanel,
                 new CustomConstraints(
                         0, 3, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+
+
 
 
         JButton userStoriesButton = new JButton("User Stories");
@@ -82,7 +84,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 userStoriesButton,
                 new CustomConstraints(
-                        0, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                        0, 2, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         JButton updateStoryStatusButton = new JButton("Update User Story Status");
         updateStoryStatusButton.addActionListener(
@@ -118,7 +120,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 possibleBlockersButton,
                 new CustomConstraints(
-                        0, 2, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                        0, 4, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
 
         // Modify Simulation button
@@ -161,7 +163,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 simulationSwitchRoleButton,
                 new CustomConstraints(
-                        0, 0, GridBagConstraints.WEST, 0.2, 0, GridBagConstraints.HORIZONTAL));
+                        0, 1, GridBagConstraints.WEST, 0.2, 0, GridBagConstraints.HORIZONTAL));
 
         //  Populate Sprint Backlog button
         JButton PopulateSprintBacklogButton = new JButton("Populate Sprint Backlog");
@@ -179,7 +181,7 @@ public class DemoPane extends JFrame implements BaseComponent {
             });
 
         myJpanel.add(PopulateSprintBacklogButton, new CustomConstraints(
-            2, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+            2, 2, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
         // View Sprint Backlog Button
         JButton ViewSprintBacklogButton = new JButton("View Sprint Backlog");
@@ -195,7 +197,7 @@ public class DemoPane extends JFrame implements BaseComponent {
             }
         );
         myJpanel.add(ViewSprintBacklogButton, new CustomConstraints(
-            3, 1, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+            3, 2, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
 
         JButton possibleBlockerSolutionsButton = new JButton("Possible Blocker Solutions");
@@ -211,7 +213,7 @@ public class DemoPane extends JFrame implements BaseComponent {
         myJpanel.add(
                 possibleBlockerSolutionsButton,
                 new CustomConstraints(
-                        1, 2, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
+                        1, 4, GridBagConstraints.WEST, 1.0, 1.0, GridBagConstraints.HORIZONTAL));
 
 
         // Create a panel for the Fine Tune Probability button
@@ -225,13 +227,13 @@ public class DemoPane extends JFrame implements BaseComponent {
         // Add the fine tune panel to the main panel
         myJpanel.add(fineTunePanel,
                 new CustomConstraints(
-                        2, 2, GridBagConstraints.EAST, 0, 0, GridBagConstraints.HORIZONTAL));
+                        2, 4, GridBagConstraints.EAST, 0, 0, GridBagConstraints.HORIZONTAL));
 
 
         //Get Current Role
         currentRoleLabel = new JLabel("Current Role: " + SimulationSwitchRolePane.getCurrentRole());
         currentRoleLabel.setFont(new Font("Poppins", Font.BOLD, 13));
-        myJpanel.add(currentRoleLabel, new CustomConstraints(1, 0, GridBagConstraints.NORTHWEST, 0, 0, GridBagConstraints.NONE));
+        myJpanel.add(currentRoleLabel, new CustomConstraints(0, 0, GridBagConstraints.NORTHWEST, 0, 0, GridBagConstraints.NONE));
 
         addWindowListener(new WindowAdapter() {
             @Override
