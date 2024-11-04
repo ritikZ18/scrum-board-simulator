@@ -15,10 +15,6 @@ public class App {
                     public void run() {
                         // Initialize User Stories in helper function now
                         initializeUserStories();
-                        // Initializing possible blockers
-                        initializePossibleBlockers();
-                        //Initialiting Possible Blockers Solution
-                        initializePossibleBlockerSolutions();
 
                         // Load DemoPane
                         DemoPane form = new DemoPane();
@@ -47,41 +43,6 @@ public class App {
         UserStoryStore.getInstance().addUserStory(c);
     }
 
-    private void initializePossibleBlockers() {
-        PossibleBlocker a =
-                PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Bug", "Delete user story","US#1","unresolved");
-        a.doRegister();
-        PossibleBlockerStore.getInstance().addPossibleBlocker(a);
-
-        PossibleBlocker b =
-                PossibleBlockerFactory.getInstance()
-                        .createNewPossibleBlocker("Bug", "Update point value","US#2","unresolved");
-        b.doRegister();
-        PossibleBlockerStore.getInstance().addPossibleBlocker(b);
-
-    }
-
-
-    private void initializePossibleBlockerSolutions() {
-        PossibleBlockerSolution x =
-                PossibleBlockerSolutionFactory.getInstance()
-                        .createNewPossibleBlockerSolution("PB1","get knowledge from other teams");
-        x.doRegister();
-        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(x);
-
-        PossibleBlockerSolution y =
-                PossibleBlockerSolutionFactory.getInstance()
-                        .createNewPossibleBlockerSolution( "PB2","get information from geeks for geeks");
-        y.doRegister();
-        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(y);
-
-        PossibleBlockerSolution z =
-                PossibleBlockerSolutionFactory.getInstance()
-                        .createNewPossibleBlockerSolution("PB3","update knowledge from other teams");
-        z.doRegister();
-        PossibleBlockerSolutionStore.getInstance().addPossibleBlockerSolution(z);
-    }
 
 
 
