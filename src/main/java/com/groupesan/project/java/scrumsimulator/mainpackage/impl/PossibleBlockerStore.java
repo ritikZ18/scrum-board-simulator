@@ -1,15 +1,10 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class PossibleBlockerStore {
 
     private static PossibleBlockerStore possibleBlockerStore;
-
-
     /**
      * returns the shared instance of the UserStoryStore which contains all user stories in the
      * system.
@@ -23,9 +18,15 @@ public class PossibleBlockerStore {
         return possibleBlockerStore;
     }
 
+    public boolean hasSpike(String userStoryId) {
+        return getSpikedUserStories().contains(userStoryId);
+    }
+
     private List<PossibleBlocker> possibleBlockers;
     private List<String> spikedUserStories;
     private Map<String, String> spikedUserStoryStatus;
+
+    private Set<String> successfulSpikes = new HashSet<>();//changes
 
     private PossibleBlockerStore() {
         possibleBlockers = new ArrayList<PossibleBlocker>();
@@ -59,6 +60,15 @@ public class PossibleBlockerStore {
         if (spikedUserStoryStatus.containsKey(userStoryId)) {
             spikedUserStoryStatus.put(userStoryId, status);
         }
+    }
+
+
+    public void markSpikeAsSuccessful(String userStoryId) {
+        successfulSpikes.add(userStoryId);
+    }
+
+    public boolean isUserStoryEditable(String userStoryId) {
+        return !spikedUserStories.contains(userStoryId) || successfulSpikes.contains(userStoryId);
     }
 
 }

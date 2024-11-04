@@ -1,5 +1,6 @@
 package com.groupesan.project.java.scrumsimulator.mainpackage.ui.panels;
 
+import com.groupesan.project.java.scrumsimulator.mainpackage.impl.PossibleBlockerStore;
 import com.groupesan.project.java.scrumsimulator.mainpackage.impl.UserStory;
 import com.groupesan.project.java.scrumsimulator.mainpackage.ui.widgets.BaseComponent;
 import com.groupesan.project.java.scrumsimulator.mainpackage.utils.CustomConstraints;
@@ -21,9 +22,36 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
     public EditUserStoryForm(UserStory userStory) {
         this.userStory = userStory;
         this.init();
+        if (PossibleBlockerStore.getInstance().hasSpike(userStory.getId().toString())) { // Check if the user story has a spike
+            disableEditing();
+        }
+        updateEditability();
     }
 
+    public void updateEditability() {
+        boolean isEditable = PossibleBlockerStore.getInstance().isUserStoryEditable(userStory.getId().toString());
+        nameField.setEnabled(isEditable && SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        descArea.setEnabled(isEditable && SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        businessValueCombo.setEnabled(isEditable && SimulationSwitchRolePane.getCurrentRole().equals("Product Owner"));
+        pointsCombo.setEnabled(isEditable && SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
+        statusCombo.setEnabled(isEditable && SimulationSwitchRolePane.getCurrentRole().equals("Developer"));
+    }
+
+    public void disableEditing() {
+        nameField.setEnabled(false);
+        descArea.setEnabled(false);
+        pointsCombo.setEnabled(false);
+        businessValueCombo.setEnabled(false);
+        statusCombo.setEnabled(false);
+    }
+
+
+
     private UserStory userStory;
+
+    public UserStory getUserStory() {
+        return userStory;
+    }
 
     private JTextField nameField = new JTextField();
     private JTextArea descArea = new JTextArea();
@@ -92,7 +120,7 @@ public class EditUserStoryForm extends JFrame implements BaseComponent {
                 new CustomConstraints(
                         1, 2, GridBagConstraints.EAST, 1.0, 0.0, GridBagConstraints.HORIZONTAL));
 
-        JLabel businessValueLabel = new JLabel("business Value:");// start Changes done by Sumathi
+        JLabel businessValueLabel = new JLabel("business Value:");
 
         myJpanel.add(
                 businessValueLabel,

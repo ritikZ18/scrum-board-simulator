@@ -27,6 +27,8 @@ public class UserStory extends ScrumObject {
 
     private String status = "New";
 
+    private boolean spikeAdded = false;
+
     // private ArrayList<Task> tasks;  TODO: implement tasks
 
     private void validateMandatoryField(String value, String fieldName){
@@ -237,5 +239,15 @@ public class UserStory extends ScrumObject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    public boolean spikeAdded() {
+        return spikeAdded;
+    }
+
+    // Method to set spike status
+    public void setSpikeAdded(boolean added) {
+        this.spikeAdded = added;
     }
 }
